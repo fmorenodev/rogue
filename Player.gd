@@ -1,7 +1,10 @@
 extends KinematicBody2D
 
 var moving = false
-onready var tile_size = 32 #16 * $AnimatedSprite.scale
+onready var grid = get_parent()
+onready var tile_size = get_parent().tile_size
+onready var type = get_parent().ENTITY_TYPES.PLAYER
+var direction = Vector2()
 
 func _ready():
 	$AnimatedSprite.play("idle")
@@ -12,30 +15,28 @@ func _physics_process(_delta):
 		if $IdleTimer.is_stopped():
 			$IdleTimer.start()
 		
-		var motion_vector = get_input()
-		if motion_vector != Vector2():
-			#tile_size is the size of the tilemap in pixels.
-			var new_position = position + motion_vector * tile_size
-			if not test_move(global_transform, motion_vector):
-				#Yes. I'm assuming you have a Tween node as a child.
-				$Tween.interpolate_property ( self, 'position', position, new_position, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-				#That last method's fifth property is how long it takes to go from one tile to the other in seconds.
+		get_input()
+		if direction != Vector2():
+			#var new_position = position + direction * tile_size
+			if grid.is_cell_vacant(position, direction):
+				var new_position = grid.update_child_pos(self)
+				$Tween.interpolate_property (self, 'position', position, new_position, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 				$Tween.start()
-				$AnimatedSprite.play("move")
+				#$AnimatedSprite.stop() # here should be the moving animation
 				moving = true
 				$IdleTimer.stop()
 				
 func get_input(): 
-	var motion_vector = Vector2()
+	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
-		motion_vector += Vector2( 0, -1)
-	elif Input.is_action_pressed("ui_down"):
-		motion_vector += Vector2( 0, 1)
-	elif Input.is_action_pressed("ui_left"):
-		motion_vector += Vector2( -1, 0)
+		direction += Vector2(0, -1)
+	if Input.is_action_pressed("ui_down"):
+		direction += Vector2(0, 1)
+	if Input.is_action_pressed("ui_left"):
+		direction += Vector2(-1, 0)
 		$AnimatedSprite.flip_h = true
-	elif Input.is_action_pressed("ui_right"):
-		motion_vector += Vector2( 1, 0)
+	if Input.is_action_pressed("ui_right"):
+		direction += Vector2(1, 0)
 		$AnimatedSprite.flip_h = false
 
 func _on_Tween_tween_completed(_object, _key):
