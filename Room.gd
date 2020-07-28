@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 var size
+var rect
 
 func make_room(pos, r_size):
 	position = pos
@@ -9,17 +10,3 @@ func make_room(pos, r_size):
 	shape.custom_solver_bias = 2
 	shape.extents = size
 	$CollisionShape2D.shape = shape
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

@@ -2,9 +2,10 @@ extends KinematicBody2D
 
 var moving = false
 onready var grid = get_parent()
-onready var tile_size = get_parent().tile_size
-onready var type = get_parent().ENTITY_TYPES.PLAYER
+onready var tile_size = grid.tile_size
+onready var INTERACTION_TYPE = grid.INTERACTION_TYPE
 var direction = Vector2()
+var speed_inv = 0.1
 
 func _ready():
 	$AnimatedSprite.play("idle")
@@ -17,10 +18,9 @@ func _physics_process(_delta):
 		
 		get_input()
 		if direction != Vector2():
-			#var new_position = position + direction * tile_size
-			if grid.is_cell_vacant(position, direction):
-				var new_position = grid.update_child_pos(self)
-				$Tween.interpolate_property (self, 'position', position, new_position, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			if grid.interact(self) == INTERACTION_TYPE.MOVE:
+				var new_position = position + direction * tile_size
+				$Tween.interpolate_property (self, 'position', position, new_position, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 				$Tween.start()
 				#$AnimatedSprite.stop() # here should be the moving animation
 				moving = true

@@ -1,61 +1,37 @@
 extends TileMap
 
 var tile_size = get_cell_size()
-var half_tile_size = tile_size / 2
-
-var grid_size = Vector2(10, 10)
 var grid = []
+var top_left
+var bottom_right
+var grid_size
+var n_enemies = 10
 
-enum ENTITY_TYPES {PLAYER, ENEMY, COLLECTIBLE}
+enum TILE_TYPE {FLOOR, WALL}
+enum INTERACTION_TYPE {NOTHING, MOVE, ATTACK, PICKUP, OTHER}
+enum ENTITY_TYPES {PLAYER, ENEMY, COLLECTIBLE, COLLISION_BLOCK}
 
 onready var Enemy = preload("res://Enemy.tscn")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	for x in range(grid_size.x):
-		grid.append([])
-		for y in range(grid_size.y):
-			grid[x].append(null)
-			
-	var positions = []
-	for n in range(5):
-		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		if not grid_pos in positions:
-			positions.append(grid_pos)
-			
-	for pos in positions:
-		var new_enemy = Enemy.instance()
-		new_enemy.position = map_to_world(pos) + half_tile_size
-		grid[pos.x][pos.y] = ENTITY_TYPES.ENEMY
-		add_child(new_enemy)
+	
+func initialize():
+	$Player.position = get_available_position()
 		
-		update_child_pos($Player)
+func get_available_position():
+	var rooms = get_node("../Rooms").get_children()
+	var chosen_room = rooms[randi() % rooms.size()]
+	var room_top_left = world_to_map(chosen_room.rect.position)
+	var room_bottom_right = world_to_map(chosen_room.rect.end)
+	var position = Vector2(int(rand_range(room_top_left.x + 2, room_bottom_right.x - 2)),
+							int(rand_range(room_top_left.y + 2, room_bottom_right.y - 2)))
+	return map_to_world(position)
 
-func is_cell_vacant(pos, direction):
-	var grid_pos = world_to_map(pos) + direction
-	if grid_pos.x < grid_size.x and grid_pos.x >= 0: # horizontal bounds
-		if grid_pos.y < grid_size.y and grid_pos.y >= 0: # vertical bounds
-			if grid[grid_pos.x][grid_pos.y] == null:  # cell is empty
-				return true
-	return false
-
-func update_child_pos(child_node):
-	var grid_pos = world_to_map(child_node.position)
-	grid[grid_pos.x][grid_pos.y] = null
-	
-	var new_grid_pos = grid_pos + child_node.direction
-	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
-	
-	return map_to_world(new_grid_pos)
-	
-	
-
-
-
-
-
-
-
-
-
+func interact(child_node):
+	var grid_pos = world_to_map(child_node.position) + child_node.direction
+	if grid_pos.x > top_left.x and grid_pos.x < bottom_right.x - 1: # horizontal bounds
+		if grid_pos.y > top_left.y and grid_pos.y < bottom_right.y - 1: # vertical bounds
+			if get_cellv(grid_pos) == 0:
+				return INTERACTION_TYPE.MOVE
+	return INTERACTION_TYPE.NOTHING

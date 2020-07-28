@@ -19,3 +19,4 @@ animations = [ {
 frames = SubResource( 1 )
 animation = "idle"
 playing = true
+centered = false

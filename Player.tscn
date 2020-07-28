@@ -25,9 +25,9 @@ position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 8, 8 )
 frames = SubResource( 2 )
 animation = "idle"
+centered = false
 
 [node name="Tween" type="Tween" parent="."]
 
