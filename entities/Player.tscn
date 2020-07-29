@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/priests_idle/priest2/priest2_v1_3.png" type="Texture" id=2]
 [ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/priests_idle/priest2/priest2_v1_2.png" type="Texture" id=3]
 [ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/priests_idle/priest2/priest2_v1_1.png" type="Texture" id=4]
@@ -27,6 +27,8 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "idle"
+frame = 2
+playing = true
 centered = false
 
 [node name="Tween" type="Tween" parent="."]

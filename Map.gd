@@ -1,6 +1,8 @@
 extends Node2D
 
 var Room = preload("res://Room.tscn")
+onready var Player = $Grid/Player
+onready var Camera = $Grid/Player/Camera2D
 onready var Map = $Grid
 var debug_mode = false
 
@@ -45,16 +47,18 @@ func _input(event):
 	if event.is_action_pressed("ui_focus_next"):
 		debug_mode = not debug_mode
 		if debug_mode:
-			$Grid/Player/Camera2D.zoom = Vector2(5, 5)
-			$Grid/Player.speed_inv = 0.05
+			Camera.zoom = Vector2(5, 5)
+			Player.speed_inv = 0.05
 		else:
-			$Grid/Player/Camera2D.zoom = Vector2(1, 1)
-			$Grid/Player.speed_inv = 0.1
+			Camera.zoom = Vector2(1, 1)
+			Player.speed_inv = 0.1
 		build_level()
 	if event.is_action_pressed("scroll_up"):
-		$Grid/Player/Camera2D.zoom -= Vector2(0.5, 0.5)
+		if Camera.zoom > Vector2(1, 1):
+			Camera.zoom -= Vector2(0.5, 0.5)
 	if event.is_action_pressed("scroll_down"):
-		$Grid/Player/Camera2D.zoom += Vector2(0.5, 0.5)
+		if Camera.zoom < Vector2(7, 7):
+			Camera.zoom += Vector2(0.5, 0.5)
 	
 func build_level():
 	Map.clear()
@@ -65,7 +69,7 @@ func build_level():
 	make_map()
 	
 func make_rooms():
-	for i in range(n_rooms):
+	for _i in range(n_rooms):
 		var pos = Vector2(rand_range(-h_spread, h_spread), rand_range(-v_spread, v_spread))
 		var room = Room.instance()
 		var width = min_size + randi() % (max_size - min_size)

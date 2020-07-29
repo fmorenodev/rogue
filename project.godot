@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://entities/Entity.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://git_api.gdns"
 } ]
 _global_script_class_icons={
+"Entity": "",
 "GitAPI": ""
 }
 
@@ -23,6 +29,10 @@ _global_script_class_icons={
 config/name="Rogue"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+dir="*res://Direction.gd"
 
 [display]
 
