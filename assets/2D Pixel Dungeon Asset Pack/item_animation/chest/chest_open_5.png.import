@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flasks_3_2.png-8e269a877d99c3ed7c1b8cf2015c6364.stex"
+path="res://.import/chest_open_5.png-333d9b9b2ca00424ac0b6bebe9f6dc16.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_2.png"
-dest_files=[ "res://.import/flasks_3_2.png-8e269a877d99c3ed7c1b8cf2015c6364.stex" ]
+source_file="res://assets/2D Pixel Dungeon Asset Pack/item_animation/chest/chest_open_5.png"
+dest_files=[ "res://.import/chest_open_5.png-333d9b9b2ca00424ac0b6bebe9f6dc16.stex" ]
 
 [params]
 

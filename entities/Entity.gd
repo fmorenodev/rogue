@@ -9,9 +9,11 @@ var direction = Vector2()
 var speed_inv = 0.1
 
 var level = 1
+var max_health = 1
 var health = 1
 var attack = 0
 var defense = 0
+var status = en.STATUS.ALIVE
 
 func move():
 	if direction == dir.left:
@@ -29,7 +31,15 @@ func take_damage(attack_value):
 	health = max(0, health - damage)
 	
 	if health == 0:
-		self.queue_free()
-		Grid.enemies.erase(self)
-	moving = true	
+		if self.has_method("get_input"):
+			#gameover
+			pass
+		else:
+			status = en.STATUS.DEAD
 
+func _on_Tween_tween_completed(_object, _key):
+	moving = false
+	
+func remove():
+	self.queue_free()
+	Grid.enemies.erase(self)

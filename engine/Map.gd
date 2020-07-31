@@ -1,12 +1,12 @@
 extends Node2D
 
-var Room = preload("res://Room.tscn")
+var Room = preload("res://engine/Room.tscn")
 onready var Player = $Grid/Player
 onready var Camera = $Grid/Player/Camera2D
-onready var Map = $Grid
+onready var Grid = $Grid
 var debug_mode = false
 
-onready var tile_size = Map.tile_size
+onready var tile_size = Grid.tile_size
 var n_rooms = 15 + randi() % 10 # 15-25 rooms 
 var min_size = 4
 var max_size = 10
@@ -61,7 +61,7 @@ func _input(event):
 			Camera.zoom += Vector2(0.5, 0.5)
 	
 func build_level():
-	Map.clear()
+	Grid.clear()
 	for n in $Rooms.get_children():
 		n.queue_free()
 	path = null
@@ -115,7 +115,7 @@ func find_mst(nodes):
 
 func make_map():	
 	yield(self, "map_created")
-	Map.clear()
+	Grid.clear()
 	map_rect = Rect2()
 	# merge all the rooms together to get the minimum size that encompasses all rooms
 	for room in $Rooms.get_children():
@@ -125,35 +125,35 @@ func make_map():
 			(room.get_node("CollisionShape2D").shape.extents * 2))
 		room.rect = r
 		map_rect = map_rect.merge(r)
-	var top_left = Map.world_to_map(map_rect.position)
-	var bottom_right = Map.world_to_map(map_rect.end)
-	Map.top_left = top_left 
-	Map.bottom_right = bottom_right
-	Map.grid_size = top_left - bottom_right
+	var top_left = Grid.world_to_map(map_rect.position)
+	var bottom_right = Grid.world_to_map(map_rect.end)
+	Grid.top_left = top_left 
+	Grid.bottom_right = bottom_right
+	Grid.grid_size = top_left - bottom_right
 	# fill the map with wall tiles
 	for x in range(top_left.x, bottom_right.x):
 		for y in range(top_left.y, bottom_right.y):
-			Map.set_cell(x, y, 1)
+			Grid.set_cell(x, y, 1)
 
 	# add the room and corridor floor tiles
 	var corridors = []
 	for room in $Rooms.get_children():
 		# tiles for the rooms
-		var room_top_left = Map.world_to_map(room.rect.position)
-		var room_bottom_right = Map.world_to_map(room.rect.end)
+		var room_top_left = Grid.world_to_map(room.rect.position)
+		var room_bottom_right = Grid.world_to_map(room.rect.end)
 		for x in range(room_top_left.x + 2, room_bottom_right.x - 1):
 			for y in range(room_top_left.y + 2, room_bottom_right.y - 1):
-				Map.set_cell(x, y, 0)
+				Grid.set_cell(x, y, 0)
 
 		# tiles for the corridors
 		var point = path.get_closest_point(room.position)
 		for connection in path.get_point_connections(point):
 			if not connection in corridors:
-				var start = Map.world_to_map(path.get_point_position(point))
-				var end = Map.world_to_map(path.get_point_position(connection))
+				var start = Grid.world_to_map(path.get_point_position(point))
+				var end = Grid.world_to_map(path.get_point_position(connection))
 				carve_path(start, end)
 		corridors.append(point)
-	Map.initialize()
+	Grid.initialize()
 		
 func carve_path(pos1, pos2):
 	var x_diff = sign(pos2.x - pos1.x)
@@ -167,7 +167,7 @@ func carve_path(pos1, pos2):
 		x_y = pos2
 		y_x = pos1
 	for x in range(pos1.x, pos2.x, x_diff):
-		Map.set_cell(x, x_y.y, 0)
+		Grid.set_cell(x, x_y.y, 0)
 	for y in range(pos1.y, pos2.y, y_diff):
-		Map.set_cell(y_x.x, y, 0)
+		Grid.set_cell(y_x.x, y, 0)
 	

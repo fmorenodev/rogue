@@ -18,21 +18,28 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://git_api.gdns"
+}, {
+"base": "AnimatedSprite",
+"class": "Item",
+"language": "GDScript",
+"path": "res://items/Item.gd"
 } ]
 _global_script_class_icons={
 "Entity": "",
-"GitAPI": ""
+"GitAPI": "",
+"Item": ""
 }
 
 [application]
 
 config/name="Rogue"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://engine/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-dir="*res://Direction.gd"
+dir="*res://engine/Direction.gd"
+en="*res://engine/Enums.gd"
 
 [display]
 

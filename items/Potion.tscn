@@ -1,0 +1,45 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://items/Potion.gd" type="Script" id=1]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_4_2.png" type="Texture" id=2]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_4_3.png" type="Texture" id=3]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_4_4.png" type="Texture" id=4]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_2.png" type="Texture" id=5]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_3.png" type="Texture" id=6]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_2.png" type="Texture" id=7]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_4_1.png" type="Texture" id=8]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_3.png" type="Texture" id=9]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_4.png" type="Texture" id=10]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_4.png" type="Texture" id=13]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_1.png" type="Texture" id=14]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_1.png" type="Texture" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "health_l",
+"speed": 5.0
+}, {
+"frames": [ null, null, null, null ],
+"loop": true,
+"name": "health_s",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "defense_s",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "defense_l",
+"speed": 5.0
+} ]
+
+[node name="AnimatedSprite" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "health_s"
+frame = 3
+centered = false
+script = ExtResource( 1 )
