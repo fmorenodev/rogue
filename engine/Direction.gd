@@ -6,6 +6,8 @@ const right = Vector2(1, 0)
 const up = Vector2(0, -1)
 const down = Vector2(0, 1)
 
+const move_left = "ui_left"
+
 func rand_dir():
 	
 	var direction = randi() % 4 + 1

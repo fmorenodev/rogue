@@ -15,7 +15,6 @@ var v_spread = 400 # vertical spread of the map
 var cull = 0 # rate of room deletion (0 -> 1)
 
 var path
-signal map_created
 var map_rect
 
 func _ready(): 
@@ -88,7 +87,6 @@ func make_rooms():
 			room_positions.append(room.position)
 	yield(get_tree(), "idle_frame")
 	path = find_mst(room_positions)
-	emit_signal("map_created")
 			
 func find_mst(nodes):
 	# Prim's algorithm
@@ -114,7 +112,7 @@ func find_mst(nodes):
 	return path
 
 func make_map():	
-	yield(self, "map_created")
+	yield(make_rooms(), "completed")
 	Grid.clear()
 	map_rect = Rect2()
 	# merge all the rooms together to get the minimum size that encompasses all rooms

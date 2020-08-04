@@ -10,9 +10,14 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
-"class": "Entity",
+"class": "Actor",
 "language": "GDScript",
-"path": "res://entities/Entity.gd"
+"path": "res://actors/Actor.gd"
+}, {
+"base": "Actor",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://actors/Enemy.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -25,7 +30,8 @@ _global_script_classes=[ {
 "path": "res://items/Item.gd"
 } ]
 _global_script_class_icons={
-"Entity": "",
+"Actor": "",
+"Enemy": "",
 "GitAPI": "",
 "Item": ""
 }
@@ -34,6 +40,7 @@ _global_script_class_icons={
 
 config/name="Rogue"
 run/main_scene="res://engine/Main.tscn"
+run/low_processor_mode=true
 config/icon="res://icon.png"
 
 [autoload]
@@ -43,8 +50,7 @@ en="*res://engine/Enums.gd"
 
 [display]
 
-window/size/width=640
-window/size/height=360
+window/size/width=800
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -100,6 +106,10 @@ scroll_down={
  ]
 }
 
+[locale]
+
+translations=PoolStringArray( "res://assets/translations.en.translation", "res://assets/translations.es.translation" )
+
 [physics]
 
 2d/default_gravity=0
@@ -109,4 +119,5 @@ scroll_down={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

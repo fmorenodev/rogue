@@ -16,6 +16,11 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 15 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "defense_s",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "health_l",
@@ -24,11 +29,6 @@ animations = [ {
 "frames": [ null, null, null, null ],
 "loop": true,
 "name": "health_s",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 15 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "defense_s",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 14 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 10 ) ],

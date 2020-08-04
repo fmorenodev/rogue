@@ -2,7 +2,7 @@
 
 a GODOT-based roguelike
 
-##TODO:
+## TODO:
 -~~project setup~~
 -~~world generation~~
 -~~player movement~~
@@ -13,17 +13,20 @@ a GODOT-based roguelike
 --~~items~~
 -~~spawn entities~~
 -expand upon basic entities
---improve item spawning to make it more evenly distributed
+--more entities
+--improve spawning to make it more evenly distributed
+--more interactions
 -~~player interaction with entities~~
--more interactions
 -inventory
 -game over and game restart
---make inputs unique (e.g for attacking only one time)
+--~~make inputs unique (e.g for attacking only one time)~~
 -enemy behaviour
--turn implementation (maybe only need to make everything run after player action completed)
+-~~turn implementation~~
 -autotiling
 -complete map and advance to next one
 -start screen
 -leveling system
 -log system
+-GUI
+-refactor nodes and scripts to make each node or script do less things and be more organized
 
