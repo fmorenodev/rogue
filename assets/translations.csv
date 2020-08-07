@@ -1,3 +1,12 @@
 keys,en,es
 BLOCKED,The way is blocked.,
 OUT_OF_BOUNDS,You cannot escape the dungeon!,
+--GUI--,---------------------,
+LEVEL_STAT,"Player, level {0}",
+ATTACK_STAT,Attack: {0},
+DEFENSE_STAT,Defense: {0},
+--COMBAT--,--------------------,
+PLAYER_ATTACK,You attack the {0}.,
+OTHER_ATTACK,The {0} attacks {1}.,
+--MISC--,,
+LEVEL_ENTERED,You enter a new dungeon floor.,

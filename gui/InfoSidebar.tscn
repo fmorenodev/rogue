@@ -1,20 +1,25 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/GUI/black.jpg" type="Texture" id=1]
+[ext_resource path="res://assets/GUI/Panel.tres" type="StyleBox" id=1]
 [ext_resource path="res://gui/Bar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gui/Label.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gui/PlayerInfo.gd" type="Script" id=4]
 
-[node name="TextureRect" type="NinePatchRect"]
+
+[node name="InfoSidebar" type="Panel"]
 show_behind_parent = true
 margin_right = 120.0
 margin_bottom = 600.0
-texture = ExtResource( 1 )
+rect_min_size = Vector2( 120, 600 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InfoSidebar" type="VSplitContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_bottom = 1.0
+margin_top = 5.0
 margin_right = 120.0
 size_flags_horizontal = 0
 size_flags_vertical = 3
@@ -22,44 +27,55 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerInfo" type="VBoxContainer" parent="InfoSidebar"]
+[node name="PlayerInfo" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 120.0
-margin_bottom = 40.0
+margin_bottom = 595.0
 rect_min_size = Vector2( 120, 0 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HP" parent="InfoSidebar/PlayerInfo" instance=ExtResource( 3 )]
+[node name="Level" type="Label" parent="MarginContainer/PlayerInfo"]
 margin_right = 120.0
-margin_bottom = 16.0
-text = "Player, Level 1"
+margin_bottom = 14.0
+align = 1
 
-[node name="TextureProgress" parent="InfoSidebar/PlayerInfo" instance=ExtResource( 2 )]
+[node name="Control" type="MarginContainer" parent="MarginContainer/PlayerInfo"]
+margin_top = 18.0
+margin_right = 120.0
+margin_bottom = 38.0
+
+[node name="HealthBar" parent="MarginContainer/PlayerInfo/Control" instance=ExtResource( 2 )]
 margin_left = 10.0
-margin_top = 20.0
 margin_right = 110.0
-margin_bottom = 40.0
-size_flags_horizontal = 4
+tint_under = Color( 0, 0, 0, 1 )
+tint_progress = Color( 1, 0, 0, 1 )
 
-[node name="PlayerInfo2" type="VBoxContainer" parent="InfoSidebar"]
-margin_top = 52.0
+[node name="Health" type="Label" parent="MarginContainer/PlayerInfo/Control"]
+margin_top = 3.0
 margin_right = 120.0
-margin_bottom = 600.0
+margin_bottom = 17.0
+text = "Health"
+align = 1
+
+[node name="Attack" type="Label" parent="MarginContainer/PlayerInfo"]
+margin_top = 42.0
+margin_right = 120.0
+margin_bottom = 56.0
+align = 1
+
+[node name="Defense" type="Label" parent="MarginContainer/PlayerInfo"]
+margin_top = 60.0
+margin_right = 120.0
+margin_bottom = 74.0
+align = 1
+
+[node name="WorldInfo" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 120.0
+margin_bottom = 595.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="HP" parent="InfoSidebar/PlayerInfo2" instance=ExtResource( 3 )]
-margin_right = 120.0
-margin_bottom = 16.0
-text = "Player, Level 1"
-
-[node name="TextureProgress" parent="InfoSidebar/PlayerInfo2" instance=ExtResource( 2 )]
-margin_left = 10.0
-margin_top = 20.0
-margin_right = 110.0
-margin_bottom = 40.0
-size_flags_horizontal = 4

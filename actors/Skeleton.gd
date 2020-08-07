@@ -7,3 +7,4 @@ func _init():
 	health = 10
 	attack = 2
 	defense = 0
+	actor_name = "skeleton"

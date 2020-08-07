@@ -1,17 +1,18 @@
 extends Actor
 
-func _ready():
+func init():
+	level = 1
 	max_health = 10
 	health = 10
 	attack = 5
 	defense = 0
+	actor_name = "You"
 	
-#func _physics_process(_delta):
-#	if !moving:
-#		get_input()
-#		if direction != Vector2():
-#			Grid.interact(self)
-#			#all other enemies / entities act
+	events.emit_signal("level_changed", level)
+	events.emit_signal("max_health_changed", max_health)
+	events.emit_signal("health_changed", health)
+	events.emit_signal("attack_changed", attack)
+	events.emit_signal("defense_changed", defense)
 	
 func check_input(event: InputEvent):
 	direction = Vector2()
@@ -23,6 +24,9 @@ func check_input(event: InputEvent):
 		direction += dir.left
 	elif event.is_action_pressed("ui_right"):
 		direction += dir.right
+	elif event.is_action_pressed("wait"):
+		direction += dir.center
+		return true
 	
 	return direction != Vector2()
 

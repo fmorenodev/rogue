@@ -14,19 +14,22 @@ a GODOT-based roguelike
 -~~spawn entities~~
 -expand upon basic entities
 --more entities
---improve spawning to make it more evenly distributed
---more interactions
+-improve spawning to make it more evenly distributed
+--no spawning in corridor entrances (find how to detect them)
 -~~player interaction with entities~~
+--more interactions
 -inventory
 -game over and game restart
---~~make inputs unique (e.g for attacking only one time)~~
 -enemy behaviour
 -~~turn implementation~~
 -autotiling
 -complete map and advance to next one
 -start screen
 -leveling system
--log system
 -GUI
+--~~Player info~~
+--Enemies/objects/items info
+--~~log system~~
+---add existing actions to log system
 -refactor nodes and scripts to make each node or script do less things and be more organized
 

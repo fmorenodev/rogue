@@ -7,11 +7,12 @@ onready var Grid = $Grid
 var debug_mode = false
 
 onready var tile_size = Grid.tile_size
-var n_rooms = 15 + randi() % 10 # 15-25 rooms 
-var min_size = 4
-var max_size = 10
-var h_spread = 200 # horizontal spread of the map
-var v_spread = 400 # vertical spread of the map
+export var min_rooms = 10 # min_rooms
+export var max_room_variation = 10 # modulo for the randi
+export var min_size = 4
+export var max_size = 10
+export var h_spread = 200 # horizontal spread of the map
+export var v_spread = 400 # vertical spread of the map
 var cull = 0 # rate of room deletion (0 -> 1)
 
 var path
@@ -38,43 +39,41 @@ func _draw():
 			draw_rect(map_rect, Color(1, 1, 1), false)
 
 func _process(_delta):
-	update()
+	update() # for debug mode drawings
 	
 func _input(event):
 	if event.is_action_pressed('ui_select'):
 		build_level()
 	if event.is_action_pressed("ui_focus_next"):
 		debug_mode = not debug_mode
-		if debug_mode:
-			Camera.zoom = Vector2(5, 5)
-			Player.speed_inv = 0.05
-		else:
-			Camera.zoom = Vector2(1, 1)
-			Player.speed_inv = 0.1
 		build_level()
 	if event.is_action_pressed("scroll_up"):
-		if Camera.zoom > Vector2(1, 1):
-			Camera.zoom -= Vector2(0.5, 0.5)
+		if debug_mode:
+			if Camera.zoom > Vector2(1, 1):
+				Camera.zoom -= Vector2(0.5, 0.5)
 	if event.is_action_pressed("scroll_down"):
-		if Camera.zoom < Vector2(7, 7):
-			Camera.zoom += Vector2(0.5, 0.5)
+		if debug_mode:
+			if Camera.zoom < Vector2(7, 7):
+				Camera.zoom += Vector2(0.5, 0.5)
 	
 func build_level():
 	Grid.clear()
+	events.emit_signal("build_level")
 	for n in $Rooms.get_children():
+		$Rooms.remove_child(n)
 		n.queue_free()
 	path = null
-	make_rooms()
 	make_map()
 	
 func make_rooms():
+	var n_rooms = min_rooms + randi() % max_room_variation
 	for _i in range(n_rooms):
 		var pos = Vector2(rand_range(-h_spread, h_spread), rand_range(-v_spread, v_spread))
 		var room = Room.instance()
 		var width = min_size + randi() % (max_size - min_size)
 		var height = min_size + randi() % (max_size - min_size)
 		room.make_room(pos, Vector2(width, height) * tile_size)
-		$Rooms.add_child(room)
+		$Rooms.add_child(room) 
 		
 	yield(get_tree().create_timer(0.75), "timeout")
 	var room_positions = []
@@ -90,26 +89,26 @@ func make_rooms():
 			
 func find_mst(nodes):
 	# Prim's algorithm
-	var path = AStar2D.new()
-	path.add_point(path.get_available_point_id(), nodes.pop_front())
+	var new_path = AStar2D.new()
+	new_path.add_point(new_path.get_available_point_id(), nodes.pop_front())
 	
 	while nodes:
 		var min_dist = INF # min distance so far
 		var min_pos = null # position of that node (with the min distance)
 		var cur_pos = null # current position
-		for p1 in path.get_points(): # look for the min_dist between p1 and p2
-			p1 = path.get_point_position(p1)
+		for p1 in new_path.get_points(): # look for the min_dist between p1 and p2
+			p1 = new_path.get_point_position(p1)
 			# rest of the nodes
 			for p2 in nodes: 
 				if p1.distance_to(p2) < min_dist:
 					min_dist = p1.distance_to(p2)
 					min_pos = p2
 					cur_pos = p1
-		var n = path.get_available_point_id()
-		path.add_point(n, min_pos)
-		path.connect_points(path.get_closest_point(cur_pos), n)
+		var n = new_path.get_available_point_id()
+		new_path.add_point(n, min_pos)
+		new_path.connect_points(new_path.get_closest_point(cur_pos), n)
 		nodes.erase(min_pos)
-	return path
+	return new_path
 
 func make_map():	
 	yield(make_rooms(), "completed")
@@ -149,6 +148,8 @@ func make_map():
 			if not connection in corridors:
 				var start = Grid.world_to_map(path.get_point_position(point))
 				var end = Grid.world_to_map(path.get_point_position(connection))
+				Grid.corridor_entrances.append(start)
+				Grid.corridor_entrances.append(end)
 				carve_path(start, end)
 		corridors.append(point)
 	Grid.initialize()

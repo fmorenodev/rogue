@@ -1,6 +1,5 @@
 extends TileMap
 
-#
 onready var Skeleton = preload("res://actors/Skeleton.tscn")
 onready var Chest = preload("res://objects/Chest.tscn")
 onready var Potion = preload("res://items/Potion.tscn")
@@ -20,11 +19,11 @@ var items = []
 var n_enemies = 10
 var n_objects = 10
 var n_items = 10
+var corridor_entrances = []
 
 # turn queue
 var actors = [null]
 var current_index = 0
-signal turn_started(current_actor)
 
 func _ready():
 	randomize()
@@ -35,8 +34,8 @@ func initialize():
 	spawn_enemies()
 	spawn_objects()
 	spawn_items()
-	if !is_connected("turn_started", $Enemy, "_on_Grid_turn_started"):
-		connect("turn_started", $Enemy, "_on_Grid_turn_started")
+	if !events.is_connected("turn_started", Enemy, "_on_Grid_turn_started"):
+		var _err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
 	
 func clean_up():
 	actors = [null]
@@ -53,11 +52,14 @@ func clean_up():
 		item.queue_free()
 	items.clear()
 	
+
+	
 func setup_player():
+	Player.init()
 	Player.position = get_available_position()
 	actors[0] = Player
-	if !is_connected("turn_started", Player, "_on_Grid_turn_started"):
-		connect("turn_started", Player, "_on_Grid_turn_started")
+	if !events.is_connected("turn_started", Player, "_on_Grid_turn_started"):
+		var _err = events.connect("turn_started", Player, "_on_Grid_turn_started")
 	
 func spawn_enemies():	
 	for _i in range(n_enemies):
@@ -75,7 +77,7 @@ func spawn_objects():
 		objects.append(object)
 		add_child(object)
 		
-func spawn_items():	
+func spawn_items():
 	for _i in range(n_items):
 		var item = Potion.instance()
 		item.init(item.TYPE.HEALTH_L)
@@ -84,7 +86,6 @@ func spawn_items():
 		add_child(item)
 		
 func get_available_position(excluded = [Vector2()]):
-	
 	var rooms = get_node("../Rooms").get_children()
 	var chosen_room = rooms[randi() % rooms.size()]
 	var room_top_left = world_to_map(chosen_room.rect.position)
@@ -94,25 +95,30 @@ func get_available_position(excluded = [Vector2()]):
 	while pos in excluded:
 		pos = Vector2(int(rand_range(room_top_left.x + 2, room_bottom_right.x - 2)),
 					  int(rand_range(room_top_left.y + 2, room_bottom_right.y - 2)))
-
+	
+	if pos == Player.position:
+		excluded.append(pos)
+		get_available_position(excluded)
 	for enemy in enemies: 
 		if pos == enemy.position:
 			excluded.append(pos)
 			get_available_position(excluded)
 	for object in objects:
 		if pos == object.position:
-			excluded.append(position)
+			excluded.append(pos)
 			get_available_position(excluded)
 	for item in items:
 		if pos == item.position:
-			excluded.append(position)
+			excluded.append(pos)
 			get_available_position(excluded)
 	
 	return map_to_world(pos)
 
 func interact(child_node):
-	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	var turn_completed = true
+	if child_node.direction == Vector2():
+		return turn_completed
+	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos.x, grid_pos.y):
 		if get_cellv(grid_pos) == 0:
 			var blocked = false
@@ -132,7 +138,7 @@ func interact(child_node):
 						object.interact()
 					else:
 						turn_completed = false
-						print(tr("BLOCKED"))
+						events.emit_signal("new_message", tr("BLOCKED"))
 					blocked = true
 					break
 			# items
@@ -148,10 +154,10 @@ func interact(child_node):
 			if !blocked:
 				child_node.move()
 		else: # moving against a wall
-			print(tr("BLOCKED"))
+			events.emit_signal("new_message", tr("BLOCKED"))
 			turn_completed = false
 	else: # moving outside the bounds
-		print(tr("OUT_OF_BOUNDS"))
+		events.emit_signal("new_message", tr("OUT_OF_BOUNDS"))
 		turn_completed = false
 	
 	return turn_completed
@@ -185,9 +191,8 @@ func is_inside_bounds(x, y):
 	return horizontal_bounds and vertical_bounds
 
 func end_turn():
-	#print("{0}: End turn.".format([get_current().name]))
 	goto_next()
-	emit_signal("turn_started", get_current())
+	events.emit_signal("turn_started", get_current())
 
 func get_current():
 	return actors[current_index]
@@ -197,9 +202,3 @@ func goto_next() -> void:
 
 	if current_index > len(actors) - 1:
 		current_index = 0
-
-
-
-
-
-

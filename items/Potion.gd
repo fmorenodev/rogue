@@ -29,7 +29,7 @@ func use(user):
 			user.defense += 4
 			# timer
 			
-func pick_up(owner):
+func pick_up(owner):	
 	#owner.add_to_inventory(self)
 	pass
 	

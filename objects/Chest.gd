@@ -8,4 +8,5 @@ func _init():
 	
 func interact():
 	play("open")
+	
 	can_interact = false
