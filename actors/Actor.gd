@@ -30,10 +30,7 @@ func take_damage(attack_value):
 		events.emit_signal("health_changed", health)
 	
 	if health == 0:
-		if has_method("check_input"):
-			#gameover
-			pass
-		else:
-			status = en.STATUS.DEAD
+		status = en.STATUS.DEAD
+
 
 	return damage

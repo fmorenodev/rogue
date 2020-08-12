@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Rogue"
-run/main_scene="res://engine/Main.tscn"
+run/main_scene="res://menus/MainMenu.tscn"
 run/low_processor_mode=true
 config/icon="res://icon.png"
 

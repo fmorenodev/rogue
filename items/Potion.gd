@@ -1,11 +1,11 @@
-extends AnimatedSprite
+extends Item
 
 enum TYPE {HEALTH_S, HEALTH_L, DEFENSE_S, DEFENSE_L}
 var type
-onready var Grid = get_parent()
 
 func init(_type):
 	type = _type
+	item_name = tr("POTION").format([str(type)]) # update when items get more functionality
 	match type:
 		TYPE.HEALTH_S:
 			play("health_s")

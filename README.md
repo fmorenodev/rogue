@@ -19,17 +19,22 @@ a GODOT-based roguelike
 -~~player interaction with entities~~
 --more interactions
 -inventory
--game over and game restart
+-~~game over and game restart~~
 -enemy behaviour
 -~~turn implementation~~
 -autotiling
 -complete map and advance to next one
--start screen
+-~~start screen~~
 -leveling system
 -GUI
 --~~Player info~~
 --Enemies/objects/items info
 --~~log system~~
----add existing actions to log system
+---~~add existing actions to log system~~
+-menu styling
+--create better design for the menus
+--custom styling for focus and hover on buttons
+--graphics
 -refactor nodes and scripts to make each node or script do less things and be more organized
+--refactor turn system
 

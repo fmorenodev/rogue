@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://menus/menu.tres" type="Theme" id=1]
+[ext_resource path="res://menus/GameOver.gd" type="Script" id=2]
+[ext_resource path="res://assets/default_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/Menus/Background.tres" type="StyleBox" id=4]
+
+[node name="GameOver" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -142.0
+margin_bottom = 142.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverText" type="Label" parent="GameOverContainer"]
+margin_right = 800.0
+margin_bottom = 60.0
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverSubtext" type="Label" parent="GameOverContainer"]
+margin_top = 64.0
+margin_right = 800.0
+margin_bottom = 80.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="Buttons" type="HBoxContainer" parent="GameOverContainer"]
+margin_top = 84.0
+margin_right = 800.0
+margin_bottom = 384.0
+rect_min_size = Vector2( 300, 300 )
+
+[node name="Retry" type="Button" parent="GameOverContainer/Buttons"]
+margin_top = 117.0
+margin_right = 398.0
+margin_bottom = 183.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+flat = true
+
+[node name="Exit" type="Button" parent="GameOverContainer/Buttons"]
+margin_left = 402.0
+margin_top = 117.0
+margin_right = 800.0
+margin_bottom = 183.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+flat = true

@@ -19,7 +19,9 @@ var items = []
 var n_enemies = 10
 var n_objects = 10
 var n_items = 10
-var corridor_entrances = []
+
+# game variables
+var floor_n = -1
 
 # turn queue
 var actors = [null]
@@ -27,15 +29,20 @@ var current_index = 0
 
 func _ready():
 	randomize()
+	var _err = events.connect("new_game", self, "_on_new_game")
+	_err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
+	_err = events.connect("turn_started", Player, "_on_Grid_turn_started")
+	
+func _on_new_game():
+	setup_player()
 	
 func initialize():
 	clean_up()
-	setup_player()
+	spawn_player()
 	spawn_enemies()
 	spawn_objects()
 	spawn_items()
-	if !events.is_connected("turn_started", Enemy, "_on_Grid_turn_started"):
-		var _err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
+	# if !events.is_connected("turn_started", Enemy, "_on_Grid_turn_started"):
 	
 func clean_up():
 	actors = [null]
@@ -51,15 +58,14 @@ func clean_up():
 	for item in items:
 		item.queue_free()
 	items.clear()
-	
 
-	
-func setup_player():
-	Player.init()
+func spawn_player():
 	Player.position = get_available_position()
 	actors[0] = Player
-	if !events.is_connected("turn_started", Player, "_on_Grid_turn_started"):
-		var _err = events.connect("turn_started", Player, "_on_Grid_turn_started")
+		
+func setup_player():
+	Player.init()
+	# if !events.is_connected("turn_started", Player, "_on_Grid_turn_started"):
 	
 func spawn_enemies():	
 	for _i in range(n_enemies):
@@ -126,9 +132,13 @@ func interact(child_node):
 			# enemy
 			for enemy in enemies:
 				if grid_pos == world_to_map(enemy.position):
-					enemy.take_damage(child_node.attack)
+					var damage = enemy.take_damage(child_node.attack)
+					events.emit_signal("new_message", tr("PLAYER_ATTACK"),
+						"8ffcff", [enemy.actor_name, damage])
 					if enemy.status == en.STATUS.DEAD:
 						to_remove.append(enemy)
+						events.emit_signal("new_message", tr("ENEMY_DEAD"),
+							"a70000", [enemy.actor_name])
 					blocked = true
 					break
 			# object
@@ -136,17 +146,22 @@ func interact(child_node):
 				if grid_pos == world_to_map(object.position):
 					if object.can_interact:
 						object.interact()
+						events.emit_signal("new_message", tr(object.interaction),
+							"ffd046", object.args)
 					else:
 						turn_completed = false
 						events.emit_signal("new_message", tr("BLOCKED"))
 					blocked = true
 					break
 			# items
-			for item in items:
-				if grid_pos == world_to_map(item.position):
-					item.pick_up(child_node)
-					to_remove.append(item)
-					break
+			if !blocked:
+				for item in items:
+					if grid_pos == world_to_map(item.position):
+						item.pick_up(child_node)
+						events.emit_signal("new_message", tr("ITEM_PICK"),
+							"ffffff", [item.item_name])
+						to_remove.append(item)
+						break
 					
 			for o in to_remove:
 				o.remove()
@@ -169,7 +184,12 @@ func enemy_interact(child_node):
 			var blocked = false
 			# Player
 			if grid_pos == world_to_map(Player.position):
-				Player.take_damage(child_node.attack)
+				# handle player game over
+				var damage = Player.take_damage(child_node.attack)
+				events.emit_signal("new_message", tr("OTHER_ATTACK"),
+						"ff5252", [child_node.actor_name, Player.actor_name.to_lower(), damage])
+				if Player.status == en.STATUS.DEAD:
+					events.emit_signal("game_over", floor_n, child_node.actor_name)
 				blocked = true
 			# other enemies
 			for enemy in enemies:

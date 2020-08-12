@@ -6,7 +6,7 @@ func init():
 	health = 10
 	attack = 5
 	defense = 0
-	actor_name = "You"
+	actor_name = tr("PLAYER_NAME")
 	
 	events.emit_signal("level_changed", level)
 	events.emit_signal("max_health_changed", max_health)

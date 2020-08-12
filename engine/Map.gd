@@ -20,6 +20,7 @@ var map_rect
 
 func _ready(): 
 	randomize()
+	var _err = events.connect("build_level", self, "build_level")
 	build_level()
 	
 func _draw():
@@ -58,7 +59,7 @@ func _input(event):
 	
 func build_level():
 	Grid.clear()
-	events.emit_signal("build_level")
+	events.emit_signal("new_message_newline", tr("LEVEL_ENTERED"), "fcba03")
 	for n in $Rooms.get_children():
 		$Rooms.remove_child(n)
 		n.queue_free()
@@ -148,8 +149,6 @@ func make_map():
 			if not connection in corridors:
 				var start = Grid.world_to_map(path.get_point_position(point))
 				var end = Grid.world_to_map(path.get_point_position(connection))
-				Grid.corridor_entrances.append(start)
-				Grid.corridor_entrances.append(end)
 				carve_path(start, end)
 		corridors.append(point)
 	Grid.initialize()
