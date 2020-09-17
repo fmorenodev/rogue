@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skeleton1/skeleton_v2_2.png" type="Texture" id=1]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skeleton1/skeleton_v2_1.png" type="Texture" id=2]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skeleton1/skeleton_v2_4.png" type="Texture" id=3]
+[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skeleton1/skeleton_v2_3.png" type="Texture" id=4]
+[ext_resource path="res://actors/enemies/Skeleton.gd" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "idle",
+"speed": 12.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[node name="Skeleton" type="KinematicBody2D" groups=[
+"enemies",
+]]
+script = ExtResource( 5 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+z_index = 1
+frames = SubResource( 1 )
+animation = "idle"
+frame = 3
+playing = true
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 8, 8 )
+shape = SubResource( 2 )

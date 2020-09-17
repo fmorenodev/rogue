@@ -1,9 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/GUI/Panel.tres" type="StyleBox" id=1]
 [ext_resource path="res://gui/Bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gui/WorldInfo.gd" type="Script" id=3]
 [ext_resource path="res://gui/PlayerInfo.gd" type="Script" id=4]
-
 
 [node name="InfoSidebar" type="Panel"]
 show_behind_parent = true
@@ -41,18 +41,18 @@ margin_right = 120.0
 margin_bottom = 14.0
 align = 1
 
-[node name="Control" type="MarginContainer" parent="MarginContainer/PlayerInfo"]
+[node name="HealthBarContainer" type="MarginContainer" parent="MarginContainer/PlayerInfo"]
 margin_top = 18.0
 margin_right = 120.0
 margin_bottom = 38.0
 
-[node name="HealthBar" parent="MarginContainer/PlayerInfo/Control" instance=ExtResource( 2 )]
+[node name="HealthBar" parent="MarginContainer/PlayerInfo/HealthBarContainer" instance=ExtResource( 2 )]
 margin_left = 10.0
 margin_right = 110.0
 tint_under = Color( 0, 0, 0, 1 )
 tint_progress = Color( 1, 0, 0, 1 )
 
-[node name="Health" type="Label" parent="MarginContainer/PlayerInfo/Control"]
+[node name="Bar2" type="Label" parent="MarginContainer/PlayerInfo/HealthBarContainer"]
 margin_top = 3.0
 margin_right = 120.0
 margin_bottom = 17.0
@@ -76,6 +76,7 @@ margin_right = 120.0
 margin_bottom = 595.0
 rect_min_size = Vector2( 120, 0 )
 size_flags_vertical = 3
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

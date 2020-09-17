@@ -56,10 +56,11 @@ func _input(event):
 		if debug_mode:
 			if Camera.zoom < Vector2(7, 7):
 				Camera.zoom += Vector2(0.5, 0.5)
+	if event.is_action_pressed("wait"):
+		events.emit_signal("game_over", -1, "bruh")
 	
 func build_level():
 	Grid.clear()
-	events.emit_signal("new_message_newline", tr("LEVEL_ENTERED"), "fcba03")
 	for n in $Rooms.get_children():
 		$Rooms.remove_child(n)
 		n.queue_free()

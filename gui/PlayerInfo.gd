@@ -7,7 +7,7 @@ var defense_text: String = tr("DEFENSE_STAT")
 onready var Level_label = $Level
 onready var Attack_label = $Attack
 onready var Defense_label = $Defense
-onready var Health_bar = $Control/HealthBar
+onready var Health_bar = $HealthBarContainer/HealthBar
 
 func _ready():
 	var _err = events.connect("max_health_changed", self, "_on_Player_max_health_changed")

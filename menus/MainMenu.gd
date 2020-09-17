@@ -1,11 +1,14 @@
 extends Control
 
+var scene_path
 var version = "0.0.1"
-onready var New_Game_Button = $MenuContainer/Buttons/NewGame
-onready var Continue_Button = $MenuContainer/Buttons/Continue
-onready var Options_Button = $MenuContainer/Buttons/Options
+onready var New_Game_Button = $MenuContainer/Buttons/NewGame/Button
+onready var Continue_Button = $MenuContainer/Buttons/Continue/Button
+onready var Options_Button = $MenuContainer/Buttons/Options/Button
+onready var New_Game_Selector = $MenuContainer/Buttons/NewGame/Selector
 onready var Version_Label = $MenuContainer/Info/Version
 onready var Dev_Label = $MenuContainer/Info/Dev
+onready var Fade_In = $FadeIn
 
 func _ready():
 	New_Game_Button.text = tr("NEW_GAME")
@@ -15,16 +18,24 @@ func _ready():
 	Dev_Label.text = tr("GAME_DEV")
 	
 	New_Game_Button.grab_focus()
+
+	New_Game_Selector.show()
 	
-	var _err = New_Game_Button.connect("pressed", self, "_on_New_Game_pressed")
+	var _err = New_Game_Button.connect("pressed", self, "_on_NewGame_pressed")
 	_err = Continue_Button.connect("pressed", self, "_on_Continue_pressed")
 	_err = Options_Button.connect("pressed", self, "_on_Options_pressed")
+	_err = events.connect("fade_finished", self, "_on_FadeIn_fade_finished")
 
-func _on_New_Game_pressed():
-	get_tree().change_scene("res://engine/Main.tscn")
+func _on_NewGame_pressed():
+	scene_path = "res://engine/Main.tscn"
+	Fade_In.show()
+	Fade_In.fade_in()
 
 func _on_Continue_pressed():
 	pass
 	
 func _on_Options_pressed():
 	pass
+	
+func _on_FadeIn_fade_finished():
+	var _err = get_tree().change_scene("res://engine/Main.tscn")

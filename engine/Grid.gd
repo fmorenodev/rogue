@@ -1,6 +1,6 @@
 extends TileMap
 
-onready var Skeleton = preload("res://actors/Skeleton.tscn")
+onready var Skeleton = preload("res://actors/enemies/Skeleton.tscn")
 onready var Chest = preload("res://objects/Chest.tscn")
 onready var Potion = preload("res://items/Potion.tscn")
 
@@ -32,9 +32,12 @@ func _ready():
 	var _err = events.connect("new_game", self, "_on_new_game")
 	_err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
 	_err = events.connect("turn_started", Player, "_on_Grid_turn_started")
+	_err = events.connect("game_over", Player, "_on_game_over")
+	_err = events.connect("level_loaded", Player, "_on_Grid_level_loaded")
 	
 func _on_new_game():
-	setup_player()
+	events.emit_signal("new_message", tr("GAME_START"))
+	Player.init()
 	
 func initialize():
 	clean_up()
@@ -42,7 +45,8 @@ func initialize():
 	spawn_enemies()
 	spawn_objects()
 	spawn_items()
-	# if !events.is_connected("turn_started", Enemy, "_on_Grid_turn_started"):
+	events.emit_signal("new_message", tr("LEVEL_ENTERED"), color.grey)
+	events.emit_signal("level_loaded")
 	
 func clean_up():
 	actors = [null]
@@ -53,7 +57,7 @@ func clean_up():
 	
 	for object in objects:
 		object.queue_free()
-	objects.clear()	
+	objects.clear()
 	
 	for item in items:
 		item.queue_free()
@@ -62,12 +66,8 @@ func clean_up():
 func spawn_player():
 	Player.position = get_available_position()
 	actors[0] = Player
-		
-func setup_player():
-	Player.init()
-	# if !events.is_connected("turn_started", Player, "_on_Grid_turn_started"):
 	
-func spawn_enemies():	
+func spawn_enemies():
 	for _i in range(n_enemies):
 		var enemy = Skeleton.instance()
 		enemy.position = get_available_position()
@@ -134,11 +134,11 @@ func interact(child_node):
 				if grid_pos == world_to_map(enemy.position):
 					var damage = enemy.take_damage(child_node.attack)
 					events.emit_signal("new_message", tr("PLAYER_ATTACK"),
-						"8ffcff", [enemy.actor_name, damage])
+						color.cyan, [enemy.actor_name, damage])
 					if enemy.status == en.STATUS.DEAD:
 						to_remove.append(enemy)
 						events.emit_signal("new_message", tr("ENEMY_DEAD"),
-							"a70000", [enemy.actor_name])
+							color.red, [enemy.actor_name])
 					blocked = true
 					break
 			# object
@@ -147,7 +147,7 @@ func interact(child_node):
 					if object.can_interact:
 						object.interact()
 						events.emit_signal("new_message", tr(object.interaction),
-							"ffd046", object.args)
+							color.white, object.args)
 					else:
 						turn_completed = false
 						events.emit_signal("new_message", tr("BLOCKED"))
@@ -158,8 +158,8 @@ func interact(child_node):
 				for item in items:
 					if grid_pos == world_to_map(item.position):
 						item.pick_up(child_node)
-						events.emit_signal("new_message", tr("ITEM_PICK"),
-							"ffffff", [item.item_name])
+						events.emit_signal("new_message", tr("ITEM_PICK"), 
+							color.white, [item.item_name])
 						to_remove.append(item)
 						break
 					
@@ -187,7 +187,7 @@ func enemy_interact(child_node):
 				# handle player game over
 				var damage = Player.take_damage(child_node.attack)
 				events.emit_signal("new_message", tr("OTHER_ATTACK"),
-						"ff5252", [child_node.actor_name, Player.actor_name.to_lower(), damage])
+						color.light_red, [child_node.actor_name, Player.actor_name.to_lower(), damage])
 				if Player.status == en.STATUS.DEAD:
 					events.emit_signal("game_over", floor_n, child_node.actor_name)
 				blocked = true
