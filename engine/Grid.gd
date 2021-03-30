@@ -57,16 +57,14 @@ func clean_up():
 	actors = [null]
 	current_index = 0
 	for enemy in enemies:
-		enemy.queue_free()
-	enemies.clear()
+		enemy.remove()
+	# enemies.clear()
 	
 	for object in objects:
-		object.queue_free()
-	objects.clear()
+		object.remove()
 	
 	for item in items:
-		item.queue_free()
-	items.clear()
+		item.remove()
 
 func spawn_player():
 	Player.position = get_available_position()
@@ -86,14 +84,19 @@ func spawn_objects():
 		var object = Chest.instance()
 		object.position = get_available_position()
 		objects.append(object)
-		#emit_signal for entity info
-		#events.emit_signal("add_entity_info", object.object_name, object.frames.frames)
 		add_child(object)
 		
 func spawn_items():
-	for _i in range(n_items):
+	for _i in range(n_items/2):
 		var item = Potion.instance()
 		item.init(en.POTION_TYPE.HEALTH_L)
+		item.position = get_available_position()
+		items.append(item)
+		add_child(item)
+		
+	for _i in range(n_items/2):
+		var item = Potion.instance()
+		item.init(en.POTION_TYPE.DEFENSE_S)
 		item.position = get_available_position()
 		items.append(item)
 		add_child(item)

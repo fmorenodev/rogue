@@ -18,7 +18,7 @@ func init():
 	#Actor_Sprite.play("idle")
 	Anim_Sprite.hide()
 	Actor_Sprite.show()
-	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite, "HEALTH_BAR")
+	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
 	
 func check_input(event: InputEvent):
 	direction = Vector2()

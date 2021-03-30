@@ -6,8 +6,8 @@ var Bar
 var Bar_Label
 var node_connected
 
-func actor_info_init(node, info_text, sprite, bar_text = "HEALTH_BAR", is_actor = true):
-	$EntityInfo.entity_info_init(node, info_text, sprite, en.ENTITY_TYPE.ACTOR)
+func actor_info_init(node, info_text, texture, bar_text = "HEALTH_BAR", is_actor = true):
+	$EntityInfo.entity_info_init(node, info_text, texture, en.ENTITY_TYPE.ACTOR)
 	Bar = $LabeledBar/Bar
 	Bar_Label = $LabeledBar/BarLabel
 	Bar_Label.text = tr(bar_text)
@@ -16,7 +16,7 @@ func actor_info_init(node, info_text, sprite, bar_text = "HEALTH_BAR", is_actor 
 	var _err = events.connect("max_bar_value_changed", self, "_on_Actor_max_bar_value_changed")
 	_err = events.connect("bar_value_changed", self, "_on_Actor_bar_value_changed")
 	if is_actor:
-		events.emit_signal("enemy_info_added", node, self)
+		events.emit_signal("enemy_info_added", self) # all actors except player are enemies for now
 
 func _on_Actor_max_bar_value_changed(node, max_bar_value):
 	if node == node_connected:

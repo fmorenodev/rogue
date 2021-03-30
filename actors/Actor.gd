@@ -4,7 +4,7 @@ extends KinematicBody2D
 
 onready var Grid = get_parent()
 onready var tile_size = Grid.tile_size
-onready var Actor_Sprite = $Sprite #$AnimatedSprite
+onready var Actor_Sprite = $Sprite
 var direction = Vector2()
 
 var level = 1

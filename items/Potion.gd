@@ -13,16 +13,16 @@ func init(_type):
 	match type:
 		en.POTION_TYPE.HEALTH_S:
 			texture = hs_texture
-			item_name = tr("POTION").format(["SIZE_SMALL".capitalize(), "EFFECT_HEALTH"])
+			item_name = tr("POTION").format([tr("SIZE_SMALL").capitalize(), tr("EFFECT_HEALTH")])
 		en.POTION_TYPE.HEALTH_L:
 			texture = hl_texture
-			item_name = tr("POTION").format(["SIZE_LARGE".capitalize(), "EFFECT_HEALTH"])
+			item_name = tr("POTION").format([tr("SIZE_LARGE").capitalize(), tr("EFFECT_HEALTH")])
 		en.POTION_TYPE.DEFENSE_S:
 			texture = ds_texture
-			item_name = tr("POTION").format(["SIZE_SMALL".capitalize(), "EFFECT_DEFENSE"])
+			item_name = tr("POTION").format([tr("SIZE_SMALL").capitalize(), tr("EFFECT_DEFENSE")])
 		en.POTION_TYPE.DEFENSE_L:
 			texture = dl_texture
-			item_name = tr("POTION").format(["SIZE_LARGE".capitalize(), "EFFECT_DEFENSE"])
+			item_name = tr("POTION").format([tr("SIZE_LARGE").capitalize(), tr("EFFECT_DEFENSE")])
 			
 func use(user):
 	match type:

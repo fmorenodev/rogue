@@ -8,5 +8,7 @@ func _init():
 	pass
 	
 func interact():
-	#play("open")
+	play("open")
+	events.emit_signal("sprite_changed", self, self.frames.get_frame("open", 4))
+	# pass items to player
 	can_interact = false

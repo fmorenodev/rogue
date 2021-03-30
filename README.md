@@ -9,10 +9,11 @@ a GODOT-based roguelike
 	- fix world gen upon retry/new dungeon level
 - ~~player movement~~
 - ~~make get_available_position check for possible entities in the position~~
+	- fix overlapping positions
 - ~~make basic entities:~~
 	- ~~enemies~~
-- ~~objects (chests, doors, traps, etc)~~
-- ~~items~~
+	- ~~objects (chests, doors, traps, etc)~~
+	- ~~items~~
 - ~~spawn entities~~
 - expand upon basic entities
 	- more entities
@@ -24,6 +25,7 @@ a GODOT-based roguelike
 - inventory
 - ~~game over and game restart~~
 - enemy behaviour
+	- enemy death behaviour
 - ~~turn implementation~~
 - autotiling
 - complete map and advance to next one
@@ -31,11 +33,10 @@ a GODOT-based roguelike
 - leveling system
 - GUI
 	- ~~Player info~~
-	- Enemies/objects/items info
-	- add info for entities with animations
+	- ~~Enemies/objects/items info~~
 	- ~~log system~~
-	- -~~add existing actions to log system~~
-	- fix signal coupling for info elements
+	- ~~add existing actions to log system~~
+	- ~~fix signal coupling for info elements~~
 - search for new fonts for the game and menus
 - menu styling
 	- create better design for the menus

@@ -26,8 +26,10 @@ VScrollBar/styles/scroll_focus = SubResource( 5 )
 
 [node name="InfoSidebar" type="Panel"]
 show_behind_parent = true
-margin_right = 120.0
-margin_bottom = 600.0
+margin_left = 0.176781
+margin_top = 0.176775
+margin_right = 120.177
+margin_bottom = 600.177
 rect_min_size = Vector2( 120, 600 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -38,7 +40,8 @@ __meta__ = {
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_top = 5.0
-margin_right = 12.0
+margin_right = 120.0
+margin_bottom = 595.0
 rect_min_size = Vector2( 120, 590 )
 theme = SubResource( 6 )
 scroll_horizontal_enabled = false
