@@ -4,6 +4,7 @@ var Room = preload("res://engine/Room.tscn")
 onready var Player = $Grid/Player
 onready var Camera = $Grid/Player/Camera2D
 onready var Grid = $Grid
+# onready var Visibility_Grid = $VisibilityGrid
 var debug_mode = false
 
 onready var tile_size = Grid.tile_size
@@ -133,6 +134,7 @@ func make_map():
 	for x in range(top_left.x, bottom_right.x):
 		for y in range(top_left.y, bottom_right.y):
 			Grid.set_cell(x, y, 1)
+			# Visibility_Grid.set_cell(x, y, 0) # also fill the visibility grid with black tiles			
 
 	# add the room and corridor floor tiles
 	var corridors = []

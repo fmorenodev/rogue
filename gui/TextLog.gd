@@ -20,4 +20,3 @@ func _on_new_message(text, color = font_color, args = []):
 func _on_new_game_cleanup():
 	Text_box.clear()
 	events.emit_signal("new_game")
-	pass

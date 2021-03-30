@@ -39,6 +39,8 @@ __meta__ = {
 }
 
 [node name="InfoSidebar" parent="GUI/GUIContainer" instance=ExtResource( 4 )]
+margin_right = 130.0
+rect_min_size = Vector2( 130, 600 )
 
 [node name="TextLogContainer" type="HBoxContainer" parent="GUI/GUIContainer"]
 margin_top = 500.0
@@ -51,7 +53,9 @@ alignment = 2
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 130.0
 margin_right = 800.0
+rect_min_size = Vector2( 670, 100 )
 
 [node name="GameOver" parent="GUI" instance=ExtResource( 6 )]
 visible = false
@@ -91,4 +95,5 @@ position = Vector2( 400, 344 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "loading"
+frame = 1
 playing = true

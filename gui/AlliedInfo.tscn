@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/AlliedInfo.gd" type="Script" id=2]
+[ext_resource path="res://gui/ActorInfo.tscn" type="PackedScene" id=3]
+
+[node name="AlliedInfo" type="VBoxContainer"]
+margin_right = 120.0
+margin_bottom = 595.0
+rect_min_size = Vector2( 130, 0 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActorInfo" parent="." instance=ExtResource( 3 )]
+margin_right = 130.0
+margin_bottom = 49.0
+
+[node name="Attack" type="Label" parent="."]
+margin_top = 53.0
+margin_right = 130.0
+margin_bottom = 67.0
+align = 1
+
+[node name="Defense" type="Label" parent="."]
+margin_top = 71.0
+margin_right = 130.0
+margin_bottom = 85.0
+align = 1

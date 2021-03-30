@@ -1,36 +1,42 @@
 extends Item
 
-enum TYPE {HEALTH_S, HEALTH_L, DEFENSE_S, DEFENSE_L}
+var hs_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_1_1.png")
+var hl_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_4_1.png")
+var ds_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_1.png")
+var dl_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_1.png")
+
 var type
 
 func init(_type):
 	type = _type
 	item_name = tr("POTION").format([str(type)]) # update when items get more functionality
 	match type:
-		TYPE.HEALTH_S:
-			play("health_s")
-		TYPE.HEALTH_L:
-			play("health_l")
-		TYPE.DEFENSE_S:
-			play("defense_s")
-		TYPE.DEFENSE_L:
-			play("defense_l")
+		en.POTION_TYPE.HEALTH_S:
+			texture = hs_texture
+			item_name = tr("POTION").format(["SIZE_SMALL".capitalize(), "EFFECT_HEALTH"])
+		en.POTION_TYPE.HEALTH_L:
+			texture = hl_texture
+			item_name = tr("POTION").format(["SIZE_LARGE".capitalize(), "EFFECT_HEALTH"])
+		en.POTION_TYPE.DEFENSE_S:
+			texture = ds_texture
+			item_name = tr("POTION").format(["SIZE_SMALL".capitalize(), "EFFECT_DEFENSE"])
+		en.POTION_TYPE.DEFENSE_L:
+			texture = dl_texture
+			item_name = tr("POTION").format(["SIZE_LARGE".capitalize(), "EFFECT_DEFENSE"])
 			
 func use(user):
 	match type:
-		TYPE.HEALTH_S:
-			user.health += 5
-		TYPE.HEALTH_L:
+		en.POTION_TYPE.HEALTH_S:
+			user.health += user.max_health /2
+		en.POTION_TYPE.HEALTH_L:
 			user.health += user.max_health
-		TYPE.DEFENSE_S:
+		en.POTION_TYPE.DEFENSE_S:
 			user.defense += 2
 			# timer
-		TYPE.DEFENSE_L:
+		en.POTION_TYPE.DEFENSE_L:
 			user.defense += 4
 			# timer
 			
-
-	
 func remove():
 	self.queue_free()
 	Grid.items.erase(self)

@@ -6,9 +6,20 @@ signal build_level
 signal level_loaded
 
 # GUI
-signal max_health_changed(max_health)
-signal health_changed(health)
-signal level_changed(level)
+signal add_entity_info(node, info_text, sprite, entity_type)
+signal add_actor_info(node, info_text, sprite, bar_text)
+signal add_allied_info(node, info_text, sprite, bar_text)
+
+signal player_info_added
+signal enemy_info_added(enemy_node, info_node)
+signal item_info_added(info_node)
+
+signal actor_removed(node)
+signal entity_removed
+
+signal max_bar_value_changed(max_bar_value)
+signal bar_value_changed(node, bar_value)
+signal level_changed(actor_name, level)
 signal attack_changed(attack)
 signal defense_changed(defense)
 

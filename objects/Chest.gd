@@ -1,13 +1,12 @@
-extends AnimatedSprite
-
-var can_interact = true
-var interaction = "CHEST_OPEN"
-var args = ["placeholder"]
+extends E_Object
 
 func _init():
+	object_name = tr("CHEST")
+	interaction = tr("CHEST_OPEN")
+	can_interact = true
 	#add items
 	pass
 	
 func interact():
-	play("open")
+	#play("open")
 	can_interact = false

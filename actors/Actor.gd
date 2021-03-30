@@ -4,7 +4,7 @@ extends KinematicBody2D
 
 onready var Grid = get_parent()
 onready var tile_size = Grid.tile_size
-onready var Actor_Sprite = $AnimatedSprite
+onready var Actor_Sprite = $Sprite #$AnimatedSprite
 var direction = Vector2()
 
 var level = 1
@@ -14,6 +14,7 @@ var health
 var attack
 var defense
 var actor_name
+var is_unique = false
 
 func move():
 	if direction == dir.left:
@@ -27,8 +28,7 @@ func take_damage(attack_value):
 	var damage = attack_value - defense #* modifier
 	health = max(0, health - damage)
 	
-	if has_method("check_input"):
-		events.emit_signal("health_changed", health)
+	events.emit_signal("bar_value_changed", self, health)
 	
 	if health == 0:
 		status = en.STATUS.DEAD

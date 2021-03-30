@@ -28,12 +28,17 @@ var actors = [null]
 var current_index = 0
 
 func _ready():
+	set_physics_process(false)
 	randomize()
 	var _err = events.connect("new_game", self, "_on_new_game")
 	_err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
 	_err = events.connect("turn_started", Player, "_on_Grid_turn_started")
 	_err = events.connect("game_over", Player, "_on_game_over")
 	_err = events.connect("level_loaded", Player, "_on_Grid_level_loaded")
+	_err = events.connect("level_loaded", self, "_on_Grid_level_loaded")
+	
+func _on_Grid_level_loaded():
+	set_physics_process(true)
 	
 func _on_new_game():
 	events.emit_signal("new_message", tr("GAME_START"))
@@ -81,12 +86,14 @@ func spawn_objects():
 		var object = Chest.instance()
 		object.position = get_available_position()
 		objects.append(object)
+		#emit_signal for entity info
+		#events.emit_signal("add_entity_info", object.object_name, object.frames.frames)
 		add_child(object)
 		
 func spawn_items():
 	for _i in range(n_items):
 		var item = Potion.instance()
-		item.init(item.TYPE.HEALTH_L)
+		item.init(en.POTION_TYPE.HEALTH_L)
 		item.position = get_available_position()
 		items.append(item)
 		add_child(item)
@@ -124,6 +131,7 @@ func interact(child_node):
 	var turn_completed = true
 	if child_node.direction == Vector2():
 		return turn_completed
+	
 	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos.x, grid_pos.y):
 		if get_cellv(grid_pos) == 0:
@@ -146,7 +154,7 @@ func interact(child_node):
 				if grid_pos == world_to_map(object.position):
 					if object.can_interact:
 						object.interact()
-						events.emit_signal("new_message", tr(object.interaction),
+						events.emit_signal("new_message", object.interaction,
 							color.white, object.args)
 					else:
 						turn_completed = false
@@ -222,3 +230,6 @@ func goto_next() -> void:
 
 	if current_index > len(actors) - 1:
 		current_index = 0
+				
+func tile_to_pixel_center(x, y):
+	return Vector2((x + 0.5) * tile_size.x, (y + 0.5) * tile_size.y)
