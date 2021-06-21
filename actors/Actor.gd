@@ -17,9 +17,9 @@ var actor_name
 var is_unique = false
 
 func move():
-	if direction == dir.left:
+	if direction == Vector2.LEFT:
 		Actor_Sprite.flip_h = true
-	elif direction == dir.right:
+	elif direction == Vector2.RIGHT:
 		Actor_Sprite.flip_h = false
 	var new_position = position + direction * tile_size
 	position = new_position

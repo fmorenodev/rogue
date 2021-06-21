@@ -23,15 +23,19 @@ func init():
 func check_input(event: InputEvent):
 	direction = Vector2()
 	if event.is_action_pressed("ui_up"):
-		direction += dir.up
+		if event.is_action_pressed("ui_left"):
+			direction += dir.up_left
+		if event.is_action_pressed("ui_right"):
+			direction += dir.up_right
+		else:
+			direction += Vector2.UP # test and do other directions
 	if event.is_action_pressed("ui_down"):
-		direction += dir.down
+		direction += Vector2.DOWN
 	if event.is_action_pressed("ui_left"):
-		direction += dir.left
+		direction += Vector2.LEFT
 	if event.is_action_pressed("ui_right"):
-		direction += dir.right
+		direction += Vector2.RIGHT
 	if event.is_action_pressed("wait"):
-		direction += dir.center
 		return true
 	
 	return direction != Vector2()

@@ -13,6 +13,7 @@ var grid_size
 # grid elements
 onready var Player = $Player
 onready var Enemy = $Enemy
+var rooms = []
 var enemies = []
 var objects = []
 var items = []
@@ -44,7 +45,8 @@ func _on_new_game():
 	events.emit_signal("new_message", tr("GAME_START"))
 	Player.init()
 	
-func initialize():
+func initialize(grid_rooms):
+	rooms = grid_rooms
 	clean_up()
 	spawn_player()
 	spawn_enemies()
@@ -102,15 +104,14 @@ func spawn_items():
 		add_child(item)
 		
 func get_available_position(excluded = [Vector2()]):
-	var rooms = get_node("../Rooms").get_children()
 	var chosen_room = rooms[randi() % rooms.size()]
-	var room_top_left = world_to_map(chosen_room.rect.position)
-	var room_bottom_right = world_to_map(chosen_room.rect.end)
+	var room_top_left = chosen_room.position
+	var room_bottom_right = chosen_room.end
 	
 	var	pos = Vector2()
 	while pos in excluded:
-		pos = Vector2(int(rand_range(room_top_left.x + 2, room_bottom_right.x - 2)),
-					  int(rand_range(room_top_left.y + 2, room_bottom_right.y - 2)))
+		pos = Vector2(int(rand_range(room_top_left.x + 1, room_bottom_right.x - 1)),
+					  int(rand_range(room_top_left.y + 1, room_bottom_right.y - 1)))
 	
 	if pos == Player.position:
 		excluded.append(pos)
@@ -128,7 +129,7 @@ func get_available_position(excluded = [Vector2()]):
 			excluded.append(pos)
 			get_available_position(excluded)
 	
-	return map_to_world(pos)
+	return pos
 
 func interact(child_node):
 	var turn_completed = true
