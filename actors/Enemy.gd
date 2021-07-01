@@ -3,8 +3,10 @@ class_name Enemy
 extends Actor
 
 func _ready():
-	events.emit_signal("add_actor_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
 	var _err = events.connect("enemy_info_added", self, "_on_info_added")
+	
+func manual_init():
+	events.emit_signal("add_actor_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
 
 func _on_Grid_turn_started(current_actor):
 	if not current_actor.is_in_group("enemies"):

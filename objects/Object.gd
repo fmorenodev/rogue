@@ -10,8 +10,10 @@ var args = ["placeholder"]
 var object_name
 
 func _ready():
-	events.emit_signal("add_entity_info", self, object_name, self.frames.get_frame("default", 0), en.ENTITY_TYPE.OBJECT)
 	var _err = events.connect("object_info_added", self, "_on_info_added")
+	
+func manual_init():
+	events.emit_signal("add_entity_info", self, object_name, self.frames.get_frame("default", 0), en.ENTITY_TYPE.OBJECT)
 
 func remove():
 	events.emit_signal("entity_removed", self)

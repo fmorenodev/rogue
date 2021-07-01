@@ -6,13 +6,15 @@ onready var Anim_Sprite = $AnimatedSprite
 func _ready():
 	var _err = events.connect("player_info_added", self, "_on_player_info_added")
 	
-func init():
+func _init():
 	level = 1
 	max_health = 10
 	health = 10
 	attack = 5
 	defense = 0
 	actor_name = tr("PLAYER_NAME")
+	
+func manual_init():
 	control_enabled = false
 	set_process_unhandled_input(true)
 	#Actor_Sprite.play("idle")

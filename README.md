@@ -5,9 +5,12 @@ a GODOT-based roguelike
 ## TODO:
 - ~~project setup~~
 - ~~world generation~~
-	- improve world gen to make it tile_based
-	- fix world gen upon retry/new dungeon level
+	- ~~improve world gen to make it tile_based~~
+	- tweak new world gen
+	- fix positioning issue for entities upon spawn
+	- fix world gen upon retry/new dungeon level (less entities spawn)
 - ~~player movement~~
+	- fix actor movement to make it work with new world gen
 - ~~make get_available_position check for possible entities in the position~~
 	- fix overlapping positions
 - ~~make basic entities:~~
@@ -21,14 +24,20 @@ a GODOT-based roguelike
 	- no spawning in corridor entrances (find how to detect them)
 	- fix entities spawning upon the player
 - ~~player interaction with entities~~
-	- more interactions
+	- item pickup (using inventory)
+	- object specific interaction (like opening chests)
+	- skills and range attacks
+	- neutral or allied interactions with actors
 - inventory
 - ~~game over and game restart~~
 - enemy behaviour
+	- universal enemy AI
+	- specfic enemy AI
 	- enemy death behaviour
+- implement neutral and ally NPCs
 - ~~turn implementation~~
-- autotiling
-- complete map and advance to next one
+- ~~autotiling~~
+- map clearing and advancing to the next map
 - ~~start screen~~
 - leveling system
 - GUI
@@ -44,6 +53,16 @@ a GODOT-based roguelike
 	- graphics
 - ~~loading screen~~
 	- ~~make graphic/animation for loading screen~~
+	- fix loading / event order to make it dissappear when the map is generated
 - refactor nodes and scripts to make each node or script do less things and be more organized
-	- refactor turn system
+	- refactor turn system ??
 	- fix diagonal movement / pressing two or more movement inputs at the same time. Add (diagonal) movement with vi / num keys or with two directional keys
+- implement visibility map / fog
+	- show visible / revealed entities only on GUI
+- implement classes or loadouts
+	- implement skills / perks / etc
+- add alternative tilesets
+	- add a new tile for the background to distinguish it
+	- add alternative color pairs
+- decide on setting and aesthetic for the game
+

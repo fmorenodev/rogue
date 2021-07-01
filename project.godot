@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://gui/EntityInfo.gd"
 }, {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://git_api.gdns"
-}, {
 "base": "Sprite",
 "class": "Item",
 "language": "GDScript",
@@ -55,7 +50,6 @@ _global_script_class_icons={
 "E_Object": "",
 "Enemy": "",
 "EntityInfo": "",
-"GitAPI": "",
 "Item": "",
 "Walker": ""
 }
@@ -65,6 +59,7 @@ _global_script_class_icons={
 config/name="Rogue"
 run/main_scene="res://menus/MainMenu.tscn"
 run/low_processor_mode=true
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
@@ -73,6 +68,7 @@ dir="*res://globals/Direction.gd"
 en="*res://globals/Enums.gd"
 events="*res://globals/Events.gd"
 color="*res://globals/Colors.gd"
+data="*res://globals/Data.gd"
 
 [display]
 
@@ -82,7 +78,7 @@ window/stretch/aspect="keep"
 
 [gdnative]
 
-singletons=[ "res://git_api.gdnlib" ]
+singletons=[  ]
 
 [input]
 

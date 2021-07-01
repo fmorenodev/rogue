@@ -7,7 +7,7 @@ var dl_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animatio
 
 var type
 
-func init(_type):
+func add_type(_type):
 	type = _type
 	item_name = tr("POTION").format([str(type)]) # update when items get more functionality
 	match type:

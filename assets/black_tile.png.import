@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Dungeon_Character.png-fec820819106a098785bee4f6351ec6c.stex"
+path="res://.import/black_tile.png-d5ca4e8e6d9ea990ba686a6977d9d387.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/2D Pixel Dungeon Asset Pack/tileset_and_characters/Dungeon_Character.png"
-dest_files=[ "res://.import/Dungeon_Character.png-fec820819106a098785bee4f6351ec6c.stex" ]
+source_file="res://assets/black_tile.png"
+dest_files=[ "res://.import/black_tile.png-d5ca4e8e6d9ea990ba686a6977d9d387.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

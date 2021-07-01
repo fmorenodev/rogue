@@ -44,8 +44,6 @@ func change_direction():
 	direction = directions.pop_front()
 	while not borders.has_point(position + direction):
 		direction = directions.pop_front()
-		
-
 
 func place_room():
 	var size = Vector2(randi() % 4 + 2, randi() % 4 + 2)
@@ -64,5 +62,3 @@ func get_end_room():
 		if starting_pos.distance_to(room.position) > starting_pos.distance_to(end_room.position):
 			end_room = room
 	return end_room
-
-

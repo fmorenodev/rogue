@@ -3,7 +3,6 @@ class_name Actor
 extends KinematicBody2D
 
 onready var Grid = get_parent()
-onready var tile_size = Grid.tile_size
 onready var Actor_Sprite = $Sprite
 var direction = Vector2()
 
@@ -21,7 +20,7 @@ func move():
 		Actor_Sprite.flip_h = true
 	elif direction == Vector2.RIGHT:
 		Actor_Sprite.flip_h = false
-	var new_position = position + direction * tile_size
+	var new_position = position + direction * data.tile_size
 	position = new_position
 
 func take_damage(attack_value):

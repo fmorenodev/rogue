@@ -8,6 +8,9 @@ var item_name
 func _ready():
 	var _err = events.connect("item_info_added", self, "_on_info_added")
 	events.emit_signal("add_entity_info", self, item_name, self.texture, en.ENTITY_TYPE.ITEM)
+	
+func manual_init():
+	events.emit_signal("add_entity_info", self, item_name, self.texture, en.ENTITY_TYPE.ITEM)
 
 func pick_up(_owner):
 	#add to inventory

@@ -5,10 +5,8 @@ onready var Chest = preload("res://objects/Chest.tscn")
 onready var Potion = preload("res://items/Potion.tscn")
 
 # grid properties
-var tile_size = get_cell_size()
-var top_left 
-var bottom_right
-var grid_size
+onready var top_left = data.map_top_left_corner
+onready var bottom_right = data.map_right_bottom_corner
 
 # grid elements
 onready var Player = $Player
@@ -29,6 +27,7 @@ var actors = [null]
 var current_index = 0
 
 func _ready():
+	data.tile_size = get_cell_size()
 	set_physics_process(false)
 	randomize()
 	var _err = events.connect("new_game", self, "_on_new_game")
@@ -43,9 +42,15 @@ func _on_Grid_level_loaded():
 	
 func _on_new_game():
 	events.emit_signal("new_message", tr("GAME_START"))
-	Player.init()
+	Player.manual_init()
+	for enemy in enemies:
+		enemy.manual_init()
+	for object in objects:
+		object.manual_init()
+	for item in items:
+		item.manual_init()
 	
-func initialize(grid_rooms):
+func init(grid_rooms):
 	rooms = grid_rooms
 	clean_up()
 	spawn_player()
@@ -89,16 +94,9 @@ func spawn_objects():
 		add_child(object)
 		
 func spawn_items():
-	for _i in range(n_items/2):
+	for _i in range(n_items):
 		var item = Potion.instance()
-		item.init(en.POTION_TYPE.HEALTH_L)
-		item.position = get_available_position()
-		items.append(item)
-		add_child(item)
-		
-	for _i in range(n_items/2):
-		var item = Potion.instance()
-		item.init(en.POTION_TYPE.DEFENSE_S)
+		item.add_type(en.POTION_TYPE.values()[randi() % 4])
 		item.position = get_available_position()
 		items.append(item)
 		add_child(item)
@@ -110,8 +108,8 @@ func get_available_position(excluded = [Vector2()]):
 	
 	var	pos = Vector2()
 	while pos in excluded:
-		pos = Vector2(int(rand_range(room_top_left.x + 1, room_bottom_right.x - 1)),
-					  int(rand_range(room_top_left.y + 1, room_bottom_right.y - 1)))
+		pos = Vector2(int(rand_range(room_top_left.x, room_bottom_right.x)),
+					  int(rand_range(room_top_left.y, room_bottom_right.y)))
 	
 	if pos == Player.position:
 		excluded.append(pos)
@@ -234,6 +232,3 @@ func goto_next() -> void:
 
 	if current_index > len(actors) - 1:
 		current_index = 0
-				
-func tile_to_pixel_center(x, y):
-	return Vector2((x + 0.5) * tile_size.x, (y + 0.5) * tile_size.y)
