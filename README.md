@@ -2,67 +2,71 @@
 
 a GODOT-based roguelike
 
-## TODO:
-- ~~project setup~~
-- ~~world generation~~
+## IMPLEMENT:
+- world generation
 	- ~~improve world gen to make it tile_based~~
 	- tweak new world gen
 	- fix positioning issue for entities upon spawn
-	- fix world gen upon retry/new dungeon level (less entities spawn)
-- ~~player movement~~
+	- fix world gen upon retry/new dungeon level (less entities spawn?)
+- player movement
 	- fix actor movement to make it work with new world gen
 - ~~make get_available_position check for possible entities in the position~~
 	- fix overlapping positions
-- ~~make basic entities:~~
-	- ~~enemies~~
-	- ~~objects (chests, doors, traps, etc)~~
-	- ~~items~~
-- ~~spawn entities~~
-- expand upon basic entities
-	- more entities
 - improve spawning to make it more evenly distributed
 	- no spawning in corridor entrances (find how to detect them)
 	- fix entities spawning upon the player
-- ~~player interaction with entities~~
+- implement visibility map / fog
+	- show visible / revealed entities only on GUI
+- map clearing and advancing to the next map
+- player interaction with entities
 	- item pickup (using inventory)
 	- object specific interaction (like opening chests)
-	- skills and range attacks
+	- skills and ranged attacks
 	- neutral or allied interactions with actors
 - inventory
-- ~~game over and game restart~~
-- enemy behaviour
-	- universal enemy AI
-	- specfic enemy AI
-	- enemy death behaviour
 - implement neutral and ally NPCs
-- ~~turn implementation~~
-- ~~autotiling~~
-- map clearing and advancing to the next map
-- ~~start screen~~
 - leveling system
-- GUI
-	- ~~Player info~~
-	- ~~Enemies/objects/items info~~
-	- ~~log system~~
-	- ~~add existing actions to log system~~
-	- ~~fix signal coupling for info elements~~
-- search for new fonts for the game and menus
-- menu styling
-	- create better design for the menus
-	- ~~custom styling for focus and hover on buttons~~
-	- graphics
-- ~~loading screen~~
+- loading screen
 	- ~~make graphic/animation for loading screen~~
 	- fix loading / event order to make it dissappear when the map is generated
 - refactor nodes and scripts to make each node or script do less things and be more organized
 	- refactor turn system ??
 	- fix diagonal movement / pressing two or more movement inputs at the same time. Add (diagonal) movement with vi / num keys or with two directional keys
-- implement visibility map / fog
-	- show visible / revealed entities only on GUI
-- implement classes or loadouts
-	- implement skills / perks / etc
-- add alternative tilesets
+- general fixes
 	- add a new tile for the background to distinguish it
-	- add alternative color pairs
-- decide on setting and aesthetic for the game
 
+## DESIGN: when designed move to implement with the decided implementation
+- decide on aesthetic for the game
+	- bw / 1 bit
+	- realistic color palette
+	- limited color palette (depending on setting)
+	- setting / aesthetic based new fonts
+- decide on setting for the game
+	- post-apocalyptic
+	- futuristic
+	- medieval
+	- fantasy
+	- oniric / surreal
+- design and decide additional inputs:
+	- open screen:
+		- menu
+		- char sheet
+		- log / quests / relations
+		- map ?
+		- inventory
+		- etc
+	- alternative interactions:
+		- talk
+		- shoot / skill / magic
+		- look at tile
+		- etc
+- design additional entities
+- design expected enemy behaviour
+	- universal enemy AI
+	- specfic enemy AI
+	- enemy death behaviour
+- design classes or loadouts
+	- implement skills / perks / etc
+- menu styling
+	- create better design for the menus
+	- graphics based on setting / aesthetic
