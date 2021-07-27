@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/black_white_tileset.tres" type="TileSet" id=2]
 
 [node name="Grid" type="TileMap"]
-scale = Vector2( 0.994559, 1 )
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1

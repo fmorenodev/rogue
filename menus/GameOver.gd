@@ -29,8 +29,8 @@ func _on_game_over(current_floor, enemy):
 
 func _on_Retry_pressed():
 	self.hide()
-	events.emit_signal("new_game_cleanup")
-	events.emit_signal("build_level")
+	events.emit_signal("reload_all")
+	# events.emit_signal("build_level")
 
 func _on_Exit_pressed():
 	var _err = get_tree().change_scene("res://menus/MainMenu.tscn")

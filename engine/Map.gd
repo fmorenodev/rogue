@@ -1,20 +1,20 @@
 extends Node
 
 onready var Grid = $Grid
-onready var borders = Rect2(data.center_point.x, data.center_point.y, data.map_size.x, data.map_size.y)
+onready var borders = Rect2(data.map_top_left_corner, data.map_size)
 
 func build_level():
 	randomize()
-	var walker = Walker.new(data.center_point, borders)
+	var walker = Walker.new(data.map_center_point, borders)
 	var map = walker.walk(300)
 	
 	#exit.position = walker.rooms.back().position * grid_size
 	#exit.position = walker.get_end_room() * grid_size
-	walker.queue_free()
 	for location in map:
 		Grid.set_cellv(location, -1)
-	Grid.update_bitmask_region(borders.position, borders.end)
+	Grid.update_bitmask_region(borders.position, borders.end - Vector2.ONE)
 	Grid.init(walker.rooms)
+	walker.queue_free()
 
 func _ready(): 
 	randomize()

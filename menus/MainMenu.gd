@@ -38,4 +38,4 @@ func _on_Options_pressed():
 	pass
 	
 func _on_FadeIn_fade_finished():
-	var _err = get_tree().change_scene("res://engine/Main.tscn")
+	var _err = get_tree().change_scene(scene_path)

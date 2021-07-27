@@ -9,14 +9,9 @@ var level_entered_text: String = tr("LEVEL_ENTERED")
 
 func _ready():
 	var _err = events.connect("new_message", self, "_on_new_message")
-	_err = events.connect("new_game_cleanup", self, "_on_new_game_cleanup")
 	Text_box.clear()
 	
 func _on_new_message(text, color = font_color, args = []):
 	var formatted_text = text.format(args)
 	Text_box.newline()
 	Text_box.append_bbcode("[color=#" + color + "]%s[/color]" % formatted_text)
-
-func _on_new_game_cleanup():
-	Text_box.clear()
-	events.emit_signal("new_game")

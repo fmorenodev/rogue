@@ -6,15 +6,13 @@ a GODOT-based roguelike
 - world generation
 	- ~~improve world gen to make it tile_based~~
 	- tweak new world gen
-	- fix positioning issue for entities upon spawn
-	- fix world gen upon retry/new dungeon level (less entities spawn?)
-- player movement
-	- fix actor movement to make it work with new world gen
-- ~~make get_available_position check for possible entities in the position~~
-	- fix overlapping positions
+	- possibly expand rooms to fit on all non-corridor space and other smaller rooms
+	- ~~fix positioning issue for entities upon spawn~~
+	- ~~fix world gen upon retry/new dungeon level (less entities spawn?)~~
 - improve spawning to make it more evenly distributed
-	- no spawning in corridor entrances (find how to detect them)
-	- fix entities spawning upon the player
+	- ~~no spawning in corridor entrances (find how to detect them)~~
+	- ~~fix entities spawning upon the player~~
+	- add the corridor finding function to the spawning function when better rooms are able to be generated
 - implement visibility map / fog
 	- show visible / revealed entities only on GUI
 - map clearing and advancing to the next map
@@ -37,16 +35,15 @@ a GODOT-based roguelike
 
 ## DESIGN: when designed move to implement with the decided implementation
 - decide on aesthetic for the game
-	- bw / 1 bit
-	- realistic color palette
-	- limited color palette (depending on setting)
-	- setting / aesthetic based new fonts
+	- bw / 1 bit (maybe)
+	- realistic color palette (i don't think so)
+	- limited color palette (maybe)
+	- setting / aesthetic based new fonts (must search first)
 - decide on setting for the game
-	- post-apocalyptic
-	- futuristic
-	- medieval
-	- fantasy
-	- oniric / surreal
+	- oniric / surreal (decided)
+- bigger tiles?
+	- 32 x 32
+	- asymmetric (16 x 32)
 - design and decide additional inputs:
 	- open screen:
 		- menu

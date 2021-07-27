@@ -1,7 +1,8 @@
 extends Node
 
-var tile_size
-var map_size = Vector2(38, 20)
-var map_top_left_corner = Vector2(-28, -15)
-var center_point = map_top_left_corner + map_size / 2 + Vector2(1, 1)
-var map_right_bottom_corner = Vector2(21, 21)
+var map_size = Vector2(31, 21) # it's better not to use even values because it will misplace the center of the map
+var map_top_left_corner = Vector2(ceil(-map_size.x / 2), floor(-map_size.y / 2))
+var map_center_point = Vector2(map_top_left_corner + (map_size / 2)).ceil()
+var map_right_bottom_corner = Vector2(ceil(map_size.x / 2), floor(map_size.y / 2))
+var map_rect = Rect2(map_top_left_corner, map_size)
+

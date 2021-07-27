@@ -20,7 +20,7 @@ func move():
 		Actor_Sprite.flip_h = true
 	elif direction == Vector2.RIGHT:
 		Actor_Sprite.flip_h = false
-	var new_position = position + direction * data.tile_size
+	var new_position = position + Grid.map_to_world(direction)
 	position = new_position
 
 func take_damage(attack_value):
@@ -33,5 +33,3 @@ func take_damage(attack_value):
 		status = en.STATUS.DEAD
 		
 	return damage
-
-

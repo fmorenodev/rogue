@@ -15,7 +15,6 @@ func _init():
 	actor_name = tr("PLAYER_NAME")
 	
 func manual_init():
-	control_enabled = false
 	set_process_unhandled_input(true)
 	#Actor_Sprite.play("idle")
 	Anim_Sprite.hide()

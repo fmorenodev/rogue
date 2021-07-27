@@ -31,9 +31,11 @@ signal new_message(msg, color, args)
 
 # Turn system
 signal turn_started(current_actor)
-signal new_game_cleanup
 signal new_game
 signal game_over(current_floor, enemy)
+
+# reloading main scene for new game
+signal reload_all
 
 # Animations
 signal fade_finished
