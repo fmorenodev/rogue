@@ -1,7 +1,6 @@
 extends Enemy
 
-func _init():
-	#TODO: add level scaling
+func _init() -> void:
 	level = 1
 	max_health = 10
 	health = 10

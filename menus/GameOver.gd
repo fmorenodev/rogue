@@ -8,7 +8,7 @@ onready var Retry_Selector = $GameOverContainer/Buttons/Retry/Selector
 onready var Exit_Button = $GameOverContainer/Buttons/Exit/Button
 onready var Anim_Player = $AnimationPlayer
 
-func _ready():
+func _ready() -> void:
 	Game_Over_Text_1.text = tr("GAME_OVER_1")
 	Game_Over_Text_2.text = tr("GAME_OVER_2")
 	Retry_Button.text = tr("RETRY")
@@ -21,21 +21,21 @@ func _ready():
 	_err = Exit_Button.connect("pressed", self, "_on_Exit_pressed")
 	_err = Anim_Player.connect("animation_finished", self, "_on_animation_finished")
 	
-func _on_game_over(current_floor, enemy):
-	Game_Over_Subtext.text = tr("GAME_OVER_SUBTEXT").format([current_floor, enemy])
+func _on_game_over(current_floor: int, enemy_name: String) -> void:
+	Game_Over_Subtext.text = tr("GAME_OVER_SUBTEXT").format([current_floor, enemy_name])
 	events.emit_signal("new_message", tr("PLAYER_DEAD"), color.dark_red)
 	self.show()
 	Anim_Player.play("init") # continued in _on_animation_finished
 
-func _on_Retry_pressed():
+func _on_Retry_pressed() -> void:
 	self.hide()
 	events.emit_signal("reload_all")
 	# events.emit_signal("build_level")
 
-func _on_Exit_pressed():
+func _on_Exit_pressed() -> void:
 	var _err = get_tree().change_scene("res://menus/MainMenu.tscn")
 
-func _on_animation_finished(anim_name):
+func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == "init":
 		Anim_Player.play("game_over")
 	elif anim_name == "game_over":

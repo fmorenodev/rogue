@@ -4,9 +4,9 @@ extends VBoxContainer
 
 var Bar
 var Bar_Label
-var node_connected
+var node_connected: Actor
 
-func actor_info_init(node, info_text, texture, bar_text = "HEALTH_BAR", is_actor = true):
+func actor_info_init(node: Actor, info_text: String, texture, bar_text: String = "HEALTH_BAR", is_actor: bool = true) -> void:
 	$EntityInfo.entity_info_init(node, info_text, texture, en.ENTITY_TYPE.ACTOR)
 	Bar = $LabeledBar/Bar
 	Bar_Label = $LabeledBar/BarLabel
@@ -18,14 +18,14 @@ func actor_info_init(node, info_text, texture, bar_text = "HEALTH_BAR", is_actor
 	if is_actor:
 		events.emit_signal("enemy_info_added", self) # all actors except player are enemies for now
 
-func _on_Actor_max_bar_value_changed(node, max_bar_value):
+func _on_Actor_max_bar_value_changed(node: Actor, max_bar_value: int) -> void:
 	if node == node_connected:
 		Bar.max_value = max_bar_value
 
-func _on_Actor_bar_value_changed(node, bar_value):
+func _on_Actor_bar_value_changed(node: Actor, bar_value: int) -> void:
 	if node == node_connected:
 		Bar.value = bar_value
 	
-func _on_Actor_removed(node):
+func _on_Actor_removed(node: Actor) -> void:
 	if node == node_connected:
 		self.queue_free()

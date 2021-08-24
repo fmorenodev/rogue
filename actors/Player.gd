@@ -1,12 +1,13 @@
 extends Actor
+class_name Player
 
 var control_enabled = false
 onready var Anim_Sprite = $AnimatedSprite
 
-func _ready():
+func _ready() -> void:
 	var _err = events.connect("player_info_added", self, "_on_player_info_added")
 	
-func _init():
+func _init() -> void:
 	level = 1
 	max_health = 10
 	health = 10
@@ -14,53 +15,55 @@ func _init():
 	defense = 0
 	actor_name = tr("PLAYER_NAME")
 	
-func manual_init():
+func manual_init() -> void:
 	set_process_unhandled_input(true)
-	#Actor_Sprite.play("idle")
 	Anim_Sprite.hide()
 	Actor_Sprite.show()
 	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
 	
-func check_input(event: InputEvent):
+func check_input(event: InputEvent) -> bool:
 	direction = Vector2()
-	if event.is_action_pressed("ui_up"):
-		if event.is_action_pressed("ui_left"):
-			direction += dir.up_left
-		if event.is_action_pressed("ui_right"):
-			direction += dir.up_right
-		else:
-			direction += Vector2.UP # test and do other directions
-	if event.is_action_pressed("ui_down"):
+	if event.is_action_pressed("ui_up", true):
+		direction += Vector2.UP
+	if event.is_action_pressed("ui_down", true):
 		direction += Vector2.DOWN
-	if event.is_action_pressed("ui_left"):
+	if event.is_action_pressed("ui_left", true):
 		direction += Vector2.LEFT
-	if event.is_action_pressed("ui_right"):
+	if event.is_action_pressed("ui_right", true):
 		direction += Vector2.RIGHT
-	if event.is_action_pressed("wait"):
+	if event.is_action_pressed("ui_up_left", true):
+		direction += dir.UP_LEFT
+	if event.is_action_pressed("ui_up_right", true):
+		direction += dir.UP_RIGHT
+	if event.is_action_pressed("ui_down_left", true):
+		direction += dir.DOWN_LEFT
+	if event.is_action_pressed("ui_down_right", true):
+		direction += dir.DOWN_RIGHT
+	elif event.is_action_pressed("wait", true):
 		return true
 	
 	return direction != Vector2()
 
-func _unhandled_input(event: InputEvent):
+func _unhandled_input(event: InputEvent) -> void:
 	if check_input(event) and control_enabled:
 		if Grid.interact(self): # turn ended
 			set_process_unhandled_input(false)
 			Grid.end_turn()
 			
-func _on_game_over(_current_floor, _enemy):
+func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
 	Actor_Sprite.hide()
 	Anim_Sprite.show()
 	Anim_Sprite.play("dead")
 	control_enabled = false
 	
-func _on_Grid_level_loaded():
+func _on_Grid_level_loaded() -> void:
 	control_enabled = true
 
-func _on_Grid_turn_started(current_actor):
+func _on_Grid_turn_started(current_actor: Actor) -> void:
 	if not current_actor.is_in_group("enemies") and control_enabled:
 		set_process_unhandled_input(true)
 		
-func _on_player_info_added():
+func _on_player_info_added() -> void:
 	events.emit_signal("level_changed", actor_name, level)
 	events.emit_signal("max_bar_value_changed", self, max_health)
 	events.emit_signal("bar_value_changed", self, health)

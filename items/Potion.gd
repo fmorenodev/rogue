@@ -5,9 +5,9 @@ var hl_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animatio
 var ds_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_2_1.png")
 var dl_texture = preload("res://assets/2D Pixel Dungeon Asset Pack/item_animation/flasks/flasks_3_1.png")
 
-var type
+var type: int
 
-func add_type(_type):
+func add_type(_type) -> void:
 	type = _type
 	item_name = tr("POTION").format([str(type)]) # update when items get more functionality
 	match type:
@@ -24,10 +24,10 @@ func add_type(_type):
 			texture = dl_texture
 			item_name = tr("POTION").format([tr("SIZE_LARGE").capitalize(), tr("EFFECT_DEFENSE")])
 			
-func use(user):
+func use(user: Actor) -> void:
 	match type:
 		en.POTION_TYPE.HEALTH_S:
-			user.health += user.max_health /2
+			user.health += 5
 		en.POTION_TYPE.HEALTH_L:
 			user.health += user.max_health
 		en.POTION_TYPE.DEFENSE_S:
@@ -37,6 +37,6 @@ func use(user):
 			user.defense += 4
 			# timer
 			
-func remove():
+func remove() -> void:
 	self.queue_free()
 	Grid.items.erase(self)

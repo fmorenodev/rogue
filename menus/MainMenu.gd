@@ -1,6 +1,6 @@
 extends Control
 
-var scene_path
+var scene_path: String
 var version = "0.0.1"
 onready var New_Game_Button = $MenuContainer/Buttons/NewGame/Button
 onready var Continue_Button = $MenuContainer/Buttons/Continue/Button
@@ -10,7 +10,7 @@ onready var Version_Label = $MenuContainer/Info/Version
 onready var Dev_Label = $MenuContainer/Info/Dev
 onready var Fade_In = $FadeIn
 
-func _ready():
+func _ready() -> void:
 	New_Game_Button.text = tr("NEW_GAME")
 	Continue_Button.text = tr("CONTINUE")
 	Options_Button.text = tr("OPTIONS")
@@ -26,16 +26,16 @@ func _ready():
 	_err = Options_Button.connect("pressed", self, "_on_Options_pressed")
 	_err = events.connect("fade_finished", self, "_on_FadeIn_fade_finished")
 
-func _on_NewGame_pressed():
+func _on_NewGame_pressed() -> void:
 	scene_path = "res://engine/Main.tscn"
 	Fade_In.show()
 	Fade_In.fade_in()
 
-func _on_Continue_pressed():
+func _on_Continue_pressed() -> void:
 	pass
 	
-func _on_Options_pressed():
+func _on_Options_pressed() -> void:
 	pass
 	
-func _on_FadeIn_fade_finished():
+func _on_FadeIn_fade_finished() -> void:
 	var _err = get_tree().change_scene(scene_path)

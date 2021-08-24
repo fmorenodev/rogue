@@ -8,14 +8,13 @@ var step_history = []
 var steps_since_turn = 0
 var rooms = []
 
-func _init(start_pos, new_borders):
+func _init(start_pos: Vector2, new_borders: Rect2) -> void:
 	assert(new_borders.has_point(start_pos))
 	position = start_pos
 	step_history.append(position)
 	borders = new_borders
-
 	
-func walk(steps):
+func walk(steps: int) -> Array:
 	place_room()
 	for step in steps:
 		#if randf() < 0.5 and steps_since_turn >= 6: 
@@ -28,7 +27,7 @@ func walk(steps):
 			change_direction()
 	return step_history
 	
-func step():
+func step() -> bool:
 	var target_pos = position + direction
 	if borders.has_point(target_pos):
 		steps_since_turn += 1
@@ -37,7 +36,7 @@ func step():
 	else:
 		return false
 		
-func change_direction():
+func change_direction() -> void:
 	steps_since_turn = 0
 	var directions = dir.DIRECTIONS.duplicate()
 	directions.erase(direction)
@@ -46,7 +45,7 @@ func change_direction():
 	while not borders.has_point(position + direction):
 		direction = directions.pop_front()
 
-func place_room():
+func place_room() -> void:
 	var size = Vector2(randi() % 4 + 2, randi() % 4 + 2)
 	var top_left_corner = (position - size/2).ceil()
 	var new_room = Rect2(top_left_corner, size)
@@ -71,15 +70,15 @@ func place_room():
 			step_history.pop_back()
 		position = step_history.back()
 
-func merge_rooms(new_room):
+func merge_rooms(new_room: Rect2) -> Rect2:
 	var size = rooms.size() - 1
 	for i in range(size, -1, -1):
 		if new_room.encloses(rooms[i]) or rooms[i].encloses(new_room):
-			new_room.merge(rooms[i])
+			new_room = new_room.merge(rooms[i])
 			rooms.remove(i)
 	return new_room
 	
-func trim_room(room):
+func trim_room(room: Rect2) -> Rect2:
 	var starting_point = room.position
 	var trimmed_room = room
 	var is_top = starting_point.y < borders.position.y
@@ -110,11 +109,3 @@ func trim_room(room):
 				trimmed_room = Rect2(trimmed_room.position, Vector2(trimmed_room.size.x - x, trimmed_room.size.y))
 				break
 	return trimmed_room
-
-func get_end_room():
-	var end_room = rooms.pop_front()
-	var starting_pos = step_history.front()
-	for room in rooms:
-		if starting_pos.distance_to(room.position) > starting_pos.distance_to(end_room.position):
-			end_room = room
-	return end_room

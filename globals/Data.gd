@@ -5,4 +5,4 @@ var map_top_left_corner = Vector2(ceil(-map_size.x / 2), floor(-map_size.y / 2))
 var map_center_point = Vector2(map_top_left_corner + (map_size / 2)).ceil()
 var map_right_bottom_corner = Vector2(ceil(map_size.x / 2), floor(map_size.y / 2))
 var map_rect = Rect2(map_top_left_corner, map_size)
-
+var map_seed: int

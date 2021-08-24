@@ -1,9 +1,7 @@
 extends TileMap
 
 onready var Skeleton = preload("res://actors/enemies/Skeleton.tscn")
-onready var Chest = preload("res://objects/Chest.tscn")
 onready var Potion = preload("res://items/Potion.tscn")
-
 
 # grid elements
 onready var Player = $Player
@@ -24,7 +22,7 @@ var floor_n = -1
 var actors = [null]
 var current_index = 0
 
-func _ready():
+func _ready() -> void:
 	set_physics_process(false)
 	randomize()
 	var _err = events.connect("new_game", self, "_on_new_game")
@@ -34,10 +32,10 @@ func _ready():
 	_err = events.connect("level_loaded", Player, "_on_Grid_level_loaded")
 	_err = events.connect("level_loaded", self, "_on_Grid_level_loaded")
 	
-func _on_Grid_level_loaded():
+func _on_Grid_level_loaded() -> void:
 	set_physics_process(true)
 	
-func _on_new_game():
+func _on_new_game() -> void:
 	events.emit_signal("new_message", tr("GAME_START"))
 	Player.manual_init()
 	for enemy in enemies:
@@ -47,19 +45,16 @@ func _on_new_game():
 	for item in items:
 		item.manual_init()
 	
-func init(grid_rooms):
+func init(grid_rooms: Array) -> void:
 	rooms = grid_rooms
-	for r in rooms:
-		detect_passages(detect_borders(r))
 	clean_up()
 	spawn_player()
 	spawn_items()
 	spawn_enemies()
-	spawn_objects()
 	events.emit_signal("new_message", tr("LEVEL_ENTERED"), color.grey)
 	events.emit_signal("level_loaded")
 	
-func clean_up():
+func clean_up() -> void:
 	actors = [null]
 	current_index = 0
 	for enemy in enemies:
@@ -69,14 +64,14 @@ func clean_up():
 	for item in items:
 		item.remove()
 
-func spawn_player():
+func spawn_player() -> void:
 	var pos = get_available_position()
 	if pos != null:
 		Player.position = pos
 	actors[0] = Player
 	entities.append(Player)
 	
-func spawn_enemies():
+func spawn_enemies() -> void:
 	for _i in range(n_enemies):
 		var enemy = Skeleton.instance()
 		var pos = get_available_position()
@@ -87,18 +82,8 @@ func spawn_enemies():
 		add_child(enemy)
 		entities.append(enemy)
 		enemy.add_to_group("enemies")
-
-func spawn_objects():
-	for _i in range(n_objects):
-		var object = Chest.instance()
-		var pos = get_available_position()
-		if pos != null:
-			object.position = pos
-		objects.append(object)
-		add_child(object)
-		entities.append(object)
 		
-func spawn_items():
+func spawn_items() -> void:
 	for _i in range(n_items):
 		var item = Potion.instance()
 		item.add_type(en.POTION_TYPE.values()[randi() % 4])
@@ -110,7 +95,7 @@ func spawn_items():
 		entities.append(item)
 		
 func get_available_position():
-	var pos
+	var pos: Vector2
 	pos = get_room_and_pos()
 	while true:
 		if is_pos_available(pos):
@@ -118,7 +103,7 @@ func get_available_position():
 		else:
 			pos = get_room_and_pos()
 
-func get_room_and_pos():
+func get_room_and_pos() -> Vector2:
 	var chosen_room = rooms[randi() % rooms.size()]
 	var room_top_left = chosen_room.position
 	var room_bottom_right = chosen_room.end
@@ -126,62 +111,24 @@ func get_room_and_pos():
 		int(rand_range(room_top_left.y, room_bottom_right.y - 1))))
 	return pos
 
-func is_pos_available(pos):
+func is_pos_available(pos: Vector2) -> bool:
 	for e in entities:
 		if e.position == pos:
 			return false
 	return true
 
-# have to merge rooms to make it work 100%, but this should be able to detect 
-# the entrance point of corridors in the right circumstances
-func detect_passages(borders):
-	var passages = []
-	var point
-	for i in borders.top_borders.size():
-		point = borders.top_borders[i] + Vector2.UP
-		if get_cellv(point) == -1:
-			passages.append(point - Vector2.UP)
-	for i in borders.bottom_borders.size():
-		point = borders.bottom_borders[i] + Vector2.DOWN
-		if get_cellv(point) == -1:
-			passages.append(point - Vector2.DOWN)
-	for i in borders.left_borders.size():
-		point = borders.left_borders[i] + Vector2.LEFT
-		if get_cellv(point) == -1:
-			passages.append(point - Vector2.LEFT)
-	for i in borders.right_borders.size():
-		point = borders.right_borders[i] + Vector2.RIGHT
-		if get_cellv(point) == -1:
-			passages.append(point - Vector2.RIGHT)
-	return passages
-
-func detect_borders(room):
-	var borders = {
-		"top_borders": [],
-		"bottom_borders": [],
-		"left_borders": [],
-		"right_borders": []
-	}
-	for x in room.size.x:
-		borders.top_borders.append(room.position + Vector2(x, 0))
-		borders.bottom_borders.append((room.end - Vector2.ONE) + Vector2(-x, 0))
-	for y in room.size.y:
-		borders.left_borders.append(room.position + Vector2(0, y))
-		borders.right_borders.append((room.end - Vector2.ONE) + Vector2(0, -y))
-	return borders
-
 # debugging function
-func _draw():
+func _draw() -> void:
 	for room in rooms:
 		draw_rect(Rect2(map_to_world(room.position), map_to_world(room.size)), Color.from_hsv(rand_range(0, 6), 1, 1), true)
 
-func interact(child_node):
+func interact(child_node: Actor) -> bool:
 	var turn_completed = true
 	if child_node.direction == Vector2():
 		return turn_completed
 	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos):
-		if get_cellv(grid_pos) == -1 or true:
+		if get_cellv(grid_pos) == -1:
 			var blocked = false
 			var to_remove = []
 			# enemy
@@ -228,10 +175,9 @@ func interact(child_node):
 	else: # moving outside the bounds
 		events.emit_signal("new_message", tr("OUT_OF_BOUNDS"))
 		turn_completed = false
-	
 	return turn_completed
 					
-func enemy_interact(child_node):
+func enemy_interact(child_node: Enemy) -> void:
 	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos):
 		if get_cellv(grid_pos) == -1:
@@ -258,20 +204,19 @@ func enemy_interact(child_node):
 			if !blocked:
 				child_node.move()
 
-func is_inside_bounds(point):
+func is_inside_bounds(point: Vector2) -> bool:
 	var horizontal_boundaries = point.x >= data.map_top_left_corner.x and point.x < (data.map_right_bottom_corner).x
 	var vertical_boundaries = point.y >= data.map_top_left_corner.y and point.y < (data.map_right_bottom_corner).y
 	return horizontal_boundaries && vertical_boundaries
 
-func end_turn():
+func end_turn() -> void:
 	goto_next()
 	events.emit_signal("turn_started", get_current())
 
-func get_current():
+func get_current() -> Actor:
 	return actors[current_index]
 
 func goto_next() -> void:
 	current_index += 1
-
 	if current_index > len(actors) - 1:
 		current_index = 0

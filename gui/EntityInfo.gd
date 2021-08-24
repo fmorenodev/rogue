@@ -7,7 +7,8 @@ onready var Entity_Sprite = $InfoContainer/EntitySprite
 
 var node_connected
 
-func entity_info_init(node, text, texture, entity_type):
+# no entity class made, entity_type is enum
+func entity_info_init(node, text: String, texture, entity_type: int) -> void:
 	Info_Label.text = text.capitalize()
 	if Info_Label.get_line_count() > 1:
 		self.rect_min_size.y = 25 + (Info_Label.get_line_count() - 1) * 16
@@ -21,10 +22,10 @@ func entity_info_init(node, text, texture, entity_type):
 			events.emit_signal("object_info_added", self)
 			var _err = events.connect("sprite_changed", self, "_on_Sprite_change")
 		
-func _on_Sprite_change(node, new_texture):
+func _on_Sprite_change(node, new_texture) -> void:
 	if node == node_connected:
 		Entity_Sprite.texture = new_texture
 	
-func _on_Entity_removed(node):
+func _on_Entity_removed(node) -> void:
 	if node == node_connected:
 		self.queue_free()

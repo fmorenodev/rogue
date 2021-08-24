@@ -2,11 +2,11 @@ extends Node
 
 const DIRECTIONS = [Vector2.RIGHT, Vector2.UP, Vector2.LEFT, Vector2.DOWN]
 
-const up_left = Vector2(-1, -1)
-const up_right = Vector2(1, -1)
-const down_left = Vector2(-1, 1)
-const down_right = Vector2(1, 1)
+const UP_LEFT = Vector2(-1, -1)
+const UP_RIGHT = Vector2(1, -1)
+const DOWN_LEFT = Vector2(-1, 1)
+const DOWN_RIGHT = Vector2(1, 1)
 
-func rand_dir():
+func rand_dir() -> Vector2:
 	DIRECTIONS.shuffle()
 	return DIRECTIONS.front()
