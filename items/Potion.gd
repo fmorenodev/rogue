@@ -14,29 +14,34 @@ func add_type(_type) -> void:
 		en.POTION_TYPE.HEALTH_S:
 			texture = hs_texture
 			item_name = tr("POTION").format([tr("SIZE_SMALL").capitalize(), tr("EFFECT_HEALTH")])
+			desc = tr("POTION_S_HEALTH_DESC")
 		en.POTION_TYPE.HEALTH_L:
 			texture = hl_texture
 			item_name = tr("POTION").format([tr("SIZE_LARGE").capitalize(), tr("EFFECT_HEALTH")])
+			desc = tr("POTION_L_HEALTH_DESC")
 		en.POTION_TYPE.DEFENSE_S:
 			texture = ds_texture
 			item_name = tr("POTION").format([tr("SIZE_SMALL").capitalize(), tr("EFFECT_DEFENSE")])
+			desc = tr("POTION_S_DEF_DESC")
 		en.POTION_TYPE.DEFENSE_L:
 			texture = dl_texture
 			item_name = tr("POTION").format([tr("SIZE_LARGE").capitalize(), tr("EFFECT_DEFENSE")])
-			
-func use(user: Actor) -> void:
+			desc = tr("POTION_L_DEF_DESC")
+
+# Actor
+func use(user: Node2D) -> void:
 	match type:
 		en.POTION_TYPE.HEALTH_S:
-			user.health += 5
+			user.modify_health(5)
 		en.POTION_TYPE.HEALTH_L:
-			user.health += user.max_health
+			user.modify_health(user.max_health)
 		en.POTION_TYPE.DEFENSE_S:
-			user.defense += 2
+			user.modify_defense(2)
 			# timer
 		en.POTION_TYPE.DEFENSE_L:
-			user.defense += 4
+			user.modify_defense(4)
 			# timer
-			
-func remove() -> void:
+	events.emit_signal("new_message", tr("POTION_DRINK"), color.white, [item_name])
+	events.emit_signal("item_used")
+	use_turn(user)
 	self.queue_free()
-	Grid.items.erase(self)

@@ -1,11 +1,13 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/Menus/Menu.tres" type="Theme" id=1]
-[ext_resource path="res://menus/GameOver.gd" type="Script" id=2]
+[ext_resource path="res://assets/Menus/main_menu.tres" type="Theme" id=1]
+[ext_resource path="res://menus/game_over/GameOver.gd" type="Script" id=2]
 [ext_resource path="res://assets/default_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/Menus/Background.tres" type="StyleBox" id=4]
-[ext_resource path="res://menus/SelectorButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://menus/main_menu/SelectorButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/Menus/cross.png" type="Texture" id=7]
+
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "game_over"

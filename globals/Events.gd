@@ -20,11 +20,19 @@ signal entity_removed(node)
 
 signal max_bar_value_changed(max_bar_value)
 signal bar_value_changed(node, bar_value)
-signal level_changed(actor_name, level)
 signal attack_changed(attack)
 signal defense_changed(defense)
 
 signal sprite_changed(node, new_texture)
+
+signal change_control(status)
+signal open_inventory
+signal items_changed(indexes)
+signal item_spawned(item)
+signal use_item(item)
+signal item_used(item)
+
+signal open_skills
 
 # Text log
 signal new_message(msg, color, args)

@@ -2,16 +2,19 @@ class_name Enemy
 
 extends Actor
 
+onready var Map = get_node("../../")
+onready var Player = get_node("../Player")
+
 func _ready() -> void:
 	var _err = events.connect("enemy_info_added", self, "_on_info_added")
 	
 func manual_init() -> void:
 	events.emit_signal("add_actor_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
-
+	
 func _on_Grid_turn_started(current_actor: Actor) -> void:
 	if not current_actor.is_in_group("enemies"):
 		return
-	current_actor.direction = dir.rand_dir()
+	current_actor.direction = Map.find_step(current_actor.position, Player.position)
 	Grid.enemy_interact(current_actor)
 	Grid.end_turn()
 

@@ -6,7 +6,6 @@ onready var Potion = preload("res://items/Potion.tscn")
 # grid elements
 onready var Player = $Player
 onready var Enemy = $Enemy
-var entities = []
 var rooms = []
 var enemies = []
 var objects = []
@@ -31,6 +30,9 @@ func _ready() -> void:
 	_err = events.connect("game_over", Player, "_on_game_over")
 	_err = events.connect("level_loaded", Player, "_on_Grid_level_loaded")
 	_err = events.connect("level_loaded", self, "_on_Grid_level_loaded")
+	_err = events.connect("entity_removed", self, "_on_Grid_entity_removed")
+	
+	_err = events.connect("item_spawned", self, "spawn_item")
 	
 func _on_Grid_level_loaded() -> void:
 	set_physics_process(true)
@@ -69,30 +71,39 @@ func spawn_player() -> void:
 	if pos != null:
 		Player.position = pos
 	actors[0] = Player
-	entities.append(Player)
+	data.entities.append(Player)
 	
 func spawn_enemies() -> void:
 	for _i in range(n_enemies):
 		var enemy = Skeleton.instance()
-		var pos = get_available_position()
-		if pos != null:
-			enemy.position = pos
+		enemy.position = get_available_position()
 		enemies.append(enemy)
 		actors.append(enemy)
 		add_child(enemy)
-		entities.append(enemy)
+		data.entities.append(enemy)
 		enemy.add_to_group("enemies")
 		
+func round_to_tile(pos: Vector2) -> Vector2:
+	return map_to_world(world_to_map(pos))
+		
+func spawn_item(item: Item, get_pos: bool = false) -> void:
+	items.append(item)
+	add_child(item)
+	if get_pos:
+		item.position = get_available_position()
+	else:
+		item.position = round_to_tile(get_local_mouse_position())
+	data.entities.append(item)
+	
 func spawn_items() -> void:
 	for _i in range(n_items):
 		var item = Potion.instance()
 		item.add_type(en.POTION_TYPE.values()[randi() % 4])
-		var pos = get_available_position()
-		if pos != null:
-			item.position = pos
-		items.append(item)
-		add_child(item)
-		entities.append(item)
+		spawn_item(item, true)
+		
+func _on_Grid_entity_removed(node: Node) -> void:
+	items.erase(node)
+	node.queue_free()
 		
 func get_available_position():
 	var pos: Vector2
@@ -112,15 +123,21 @@ func get_room_and_pos() -> Vector2:
 	return pos
 
 func is_pos_available(pos: Vector2) -> bool:
-	for e in entities:
+	for e in data.entities:
 		if e.position == pos:
 			return false
 	return true
 
+func is_actor_in_position(pos: Vector2):
+	for a in actors:
+		if a.position == pos:
+			return a
+	return false
+
 # debugging function
-func _draw() -> void:
-	for room in rooms:
-		draw_rect(Rect2(map_to_world(room.position), map_to_world(room.size)), Color.from_hsv(rand_range(0, 6), 1, 1), true)
+#func _draw() -> void:
+#	for room in rooms:
+#		draw_rect(Rect2(map_to_world(room.position), map_to_world(room.size)), Color.from_hsv(rand_range(0, 6), 1, 1), true)
 
 func interact(child_node: Actor) -> bool:
 	var turn_completed = true
@@ -159,10 +176,14 @@ func interact(child_node: Actor) -> bool:
 			if !blocked:
 				for item in items:
 					if grid_pos == world_to_map(item.position):
-						item.pick_up(child_node)
-						events.emit_signal("new_message", tr("ITEM_PICK"), 
-							color.white, [item.item_name])
-						to_remove.append(item)
+						if item.pick_up(child_node):
+							events.emit_signal("new_message", tr("ITEM_PICK"), 
+								color.white, [item.item_name])
+							to_remove.append(item)
+						else:
+							events.emit_signal("new_message", tr("INV_FULL"),
+								color.white, [item.item_name])
+							
 						break
 			for o in to_remove:
 				o.remove()

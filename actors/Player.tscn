@@ -1,10 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/priests_idle/priest2/priest_death.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/priests_idle/priest2/priest2_v1_1.png" type="Texture" id=2]
+[ext_resource path="res://assets/marine16.png" type="Texture" id=2]
 [ext_resource path="res://actors/Player.gd" type="Script" id=5]
 
 [node name="Player" type="KinematicBody2D"]
+z_index = 1
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

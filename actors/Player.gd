@@ -6,9 +6,10 @@ onready var Anim_Sprite = $AnimatedSprite
 
 func _ready() -> void:
 	var _err = events.connect("player_info_added", self, "_on_player_info_added")
+	_err = events.connect("use_item", self, "_on_use_item")
+	_err = events.connect("change_control", self, "_on_control_changed")
 	
 func _init() -> void:
-	level = 1
 	max_health = 10
 	health = 10
 	attack = 5
@@ -50,6 +51,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			set_process_unhandled_input(false)
 			Grid.end_turn()
 			
+func _on_control_changed(status: bool) -> void:
+	control_enabled = status
+
+func _on_use_item(item: Item) -> void:
+	item.use(self)
+	events.emit_signal("item_used")
+			
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
 	Actor_Sprite.hide()
 	Anim_Sprite.show()
@@ -64,7 +72,6 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 		set_process_unhandled_input(true)
 		
 func _on_player_info_added() -> void:
-	events.emit_signal("level_changed", actor_name, level)
 	events.emit_signal("max_bar_value_changed", self, max_health)
 	events.emit_signal("bar_value_changed", self, health)
 	events.emit_signal("attack_changed", attack)
