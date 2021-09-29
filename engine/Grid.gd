@@ -65,6 +65,7 @@ func clean_up() -> void:
 		object.remove()
 	for item in items:
 		item.remove()
+	data.entities = []
 
 func spawn_player() -> void:
 	var pos = get_available_position()

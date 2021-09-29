@@ -54,8 +54,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_control_changed(status: bool) -> void:
 	control_enabled = status
 
-func _on_use_item(item: Item) -> void:
-	item.use(self)
+func _on_use_item(item: Item, item_index: int) -> void:
+	item.use(self, item_index)
 	events.emit_signal("item_used")
 			
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:

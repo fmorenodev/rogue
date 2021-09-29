@@ -29,7 +29,7 @@ signal change_control(status)
 signal open_inventory
 signal items_changed(indexes)
 signal item_spawned(item)
-signal use_item(item)
+signal use_item(item, item_index)
 signal item_used(item)
 
 signal open_skills

@@ -24,9 +24,9 @@ func move() -> void:
 	position = new_position
 
 func take_damage(attack_value: int) -> int:
-	var damage = attack_value - defense if attack_value > defense else 1 #* modifier
+	var damage = attack_value - defense if attack_value > defense else 1
 	modify_health(-damage)
-		
+	
 	return damage
 	
 func modify_health(hp: int) -> void:

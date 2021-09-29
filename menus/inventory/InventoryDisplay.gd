@@ -4,6 +4,7 @@ extends GridContainer
 onready var Slot = preload("res://menus/inventory/InventorySlot.tscn")
 onready var Potion = preload("res://items/Potion.tscn")
 onready var InventoryPopup = get_parent().get_parent()
+onready var InventoryContainer = get_parent().get_parent().get_parent().get_parent()
 var inventory = preload("res://menus/inventory/Inventory.tres")
 
 var selected_slot: int = 0
@@ -13,15 +14,12 @@ func _ready() -> void:
 	var _err = events.connect("items_changed", self, "_on_items_changed")
 	_err = events.connect("item_used", self, "_on_item_used")
 	inventory.items = []
-	for slot in pow(columns, 2):
+	for slot in pow(columns, 2): # for testing purposes
 		var new_slot = Slot.instance()
 		add_child(new_slot)
-		if slot % 2 == 0:
-			var item = Potion.instance()
-			item.add_type(en.POTION_TYPE.values()[randi() % 4])
-			inventory.items.append(item)
-		else:
-			inventory.items.append(null)
+		var item = Potion.instance()
+		item.add_type(en.POTION_TYPE.values()[randi() % 4])
+		inventory.items.append(item)
 	update_inventory_display()
 	show_selector()
 	
@@ -33,7 +31,7 @@ func hide_selector() -> void:
 	get_child(selected_slot).Selector.hide()
 	
 func _input(event: InputEvent) -> void:
-	if InventoryPopup.visible:
+	if InventoryContainer.visible and InventoryPopup.visible:
 		if selected_slot != last_focused.get_index():
 			last_focused.Selector.hide()
 		if event.is_action_pressed("ui_up", true):
@@ -64,13 +62,13 @@ func _input(event: InputEvent) -> void:
 			show_selector()
 		if event.is_action_pressed("ui_accept"):
 			if inventory.items[selected_slot] != null:
-				events.emit_signal("use_item", inventory.items[selected_slot])
+				events.emit_signal("use_item", inventory.items[selected_slot], selected_slot)
 			get_tree().set_input_as_handled()
 		if event is InputEventMouseButton and event.pressed:
 			match event.button_index:
 				BUTTON_RIGHT:
 					if inventory.items[selected_slot] != null:
-						events.emit_signal("use_item", inventory.items[selected_slot])
+						events.emit_signal("use_item", inventory.items[selected_slot], selected_slot)
 
 func update_slot_display(item_index: int) -> void:
 	var slot = get_child(item_index)
@@ -91,3 +89,8 @@ func _on_item_used() -> void:
 	if !is_instance_valid(item):
 		inventory.items[selected_slot] = null
 	update_slot_display(selected_slot)
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("ui_left_mouse"):
+		if inventory.drag_data is Dictionary:
+			inventory.set_item(inventory.drag_data.item, inventory.drag_data.item_index)

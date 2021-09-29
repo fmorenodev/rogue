@@ -34,6 +34,20 @@ rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 1 )
 stretch_mode = 1
 
+[node name="Amount" type="Label" parent="ItemTexture"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = 2.0
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Selector" type="TextureRect" parent="."]
 visible = false
 margin_left = 392.0
