@@ -14,6 +14,7 @@ func manual_init() -> void:
 func _on_Grid_turn_started(current_actor: Actor) -> void:
 	if not current_actor.is_in_group("enemies"):
 		return
+	# check enemy type for different ai?
 	current_actor.direction = Map.find_step(current_actor.position, Player.position)
 	Grid.enemy_interact(current_actor)
 	Grid.end_turn()

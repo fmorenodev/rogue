@@ -1,13 +1,16 @@
 extends TileMap
 
-onready var Skeleton = preload("res://actors/enemies/Skeleton.tscn")
-onready var Potion = preload("res://items/Potion.tscn")
+onready var Zombie = preload("res://actors/enemies/Zombie.tscn")
+onready var Turret = preload("res://actors/allies/Turret.tscn")
+onready var Syringe = preload("res://items/Syringe.tscn")
 
 # grid elements
 onready var Player = $Player
 onready var Enemy = $Enemy
+onready var Ally = $Ally
 var rooms = []
 var enemies = []
+var allies = []
 var objects = []
 var items = []
 var n_enemies = 10
@@ -26,6 +29,7 @@ func _ready() -> void:
 	randomize()
 	var _err = events.connect("new_game", self, "_on_new_game")
 	_err = events.connect("turn_started", Enemy, "_on_Grid_turn_started")
+	_err = events.connect("turn_started", Ally, "_on_Grid_turn_started")
 	_err = events.connect("turn_started", Player, "_on_Grid_turn_started")
 	_err = events.connect("game_over", Player, "_on_game_over")
 	_err = events.connect("level_loaded", Player, "_on_Grid_level_loaded")
@@ -33,6 +37,7 @@ func _ready() -> void:
 	_err = events.connect("entity_removed", self, "_on_Grid_entity_removed")
 	
 	_err = events.connect("item_spawned", self, "spawn_item")
+	_err = events.connect("ally_spawned", self, "spawn_ally")
 	
 func _on_Grid_level_loaded() -> void:
 	set_physics_process(true)
@@ -74,15 +79,30 @@ func spawn_player() -> void:
 	actors[0] = Player
 	data.entities.append(Player)
 	
+func spawn_ally(type: int) -> void:
+	var ally_spawned: Ally
+	match type:
+		en.SPAWN_SKILL_TYPE.TURRET, _:
+			ally_spawned = Turret.instance()
+	spawn_actor(ally_spawned, true)
+	
+func spawn_actor(actor: Actor, get_pos: bool = false) -> void:
+	if data.enemy_names.has(actor.name):
+		enemies.append(actor)
+		actor.add_to_group("enemies")
+	if data.ally_names.has(actor.name):
+		allies.append(actor)
+		actor.add_to_group("allies")
+	actors.append(actor)
+	add_child(actor)
+	if get_pos:
+		actor.position = get_available_position()
+	data.entities.append(actor)
+	
 func spawn_enemies() -> void:
 	for _i in range(n_enemies):
-		var enemy = Skeleton.instance()
-		enemy.position = get_available_position()
-		enemies.append(enemy)
-		actors.append(enemy)
-		add_child(enemy)
-		data.entities.append(enemy)
-		enemy.add_to_group("enemies")
+		var enemy = Zombie.instance()
+		spawn_actor(enemy, true)
 		
 func round_to_tile(pos: Vector2) -> Vector2:
 	return map_to_world(world_to_map(pos))
@@ -98,8 +118,8 @@ func spawn_item(item: Item, get_pos: bool = false) -> void:
 	
 func spawn_items() -> void:
 	for _i in range(n_items):
-		var item = Potion.instance()
-		item.add_type(en.POTION_TYPE.values()[randi() % 4])
+		var item = Syringe.instance()
+		item.add_type(en.SYRINGE_TYPE.values()[randi() % 4])
 		spawn_item(item, true)
 		
 func _on_Grid_entity_removed(node: Node) -> void:

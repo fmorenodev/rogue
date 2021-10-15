@@ -18,3 +18,7 @@ func is_entity_in_position(pos: Vector2):
 	return false
 
 var tabs = {tr("INVENTORY"): 0, tr("SKILLS"): 1}
+
+var enemy_names = ["Zombie"]
+
+var ally_names = ["Turret"]

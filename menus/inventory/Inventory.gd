@@ -33,6 +33,7 @@ func swap_items(item_index: int, target_item_index: int) -> void:
 func remove_item(item_index: int) -> Sprite:
 	var item = items[item_index]
 	items[item_index] = null
+	drag_data = null
 	events.emit_signal("items_changed", [item_index])
 	return item
 	

@@ -17,8 +17,7 @@ func entity_info_init(node, text: String, texture, entity_type: int) -> void:
 	match entity_type:
 		en.ENTITY_TYPE.ITEM:
 			events.emit_signal("item_info_added", self)
-		# if actor do nothing?
-		en.ENTITY_TYPE.OBJECT:
+		en.ENTITY_TYPE.OBJECT, _:
 			events.emit_signal("object_info_added", self)
 			var _err = events.connect("sprite_changed", self, "_on_Sprite_change")
 		

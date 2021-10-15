@@ -2,9 +2,9 @@
 extends GridContainer
 
 onready var Slot = preload("res://menus/inventory/InventorySlot.tscn")
-onready var Potion = preload("res://items/Potion.tscn")
-onready var InventoryPopup = get_parent().get_parent()
-onready var InventoryContainer = get_parent().get_parent().get_parent().get_parent()
+onready var Syringe = preload("res://items/Syringe.tscn")
+onready var Inventory_Popup = get_parent().get_parent()
+onready var Inventory_Container = get_parent().get_parent().get_parent().get_parent()
 var inventory = preload("res://menus/inventory/Inventory.tres")
 
 var selected_slot: int = 0
@@ -17,8 +17,8 @@ func _ready() -> void:
 	for slot in pow(columns, 2): # for testing purposes
 		var new_slot = Slot.instance()
 		add_child(new_slot)
-		var item = Potion.instance()
-		item.add_type(en.POTION_TYPE.values()[randi() % 4])
+		var item = Syringe.instance()
+		item.add_type(en.SYRINGE_TYPE.values()[randi() % 4])
 		inventory.items.append(item)
 	update_inventory_display()
 	show_selector()
@@ -29,9 +29,9 @@ func show_selector() -> void:
 	
 func hide_selector() -> void:
 	get_child(selected_slot).Selector.hide()
-	
+		
 func _input(event: InputEvent) -> void:
-	if InventoryContainer.visible and InventoryPopup.visible:
+	if Inventory_Container.visible and Inventory_Popup.visible:
 		if selected_slot != last_focused.get_index():
 			last_focused.Selector.hide()
 		if event.is_action_pressed("ui_up", true):

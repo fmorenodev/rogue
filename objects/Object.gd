@@ -1,6 +1,6 @@
 class_name E_Object
 
-extends AnimatedSprite
+extends Sprite
 
 onready var Grid = get_parent()
 

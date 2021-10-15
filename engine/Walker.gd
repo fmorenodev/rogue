@@ -1,4 +1,5 @@
 extends Node
+
 class_name Walker
 
 var position = Vector2.ZERO

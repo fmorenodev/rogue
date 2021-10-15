@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://engine/Map.gd" type="Script" id=1]
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://engine/Grid.tscn" type="PackedScene" id=3]
 [ext_resource path="res://actors/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://actors/Ally.tscn" type="PackedScene" id=5]
 
 [node name="Map" type="Node2D"]
 position = Vector2( 448, 256 )
@@ -28,3 +29,5 @@ drag_margin_bottom = 0.0
 [node name="Enemy" parent="Grid" instance=ExtResource( 4 )]
 position = Vector2( -16.0875, -16 )
 scale = Vector2( 1.00547, 1 )
+
+[node name="Ally" parent="Grid" instance=ExtResource( 5 )]

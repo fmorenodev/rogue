@@ -50,9 +50,10 @@ __meta__ = {
 
 [node name="Selector" type="TextureRect" parent="."]
 visible = false
-margin_left = 392.0
-margin_top = 292.0
-margin_right = 408.0
-margin_bottom = 308.0
+margin_left = 384.0
+margin_top = 284.0
+margin_right = 416.0
+margin_bottom = 316.0
+rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 3 )
-stretch_mode = 4
+stretch_mode = 1

@@ -6,32 +6,31 @@ a GODOT-based roguelike
 - world generation
 	- ~~improve world gen to make it tile_based~~
 	- tweak new world gen
-	- possibly expand rooms to fit on all non-corridor space and other smaller rooms
 	- ~~fix positioning issue for entities upon spawn~~
 	- ~~fix world gen upon retry/new dungeon level (less entities spawn?)~~
 - improve spawning to make it more evenly distributed
 	- ~~no spawning in corridor entrances (find how to detect them)~~
 	- ~~fix entities spawning upon the player~~
-	- add the corridor finding function to the spawning function when better rooms are able to be generated
-- implement visibility map / fog
-	- show visible / revealed entities only on GUI
+	- check max enemies in certain area
 - map clearing and advancing to the next map
+	- rewards for clearing map
 - player interaction with entities
-	- item pickup (using inventory)
-	- object specific interaction (like opening chests)
+	- ~~item pickup (using inventory)~~
 	- skills and ranged attacks
 	- neutral or allied interactions with actors
-- inventory
+- ~~inventory~~
 - implement neutral and ally NPCs
-- leveling system
 - loading screen
 	- ~~make graphic/animation for loading screen~~
 	- fix loading / event order to make it dissappear when the map is generated
 - refactor nodes and scripts to make each node or script do less things and be more organized
-	- refactor turn system ??
-	- fix diagonal movement / pressing two or more movement inputs at the same time. Add (diagonal) movement with vi / num keys or with two directional keys
+	- ~~add diagonal movement~~
+	- fix diagonal movement / pressing two or more movement inputs at the same time.
 - general fixes
-	- add a new tile for the background to distinguish it
+	- add a new tile for the background to distinguish it / parallax background (not possible to do this kind of bg)
+	- ~~fix player / enemy behaviour~~
+	- ~~bug: when inventory is full, taking the same item later doesn't remove it from the floor until you pass it again~~
+	- bug: when calculating a path, if the path is blocked by an entity, move around (or possibly update the a* map with the square each untraversable entity occupies at the end of each turn)
 
 ## DESIGN: when designed move to implement with the decided implementation
 - decide on aesthetic for the game
@@ -40,7 +39,11 @@ a GODOT-based roguelike
 	- limited color palette (maybe)
 	- setting / aesthetic based new fonts (must search first)
 - decide on setting for the game
-	- oniric / surreal (decided)
+	- post-apocalyptic
+	- futuristic
+	- medieval
+	- fantasy
+	- oniric / surreal
 - bigger tiles?
 	- 32 x 32
 	- asymmetric (16 x 32)
@@ -49,7 +52,7 @@ a GODOT-based roguelike
 		- menu
 		- char sheet
 		- log / quests / relations
-		- map ?
+		- no map needed
 		- inventory
 		- etc
 	- alternative interactions:

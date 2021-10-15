@@ -1,12 +1,12 @@
-extends Actor
+extends Ally
+
 class_name Player
 
 var control_enabled = false
-onready var Anim_Sprite = $AnimatedSprite
 
 func _ready() -> void:
-	var _err = events.connect("player_info_added", self, "_on_player_info_added")
-	_err = events.connect("use_item", self, "_on_use_item")
+	var _err = events.connect("use_item", self, "_on_use_item")
+	_err = events.connect("use_skill", self, "_on_use_skill")
 	_err = events.connect("change_control", self, "_on_control_changed")
 	
 func _init() -> void:
@@ -18,9 +18,7 @@ func _init() -> void:
 	
 func manual_init() -> void:
 	set_process_unhandled_input(true)
-	Anim_Sprite.hide()
-	Actor_Sprite.show()
-	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
+	.manual_init()
 	
 func check_input(event: InputEvent) -> bool:
 	direction = Vector2()
@@ -57,22 +55,16 @@ func _on_control_changed(status: bool) -> void:
 func _on_use_item(item: Item, item_index: int) -> void:
 	item.use(self, item_index)
 	events.emit_signal("item_used")
+	
+func _on_use_skill(skill: Skill) -> void:
+	skill.use(self)
 			
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
-	Actor_Sprite.hide()
-	Anim_Sprite.show()
-	Anim_Sprite.play("dead")
 	control_enabled = false
 	
 func _on_Grid_level_loaded() -> void:
 	control_enabled = true
 
 func _on_Grid_turn_started(current_actor: Actor) -> void:
-	if not current_actor.is_in_group("enemies") and control_enabled:
+	if not current_actor.is_in_group("enemies") and not current_actor.is_in_group("allies") and control_enabled:
 		set_process_unhandled_input(true)
-		
-func _on_player_info_added() -> void:
-	events.emit_signal("max_bar_value_changed", self, max_health)
-	events.emit_signal("bar_value_changed", self, health)
-	events.emit_signal("attack_changed", attack)
-	events.emit_signal("defense_changed", defense)

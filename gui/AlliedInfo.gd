@@ -10,11 +10,9 @@ func _ready() -> void:
 	var _err = events.connect("attack_changed", self, "_on_Ally_attack_changed")
 	_err = events.connect("defense_changed", self, "_on_Ally_defense_changed")
 
-# change type Player when (if) including allies
-func allied_info_init(node: Player, info_text: String, texture, bar_text: String = "HEALTH_BAR") -> void:
+func allied_info_init(node: Ally, info_text: String, texture, bar_text: String = "HEALTH_BAR") -> void:
 	$ActorInfo.actor_info_init(node, info_text, texture, bar_text, false)
-	if info_text == tr("PLAYER_NAME"):
-		events.emit_signal("player_info_added")
+	events.emit_signal("allied_info_added", self)
 
 func _on_Ally_attack_changed(attack: int) -> void:
 	Attack_Label.text = attack_text.format([attack])

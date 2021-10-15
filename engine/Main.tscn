@@ -91,9 +91,10 @@ anchor_right = 1.0
 margin_left = -400.0
 margin_top = 24.0
 margin_bottom = 274.0
-rect_min_size = Vector2( 275, 200 )
+rect_min_size = Vector2( 400, 200 )
 mouse_filter = 1
 theme = ExtResource( 12 )
+resizable = true
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -149,7 +150,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SkillsContainer" type="VBoxContainer" parent="GUI/MenuContainer/MenuTabs"]
+[node name="SkillsContainer" type="ScrollContainer" parent="GUI/MenuContainer/MenuTabs"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -157,5 +158,10 @@ margin_left = 2.0
 margin_top = 28.0
 margin_right = -2.0
 margin_bottom = -2.0
-alignment = 1
+theme = ExtResource( 5 )
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/MenuContainer/MenuTabs/SkillsContainer"]
+margin_right = 396.0
+size_flags_horizontal = 3
 script = ExtResource( 16 )

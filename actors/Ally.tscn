@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://actors/Ally.gd" type="Script" id=1]
+
+[node name="Ally" type="KinematicBody2D"]
+position = Vector2( -16.0875, -16 )
+scale = Vector2( 1.00547, 1 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
