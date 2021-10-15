@@ -2,10 +2,10 @@ extends MarginContainer
 
 var inventory = preload("res://menus/inventory/Inventory.tres")
 	
-func can_drop_data(_position, data):
+func can_drop_data(_position, data) -> bool:
 	return data is Dictionary and data.has("item")
 	
-func drop_data(_position, data):
+func drop_data(_position, data) -> void:
 	var item = data.item.clone()
 	inventory.remove_item(data.item_index)
 	inventory.drag_data = null

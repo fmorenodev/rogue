@@ -22,14 +22,14 @@ func _ready() -> void:
 		inventory.items.append(item)
 	update_inventory_display()
 	show_selector()
-	
+
 func show_selector() -> void:
 	last_focused = get_child(selected_slot)
 	last_focused.Selector.show()
-	
+
 func hide_selector() -> void:
 	get_child(selected_slot).Selector.hide()
-		
+
 func _input(event: InputEvent) -> void:
 	if Inventory_Container.visible and Inventory_Popup.visible:
 		if selected_slot != last_focused.get_index():

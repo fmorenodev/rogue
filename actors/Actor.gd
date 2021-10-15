@@ -26,9 +26,9 @@ func move() -> void:
 func take_damage(attack_value: int) -> int:
 	var damage = attack_value - defense if attack_value > defense else 1
 	modify_health(-damage)
-	
+
 	return damage
-	
+
 func modify_health(hp: int) -> void:
 	if hp > 0:
 		health = min(health + hp, max_health)
@@ -37,7 +37,7 @@ func modify_health(hp: int) -> void:
 		if health == 0:
 			status = en.STATUS.DEAD
 	events.emit_signal("bar_value_changed", self, health)
-	
+
 func modify_defense(def: int) -> void:
 	defense += def
 	events.emit_signal("defense_changed", defense)

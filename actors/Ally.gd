@@ -7,7 +7,7 @@ onready var Player = get_node("../Player")
 
 func _ready() -> void:
 	var _err = events.connect("allied_info_added", self, "_on_allied_info_added")
-	
+
 func manual_init() -> void:
 	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
 	
@@ -21,7 +21,7 @@ func remove() -> void:
 	Grid.actors.erase(self)
 	events.emit_signal("actor_removed", self)
 	self.queue_free()
-	
+
 func _on_allied_info_added(info_node: ActorInfo) -> void:
 	if self.is_in_group("allies") and !events.is_connected("actor_removed", info_node, "_on_Actor_removed"):
 		var _err = events.connect("actor_removed", info_node, "_on_Actor_removed")

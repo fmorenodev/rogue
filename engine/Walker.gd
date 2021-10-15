@@ -14,7 +14,7 @@ func _init(start_pos: Vector2, new_borders: Rect2) -> void:
 	position = start_pos
 	step_history.append(position)
 	borders = new_borders
-	
+
 func walk(steps: int) -> Array:
 	place_room()
 	for step in steps:
@@ -27,7 +27,7 @@ func walk(steps: int) -> Array:
 		else:
 			change_direction()
 	return step_history
-	
+
 func step() -> bool:
 	var target_pos = position + direction
 	if borders.has_point(target_pos):
@@ -36,7 +36,7 @@ func step() -> bool:
 		return true
 	else:
 		return false
-		
+
 func change_direction() -> void:
 	steps_since_turn = 0
 	var directions = dir.BASIC_DIRECTIONS.duplicate()
@@ -78,7 +78,7 @@ func merge_rooms(new_room: Rect2) -> Rect2:
 			new_room = new_room.merge(rooms[i])
 			rooms.remove(i)
 	return new_room
-	
+
 func trim_room(room: Rect2) -> Rect2:
 	var starting_point = room.position
 	var trimmed_room = room

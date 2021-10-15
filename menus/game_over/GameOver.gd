@@ -20,7 +20,7 @@ func _ready() -> void:
 	_err = Retry_Button.connect("pressed", self, "_on_Retry_pressed")
 	_err = Exit_Button.connect("pressed", self, "_on_Exit_pressed")
 	_err = Anim_Player.connect("animation_finished", self, "_on_animation_finished")
-	
+
 func _on_game_over(current_floor: int, enemy_name: String) -> void:
 	Game_Over_Subtext.text = tr("GAME_OVER_SUBTEXT").format([current_floor, enemy_name])
 	events.emit_signal("new_message", tr("PLAYER_DEAD"), color.dark_red)

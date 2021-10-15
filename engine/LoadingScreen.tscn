@@ -1,19 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/GUI/Panel.tres" type="StyleBox" id=1]
-[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skull/skull_v2_2.png" type="Texture" id=2]
-[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skull/skull_v2_3.png" type="Texture" id=3]
-[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skull/skull_v2_4.png" type="Texture" id=4]
-[ext_resource path="res://assets/2D Pixel Dungeon Asset Pack/character_animation/monsters_idle/skull/skull_v2_1.png" type="Texture" id=5]
 [ext_resource path="res://engine/LoadingScreen.gd" type="Script" id=6]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "loading",
-"speed": 10.0
-} ]
 
 [node name="LoadingScreen" type="Control"]
 anchor_right = 1.0
@@ -46,7 +34,4 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Background"]
 position = Vector2( 400, 344 )
 scale = Vector2( 4, 4 )
-frames = SubResource( 1 )
 animation = "loading"
-frame = 2
-playing = true

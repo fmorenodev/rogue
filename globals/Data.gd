@@ -11,7 +11,7 @@ var pathfinding: AStar2D
 
 var entities: Array = []
 
-func is_entity_in_position(pos: Vector2):
+func is_entity_in_position(pos: Vector2) -> Varian:
 	for e in entities:
 		if e.position == pos:
 			return e

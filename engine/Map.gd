@@ -10,7 +10,7 @@ func _ready() -> void:
 	_err = events.connect("game_over", self, "_on_game_over")
 	input_enabled = true
 	build_level()
-	
+
 func _input(event: InputEvent) -> void:
 	if input_enabled:
 		if event.is_action_pressed('open_inventory'):
@@ -21,7 +21,7 @@ func _input(event: InputEvent) -> void:
 			var _err = get_tree().reload_current_scene()
 		if event.is_action_pressed('ui_focus_prev'):
 			events.emit_signal("game_over", -1, "debug")
-		
+
 func build_level() -> void:
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -36,7 +36,7 @@ func build_level() -> void:
 	Grid.update_bitmask_region(borders.position, borders.end - Vector2.ONE)
 	Grid.init(walker.rooms)
 	walker.queue_free()
-	
+
 func add_and_connect_point(pos: Vector2) -> void:
 	var new_id = data.pathfinding.get_available_point_id()
 	data.pathfinding.add_point(new_id, pos)
@@ -47,7 +47,7 @@ func add_and_connect_point(pos: Vector2) -> void:
 
 	for point in points_to_connect:
 		data.pathfinding.connect_points(new_id, point)
-		
+
 func find_step(initial_pos: Vector2, final_pos: Vector2) -> Vector2:
 	var i_pos_grid = Grid.world_to_map(initial_pos)
 	var pathfinding = data.pathfinding
@@ -55,6 +55,6 @@ func find_step(initial_pos: Vector2, final_pos: Vector2) -> Vector2:
 	var f_pos = pathfinding.get_closest_point(Grid.world_to_map(final_pos))
 	var path = pathfinding.get_id_path(i_pos, f_pos)
 	return pathfinding.get_point_position(path[1]) - i_pos_grid
-	
+
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
 	input_enabled = false

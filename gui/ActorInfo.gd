@@ -12,7 +12,7 @@ func actor_info_init(node: Actor, info_text: String, texture, bar_text: String =
 	Bar_Label = $LabeledBar/BarLabel
 	Bar_Label.text = tr(bar_text)
 	node_connected = node
-	
+
 	var _err = events.connect("max_bar_value_changed", self, "_on_Actor_max_bar_value_changed")
 	_err = events.connect("bar_value_changed", self, "_on_Actor_bar_value_changed")
 	if is_actor and node.is_in_group("enemies"):
@@ -25,7 +25,7 @@ func _on_Actor_max_bar_value_changed(node: Actor, max_bar_value: int) -> void:
 func _on_Actor_bar_value_changed(node: Actor, bar_value: int) -> void:
 	if node == node_connected:
 		Bar.value = bar_value
-	
+
 func _on_Actor_removed(node: Actor) -> void:
 	if node == node_connected:
 		self.queue_free()

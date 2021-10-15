@@ -8,18 +8,18 @@ func _ready() -> void:
 	var _err = events.connect("use_item", self, "_on_use_item")
 	_err = events.connect("use_skill", self, "_on_use_skill")
 	_err = events.connect("change_control", self, "_on_control_changed")
-	
+
 func _init() -> void:
 	max_health = 10
 	health = 10
 	attack = 5
 	defense = 0
 	actor_name = tr("PLAYER_NAME")
-	
+
 func manual_init() -> void:
 	set_process_unhandled_input(true)
 	.manual_init()
-	
+
 func check_input(event: InputEvent) -> bool:
 	direction = Vector2()
 	if event.is_action_pressed("ui_up", true):
@@ -40,7 +40,7 @@ func check_input(event: InputEvent) -> bool:
 		direction += dir.DOWN_RIGHT
 	elif event.is_action_pressed("wait", true):
 		return true
-	
+
 	return direction != Vector2()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,20 +48,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		if Grid.interact(self): # turn ended
 			set_process_unhandled_input(false)
 			Grid.end_turn()
-			
+
 func _on_control_changed(status: bool) -> void:
 	control_enabled = status
 
 func _on_use_item(item: Item, item_index: int) -> void:
 	item.use(self, item_index)
 	events.emit_signal("item_used")
-	
+
 func _on_use_skill(skill: Skill) -> void:
 	skill.use(self)
-			
+
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
 	control_enabled = false
-	
+
 func _on_Grid_level_loaded() -> void:
 	control_enabled = true
 

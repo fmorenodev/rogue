@@ -9,13 +9,13 @@ func _ready() -> void:
 	_err = connect("popup_hide", self, "_on_popup_hide")
 	_err = events.connect("close_popups", self, "_on_close_popups")
 	window_title = tr("MENU")
-	
+
 func _on_inventory_open() -> void:
 	open_tab(data.tabs.get(tr("INVENTORY")))
-	
+
 func _on_skills_open() -> void:
 	open_tab(data.tabs.get(tr("SKILLS")))
-		
+
 func open_tab(tab: int) -> void:
 	if !visible:
 		popup()
@@ -23,9 +23,9 @@ func open_tab(tab: int) -> void:
 		events.emit_signal("change_control", false)
 	else:
 		hide()
-		
+
 func _on_close_popups() -> void:
 	hide()
-		
+
 func _on_popup_hide() -> void:
 	events.emit_signal("change_control", true)

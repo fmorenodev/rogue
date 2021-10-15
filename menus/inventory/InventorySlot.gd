@@ -10,11 +10,11 @@ var default_texture = preload("res://assets/Menus/inventory/empty_slot.png")
 func _ready() -> void:
 	var _err = connect("mouse_entered", self, "_on_Slot_hover")
 	_err = connect("mouse_exited", self, "_on_Slot_hover_end")
-	
+
 func _on_Slot_hover() -> void:
 	Selector.show()
 	Inv_Display.selected_slot = get_index()
-	
+
 func _on_Slot_hover_end() -> void:
 	Selector.hide()
 
@@ -43,11 +43,11 @@ func get_drag_data(_position):
 		set_drag_preview(drag_preview)
 		inventory.drag_data = data
 		return data
-	
-func can_drop_data(_position, data):
+
+func can_drop_data(_position, data) -> bool:
 	return data is Dictionary and data.has("item")
-	
-func drop_data(_position, data):
+
+func drop_data(_position, data) -> void:
 	var item_index = get_index()
 	var item = inventory.items[item_index]
 	if item is Item and item.item_name == data.item.item_name:

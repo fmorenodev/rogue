@@ -38,10 +38,10 @@ func _ready() -> void:
 	
 	_err = events.connect("item_spawned", self, "spawn_item")
 	_err = events.connect("ally_spawned", self, "spawn_ally")
-	
+
 func _on_Grid_level_loaded() -> void:
 	set_physics_process(true)
-	
+
 func _on_new_game() -> void:
 	events.emit_signal("new_message", tr("GAME_START"))
 	Player.manual_init()
@@ -51,7 +51,7 @@ func _on_new_game() -> void:
 		object.manual_init()
 	for item in items:
 		item.manual_init()
-	
+
 func init(grid_rooms: Array) -> void:
 	rooms = grid_rooms
 	clean_up()
@@ -60,7 +60,7 @@ func init(grid_rooms: Array) -> void:
 	spawn_enemies()
 	events.emit_signal("new_message", tr("LEVEL_ENTERED"), color.grey)
 	events.emit_signal("level_loaded")
-	
+
 func clean_up() -> void:
 	actors = [null]
 	current_index = 0
@@ -78,14 +78,14 @@ func spawn_player() -> void:
 		Player.position = pos
 	actors[0] = Player
 	data.entities.append(Player)
-	
+
 func spawn_ally(type: int) -> void:
 	var ally_spawned: Ally
 	match type:
 		en.SPAWN_SKILL_TYPE.TURRET, _:
 			ally_spawned = Turret.instance()
 	spawn_actor(ally_spawned, true)
-	
+
 func spawn_actor(actor: Actor, get_pos: bool = false) -> void:
 	if data.enemy_names.has(actor.name):
 		enemies.append(actor)
@@ -98,15 +98,15 @@ func spawn_actor(actor: Actor, get_pos: bool = false) -> void:
 	if get_pos:
 		actor.position = get_available_position()
 	data.entities.append(actor)
-	
+
 func spawn_enemies() -> void:
 	for _i in range(n_enemies):
 		var enemy = Zombie.instance()
 		spawn_actor(enemy, true)
-		
+
 func round_to_tile(pos: Vector2) -> Vector2:
 	return map_to_world(world_to_map(pos))
-		
+
 func spawn_item(item: Item, get_pos: bool = false) -> void:
 	items.append(item)
 	add_child(item)
@@ -115,17 +115,17 @@ func spawn_item(item: Item, get_pos: bool = false) -> void:
 	else:
 		item.position = round_to_tile(get_local_mouse_position())
 	data.entities.append(item)
-	
+
 func spawn_items() -> void:
 	for _i in range(n_items):
 		var item = Syringe.instance()
 		item.add_type(en.SYRINGE_TYPE.values()[randi() % 4])
 		spawn_item(item, true)
-		
+
 func _on_Grid_entity_removed(node: Node) -> void:
 	items.erase(node)
 	node.queue_free()
-		
+
 func get_available_position():
 	var pos: Vector2
 	pos = get_room_and_pos()
@@ -204,7 +204,7 @@ func interact(child_node: Actor) -> bool:
 						else:
 							events.emit_signal("new_message", tr("INV_FULL"),
 								color.white, [item.item_name])
-							
+
 						break
 			for o in to_remove:
 				o.remove()
@@ -218,7 +218,7 @@ func interact(child_node: Actor) -> bool:
 		events.emit_signal("new_message", tr("OUT_OF_BOUNDS"))
 		turn_completed = false
 	return turn_completed
-					
+
 func enemy_interact(child_node: Enemy) -> void:
 	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos):

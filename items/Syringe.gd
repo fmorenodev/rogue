@@ -45,7 +45,7 @@ func use(user: Node2D, item_index: int) -> void:
 	events.emit_signal("new_message", tr("ITEM_USE"), color.white, [item_name])
 	inventory.change_amount(item_index, -1)
 	use_turn(user)
-	
+
 func clone() -> Item:
 	var cloned_syringe = .clone()
 	cloned_syringe.type = self.type

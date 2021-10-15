@@ -10,7 +10,7 @@ func _ready() -> void:
 	
 func manual_init() -> void:
 	events.emit_signal("add_actor_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
-	
+
 func _on_Grid_turn_started(current_actor: Actor) -> void:
 	if not current_actor.is_in_group("enemies"):
 		return
