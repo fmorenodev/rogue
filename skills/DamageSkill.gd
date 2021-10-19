@@ -26,7 +26,7 @@ func add_type(skill_type: int) -> void:
 			skill_name = tr("BOMB_SKILL")
 			desc = tr("BOMB_DESC")
 
-func use(user: Actor) -> void:
+func use(_user: Actor) -> void:
 	# target_tile is calculated using the targeting system
 	# calculate actual reach with user_position to target_tile ?
 	# var blast_area = calc_blast_area(target_tile)

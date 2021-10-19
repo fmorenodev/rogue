@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/Menus/main_menu.tres" type="Theme" id=1]
+[ext_resource path="res://assets/Menus/main_menu/main_menu.tres" type="Theme" id=1]
 [ext_resource path="res://menus/game_over/GameOver.gd" type="Script" id=2]
 [ext_resource path="res://assets/default_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/Menus/Background.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/Menus/main_menu/Background.tres" type="StyleBox" id=4]
 [ext_resource path="res://menus/main_menu/SelectorButton.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/Menus/cross.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "game_over"
@@ -215,12 +214,11 @@ __meta__ = {
 
 [node name="GameOverTitle" type="HBoxContainer" parent="GameOverContainer"]
 margin_right = 800.0
-margin_bottom = 96.0
+margin_bottom = 60.0
 
 [node name="GameOverText1" type="Label" parent="GameOverContainer/GameOverTitle"]
-margin_top = 18.0
-margin_right = 365.0
-margin_bottom = 78.0
+margin_right = 398.0
+margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 2
@@ -228,21 +226,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Cross" type="NinePatchRect" parent="GameOverContainer/GameOverTitle"]
-margin_left = 369.0
-margin_right = 431.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 62, 96 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="GameOverText2" type="Label" parent="GameOverContainer/GameOverTitle"]
-margin_left = 435.0
-margin_top = 18.0
+margin_left = 402.0
 margin_right = 800.0
-margin_bottom = 78.0
+margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -250,16 +237,16 @@ __meta__ = {
 }
 
 [node name="GameOverSubtext" type="Label" parent="GameOverContainer"]
-margin_top = 100.0
+margin_top = 64.0
 margin_right = 800.0
-margin_bottom = 116.0
+margin_bottom = 80.0
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
 [node name="Buttons" type="HBoxContainer" parent="GameOverContainer"]
-margin_top = 120.0
+margin_top = 84.0
 margin_right = 800.0
-margin_bottom = 420.0
+margin_bottom = 384.0
 rect_min_size = Vector2( 300, 300 )
 
 [node name="Retry" parent="GameOverContainer/Buttons" instance=ExtResource( 5 )]

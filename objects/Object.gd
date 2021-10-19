@@ -16,8 +16,9 @@ func manual_init() -> void:
 	events.emit_signal("add_entity_info", self, object_name, self.frames.get_frame("default", 0), en.ENTITY_TYPE.OBJECT)
 
 func remove() -> void:
-	events.emit_signal("entity_removed", self)
 	Grid.objects.erase(self)
+	data.entities.erase(self)
+	events.emit_signal("entity_removed", self)
 	self.queue_free()
 
 func _on_info_added(info_node: EntityInfo) -> void:

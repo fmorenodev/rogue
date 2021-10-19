@@ -28,6 +28,7 @@ func use_turn(user: Actor) -> void:
 	user.Grid.end_turn()
 
 func remove() -> void:
+	data.entities.erase(self)
 	events.emit_signal("entity_removed", self)
 
 func _on_info_added(info_node: EntityInfo) -> void:

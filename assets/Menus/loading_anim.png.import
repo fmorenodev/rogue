@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/cross.png-e1d3ae36432e8265f337b264eae75348.stex"
+path="res://.import/loading_anim.png-7063d7058b5c2c6df23b9c00b58e71f3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Menus/cross.png"
-dest_files=[ "res://.import/cross.png-e1d3ae36432e8265f337b264eae75348.stex" ]
+source_file="res://assets/Menus/loading_anim.png"
+dest_files=[ "res://.import/loading_anim.png-7063d7058b5c2c6df23b9c00b58e71f3.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

@@ -19,6 +19,7 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 func remove() -> void:
 	Grid.enemies.erase(self)
 	Grid.actors.erase(self)
+	data.entities.erase(self)
 	events.emit_signal("actor_removed", self)
 	self.queue_free()
 

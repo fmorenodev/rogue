@@ -204,10 +204,11 @@ func interact(child_node: Actor) -> bool:
 						else:
 							events.emit_signal("new_message", tr("INV_FULL"),
 								color.white, [item.item_name])
-
 						break
 			for o in to_remove:
+				print(get_groups()[0])
 				o.remove()
+				print(get_groups()[0])
 			# movement
 			if !blocked:
 				child_node.move()

@@ -3,70 +3,30 @@
 a GODOT-based roguelike
 
 ## IMPLEMENT:
-- world generation
-	- ~~improve world gen to make it tile_based~~
-	- tweak new world gen
-	- ~~fix positioning issue for entities upon spawn~~
-	- ~~fix world gen upon retry/new dungeon level (less entities spawn?)~~
-- improve spawning to make it more evenly distributed
-	- ~~no spawning in corridor entrances (find how to detect them)~~
-	- ~~fix entities spawning upon the player~~
-	- check max enemies in certain area
-- map clearing and advancing to the next map
-	- rewards for clearing map
 - player interaction with entities
-	- ~~item pickup (using inventory)~~
 	- skills and ranged attacks
 	- neutral or allied interactions with actors
-- ~~inventory~~
 - implement neutral and ally NPCs
+	- new designs
+	- different ai on each mob
+- map clearing and advancing to the next map
+	- rewards for clearing map
 - loading screen
-	- ~~make graphic/animation for loading screen~~
 	- fix loading / event order to make it dissappear when the map is generated
-- refactor nodes and scripts to make each node or script do less things and be more organized
-	- ~~add diagonal movement~~
-	- fix diagonal movement / pressing two or more movement inputs at the same time.
+	- add new animation
 - general fixes
-	- add a new tile for the background to distinguish it / parallax background (not possible to do this kind of bg)
-	- ~~fix player / enemy behaviour~~
-	- ~~bug: when inventory is full, taking the same item later doesn't remove it from the floor until you pass it again~~
+	- improve spawning to make it more evenly distributed
+	- fix diagonal movement / pressing two or more movement inputs at the same time.
 	- bug: when calculating a path, if the path is blocked by an entity, move around (or possibly update the a* map with the square each untraversable entity occupies at the end of each turn)
 
 ## DESIGN: when designed move to implement with the decided implementation
-- decide on aesthetic for the game
-	- bw / 1 bit (maybe)
-	- realistic color palette (i don't think so)
-	- limited color palette (maybe)
-	- setting / aesthetic based new fonts (must search first)
-- decide on setting for the game
-	- post-apocalyptic
-	- futuristic
-	- medieval
-	- fantasy
-	- oniric / surreal
-- bigger tiles?
-	- 32 x 32
-	- asymmetric (16 x 32)
 - design and decide additional inputs:
 	- open screen:
-		- menu
 		- char sheet
-		- log / quests / relations
-		- no map needed
-		- inventory
-		- etc
+		- log
 	- alternative interactions:
-		- talk
-		- shoot / skill / magic
 		- look at tile
-		- etc
-- design additional entities
-- design expected enemy behaviour
-	- universal enemy AI
-	- specfic enemy AI
-	- enemy death behaviour
 - design classes or loadouts
 	- implement skills / perks / etc
 - menu styling
 	- create better design for the menus
-	- graphics based on setting / aesthetic

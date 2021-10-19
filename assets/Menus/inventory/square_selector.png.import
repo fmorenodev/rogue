@@ -2,11 +2,16 @@
 
 importer="texture"
 type="StreamTexture"
-valid=false
+path="res://.import/square_selector.png-ffed8c7dfaf525786d57aeb5a36f2cff.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://assets/Menus/empty_texture.png"
+source_file="res://assets/Menus/inventory/square_selector.png"
+dest_files=[ "res://.import/square_selector.png-ffed8c7dfaf525786d57aeb5a36f2cff.stex" ]
+
 [params]
 
 compress/mode=0
