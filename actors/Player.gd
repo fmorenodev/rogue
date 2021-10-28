@@ -4,10 +4,14 @@ class_name Player
 
 var control_enabled = false
 
+onready var Player_Camera = $Camera2D
+onready var punch = preload("res://assets/sounds/punch.wav")
+
 func _ready() -> void:
 	var _err = events.connect("use_item", self, "_on_use_item")
 	_err = events.connect("use_skill", self, "_on_use_skill")
 	_err = events.connect("change_control", self, "_on_control_changed")
+	attack_sound = punch
 
 func _init() -> void:
 	max_health = 10
@@ -42,11 +46,29 @@ func check_input(event: InputEvent) -> bool:
 		return true
 
 	return direction != Vector2()
+	
+func switch_camera(status: bool) -> void:
+	if status:
+		Player_Camera.drag_margin_bottom = 0
+		Player_Camera.drag_margin_top = 0
+		Player_Camera.drag_margin_left = 0
+		Player_Camera.drag_margin_right = 0
+	else:
+		Player_Camera.drag_margin_bottom = 1
+		Player_Camera.drag_margin_top = 1
+		Player_Camera.drag_margin_left = 1
+		Player_Camera.drag_margin_right = 1
 
 func _unhandled_input(event: InputEvent) -> void:
 	if check_input(event) and control_enabled:
 		if Grid.interact(self): # turn ended
 			set_process_unhandled_input(false)
+			if Grid.Anim_Player.is_playing():
+				events.emit_signal("switch_input", false)
+				switch_camera(false)
+				yield(Grid.Anim_Player, "animation_finished")
+				events.emit_signal("switch_input", true)
+				switch_camera(true)
 			Grid.end_turn()
 
 func _on_control_changed(status: bool) -> void:

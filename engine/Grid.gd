@@ -1,13 +1,14 @@
 extends TileMap
 
-onready var Zombie = preload("res://actors/enemies/Zombie.tscn")
-onready var Turret = preload("res://actors/allies/Turret.tscn")
+onready var Enemy_instance = preload("res://actors/Enemy.tscn")
+onready var Ally_instance = preload("res://actors/Ally.tscn")
 onready var Syringe = preload("res://items/Syringe.tscn")
 
 # grid elements
 onready var Player = $Player
 onready var Enemy = $Enemy
 onready var Ally = $Ally
+onready var Anim_Player = $AnimationPlayer
 var rooms = []
 var enemies = []
 var allies = []
@@ -47,6 +48,8 @@ func _on_new_game() -> void:
 	Player.manual_init()
 	for enemy in enemies:
 		enemy.manual_init()
+	for ally in allies:
+		ally.manual_init()
 	for object in objects:
 		object.manual_init()
 	for item in items:
@@ -80,29 +83,28 @@ func spawn_player() -> void:
 	data.entities.append(Player)
 
 func spawn_ally(type: int) -> void:
-	var ally_spawned: Ally
-	match type:
-		en.SPAWN_SKILL_TYPE.TURRET, _:
-			ally_spawned = Turret.instance()
-	spawn_actor(ally_spawned, true)
+	var ally_spawned = Ally_instance.instance()
+	spawn_actor(ally_spawned, type, true)
 
-func spawn_actor(actor: Actor, get_pos: bool = false) -> void:
-	if data.enemy_names.has(actor.name):
+func spawn_actor(actor: Actor, type: int, get_pos: bool = false) -> void:
+	if actor.name == 'Enemy':
 		enemies.append(actor)
 		actor.add_to_group("enemies")
-	if data.ally_names.has(actor.name):
+	if actor.name == 'Ally':
 		allies.append(actor)
 		actor.add_to_group("allies")
 	actors.append(actor)
 	add_child(actor)
+	actor.add_type(type)
 	if get_pos:
 		actor.position = get_available_position()
 	data.entities.append(actor)
+	actor.manual_init()
 
 func spawn_enemies() -> void:
 	for _i in range(n_enemies):
-		var enemy = Zombie.instance()
-		spawn_actor(enemy, true)
+		var enemy = Enemy_instance.instance()
+		spawn_actor(enemy, randi() % 4, true)
 
 func round_to_tile(pos: Vector2) -> Vector2:
 	return map_to_world(world_to_map(pos))
@@ -169,19 +171,25 @@ func interact(child_node: Actor) -> bool:
 		if get_cellv(grid_pos) == -1:
 			var blocked = false
 			var to_remove = []
-			# enemy
+			# enemies
 			for enemy in enemies:
 				if grid_pos == world_to_map(enemy.position):
-					var damage = enemy.take_damage(child_node.attack)
-					events.emit_signal("new_message", tr("PLAYER_ATTACK"),
-						color.cyan, [enemy.actor_name, damage])
-					if enemy.status == en.STATUS.DEAD:
+					var result = child_node.basic_attack(enemy)
+					if result:
 						to_remove.append(enemy)
-						events.emit_signal("new_message", tr("ENEMY_DEAD"),
-							color.red, [enemy.actor_name])
 					blocked = true
 					break
-			# object
+			# allies
+			for ally in allies:
+				if grid_pos == world_to_map(ally.position):
+					events.emit_signal("new_message", tr("PLAYER_PUSH"),
+						color.cyan, [ally.actor_name])
+					ally.direction = child_node.direction
+					if !passive_interact(ally):
+						blocked = true
+						turn_completed = false
+					break
+			# objects
 			for object in objects:
 				if grid_pos == world_to_map(object.position):
 					if object.can_interact:
@@ -206,9 +214,7 @@ func interact(child_node: Actor) -> bool:
 								color.white, [item.item_name])
 						break
 			for o in to_remove:
-				print(get_groups()[0])
 				o.remove()
-				print(get_groups()[0])
 			# movement
 			if !blocked:
 				child_node.move()
@@ -220,29 +226,68 @@ func interact(child_node: Actor) -> bool:
 		turn_completed = false
 	return turn_completed
 
+func passive_interact(child_node: Actor) -> bool:
+	var blocked = false
+	var grid_pos = world_to_map(child_node.position) + child_node.direction
+	if is_inside_bounds(grid_pos):
+		if get_cellv(grid_pos) == -1:
+			# enemies
+			for enemy in enemies:
+				if grid_pos == world_to_map(enemy.position):
+					blocked = true
+					break
+			# allies
+			for ally in allies:
+				if grid_pos == world_to_map(ally.position):
+					blocked = true
+					break
+			# objects
+			for object in objects:
+				if grid_pos == world_to_map(object.position):
+					blocked = true
+					break
+		else: # moving against a wall
+			blocked = true
+	else: # moving outside the bounds
+		blocked = true
+	# movement
+	if blocked:
+		events.emit_signal("new_message", tr("BLOCKED"))
+	else:
+		child_node.move()
+	return !blocked
+
 func enemy_interact(child_node: Enemy) -> void:
 	var grid_pos = world_to_map(child_node.position) + child_node.direction
 	if is_inside_bounds(grid_pos):
 		if get_cellv(grid_pos) == -1:
 			var blocked = false
-			# Player
+			var to_remove = []
+			# player
 			if grid_pos == world_to_map(Player.position):
-				var damage = Player.take_damage(child_node.attack)
-				events.emit_signal("new_message", tr("OTHER_ATTACK"),
-						color.light_red, [child_node.actor_name, Player.actor_name.to_lower(), damage])
-				if Player.status == en.STATUS.DEAD:
-					events.emit_signal("game_over", floor_n, child_node.actor_name)
+				var _result = child_node.basic_attack(Player)
 				blocked = true
+			# allies
+			for ally in allies:
+				if grid_pos == world_to_map(ally.position):
+					var result = child_node.basic_attack(ally)
+					if result:
+						to_remove.append(ally)
+					blocked = true
+					break
 			# other enemies
 			for enemy in enemies:
 				if grid_pos == world_to_map(enemy.position):
 					blocked = true
 					break
-			# object
+			# objects
 			for object in objects:
 				if grid_pos == world_to_map(object.position):
 					blocked = true
 					break
+			# entity removal
+			for o in to_remove:
+				o.remove()
 			# movement
 			if !blocked:
 				child_node.move()
@@ -253,8 +298,11 @@ func is_inside_bounds(point: Vector2) -> bool:
 	return horizontal_boundaries && vertical_boundaries
 
 func end_turn() -> void:
-	goto_next()
-	events.emit_signal("turn_started", get_current())
+	if Player.status == en.STATUS.DEAD:
+		events.emit_signal("game_over", floor_n, get_current().actor_name)
+	else:
+		goto_next()
+		events.emit_signal("turn_started", get_current())
 
 func get_current() -> Actor:
 	return actors[current_index]

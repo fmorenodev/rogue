@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/trash.png-0a60288b50084688e23da1baea25e65d.stex"
+path="res://.import/trash.png-8dcdee7f71feee2a1992532b6385e4e0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Menus/inventory/trash.png"
-dest_files=[ "res://.import/trash.png-0a60288b50084688e23da1baea25e65d.stex" ]
+source_file="res://assets/menus/inventory/trash.png"
+dest_files=[ "res://.import/trash.png-8dcdee7f71feee2a1992532b6385e4e0.stex" ]
 
 [params]
 

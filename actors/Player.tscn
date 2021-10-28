@@ -3,7 +3,6 @@
 [ext_resource path="res://assets/actors/marine.png" type="Texture" id=2]
 [ext_resource path="res://actors/Player.gd" type="Script" id=5]
 
-
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 5 )

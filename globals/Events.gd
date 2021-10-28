@@ -17,6 +17,7 @@ signal enemy_info_added(info_node)
 signal item_info_added(info_node)
 signal object_info_added(info_node)
 
+signal ally_removed(node)
 signal actor_removed(node)
 signal entity_removed(node)
 
@@ -47,7 +48,8 @@ signal new_message(msg, color, args)
 
 # Turn system
 signal turn_started(current_actor)
-signal end_turn()
+signal end_turn
+signal switch_input(boolean)
 signal new_game
 signal game_over(current_floor, enemy)
 

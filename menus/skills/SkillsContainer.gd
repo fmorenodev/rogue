@@ -8,7 +8,7 @@ func _ready() -> void:
 	# testing
 	for _i in range(0, 2):
 		var new_skill = SpawnSkill.new()
-		new_skill.add_type(en.SPAWN_SKILL_TYPE.TURRET)
+		new_skill.add_type(en.ALLY_TYPE.TURRET)
 		skills.add_skill(new_skill)
 	for _i in range(0, 2):
 		var new_skill = DamageSkill.new()

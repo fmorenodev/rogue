@@ -18,9 +18,12 @@ tile_data = PoolIntArray( -2490407, 0, 0, -2490406, 0, 1, -2490405, 0, 1, -24904
 scale = Vector2( 1.00547, 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Grid/Player"]
-position = Vector2( -52, 54 )
+position = Vector2( 7.95648, 8 )
+scale = Vector2( 0.99456, 1 )
 current = true
 zoom = Vector2( 0.75, 0.75 )
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
 drag_margin_left = 0.0
 drag_margin_top = 0.0
 drag_margin_right = 0.0
@@ -31,3 +34,7 @@ position = Vector2( -16.0875, -16 )
 scale = Vector2( 1.00547, 1 )
 
 [node name="Ally" parent="Grid" instance=ExtResource( 5 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Grid"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Grid"]

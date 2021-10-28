@@ -8,6 +8,7 @@ func _ready() -> void:
 	randomize()
 	var _err = events.connect("build_level", self, "build_level")
 	_err = events.connect("game_over", self, "_on_game_over")
+	_err = events.connect("switch_input", self, "_on_switch_input")
 	input_enabled = true
 	build_level()
 
@@ -58,3 +59,6 @@ func find_step(initial_pos: Vector2, final_pos: Vector2) -> Vector2:
 
 func _on_game_over(_current_floor: int, _enemy_name: String) -> void:
 	input_enabled = false
+	
+func _on_switch_input(status: bool) -> void:
+	input_enabled = status

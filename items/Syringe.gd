@@ -9,8 +9,8 @@ var dl_texture = preload("res://assets/items/syringe_dl.png")
 
 var type: int
 
-func add_type(_type) -> void:
-	type = _type
+func add_type(syringe_type: int) -> void:
+	type = syringe_type
 	match type:
 		en.SYRINGE_TYPE.HEALTH_S:
 			texture = hs_texture

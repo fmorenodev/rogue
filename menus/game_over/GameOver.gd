@@ -23,9 +23,9 @@ func _ready() -> void:
 
 func _on_game_over(current_floor: int, enemy_name: String) -> void:
 	Game_Over_Subtext.text = tr("GAME_OVER_SUBTEXT").format([current_floor, enemy_name])
-	events.emit_signal("new_message", tr("PLAYER_DEAD"), color.dark_red)
+	events.emit_signal("new_message", tr("ACTOR_DEAD"), color.dark_red, [tr("PLAYER_NAME")])
 	self.show()
-	Anim_Player.play("init") # continued in _on_animation_finished
+	Anim_Player.play("game_over") # continued in _on_animation_finished
 
 func _on_Retry_pressed() -> void:
 	self.hide()
@@ -34,8 +34,5 @@ func _on_Retry_pressed() -> void:
 func _on_Exit_pressed() -> void:
 	var _err = get_tree().change_scene("res://menus/main_menu/MainMenu.tscn")
 
-func _on_animation_finished(anim_name: String) -> void:
-	if anim_name == "init":
-		Anim_Player.play("game_over")
-	elif anim_name == "game_over":
-		Retry_Button.grab_focus()
+func _on_animation_finished(_anim_name: String) -> void:
+	Retry_Button.grab_focus()

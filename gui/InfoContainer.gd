@@ -20,7 +20,7 @@ func _on_add_actor_info(node: Actor, info_text: String, texture, bar_text: Strin
 	add_child(a_info)
 	a_info.actor_info_init(node, info_text, texture, bar_text)
 
-func _on_add_allied_info(node: Player, info_text: String, texture, bar_text: String) -> void:
+func _on_add_allied_info(node: Ally, info_text: String, texture, bar_text: String) -> void:
 	var a_info = Allied_Info.instance()
 	add_child(a_info)
 	a_info.allied_info_init(node, info_text, texture, bar_text)

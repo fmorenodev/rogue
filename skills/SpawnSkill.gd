@@ -8,7 +8,7 @@ var type: int
 
 func add_type(skill_type: int) -> void:
 	match skill_type:
-		en.SPAWN_SKILL_TYPE.TURRET, _:
+		en.ALLY_TYPE.TURRET, _:
 			type = skill_type
 			texture = turret_texture
 			skill_name = tr("SPAWN_SKILL").format([tr("TURRET_NAME")])

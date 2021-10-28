@@ -8,10 +8,10 @@
 [ext_resource path="res://menus/game_over/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://menus/menu_container/MenuTabs.gd" type="Script" id=7]
 [ext_resource path="res://menus/inventory/InventoryDisplay.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/Menus/inventory/trash.png" type="Texture" id=9]
+[ext_resource path="res://assets/menus/inventory/trash.png" type="Texture" id=9]
 [ext_resource path="res://menus/inventory/ItemDeleter.gd" type="Script" id=10]
 [ext_resource path="res://gui/GUIContainer.gd" type="Script" id=11]
-[ext_resource path="res://assets/Menus/window_menu.tres" type="Theme" id=12]
+[ext_resource path="res://assets/menus/window_menu.tres" type="Theme" id=12]
 [ext_resource path="res://menus/menu_container/MenuContainer.gd" type="Script" id=13]
 [ext_resource path="res://assets/GUI/Panel.tres" type="StyleBox" id=14]
 [ext_resource path="res://menus/inventory/InventoryContainer.gd" type="Script" id=15]
@@ -80,9 +80,6 @@ rect_min_size = Vector2( 670, 100 )
 
 [node name="GameOver" parent="GUI" instance=ExtResource( 6 )]
 visible = false
-margin_left = 129.0
-margin_right = -2.0
-margin_bottom = -100.0
 
 [node name="MenuContainer" type="WindowDialog" parent="GUI"]
 visible = true

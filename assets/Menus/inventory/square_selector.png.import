@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/square_selector.png-ffed8c7dfaf525786d57aeb5a36f2cff.stex"
+path="res://.import/square_selector.png-a9441b7dee0579fb8442208c9830086e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Menus/inventory/square_selector.png"
-dest_files=[ "res://.import/square_selector.png-ffed8c7dfaf525786d57aeb5a36f2cff.stex" ]
+source_file="res://assets/menus/inventory/square_selector.png"
+dest_files=[ "res://.import/square_selector.png-a9441b7dee0579fb8442208c9830086e.stex" ]
 
 [params]
 

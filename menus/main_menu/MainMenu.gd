@@ -2,6 +2,7 @@ extends Control
 
 var scene_path: String
 var version = "0.0.1"
+onready var Title = $MenuContainer/Title
 onready var New_Game_Button = $MenuContainer/Buttons/NewGame/Button
 onready var Continue_Button = $MenuContainer/Buttons/Continue/Button
 onready var Options_Button = $MenuContainer/Buttons/Options/Button
@@ -11,6 +12,7 @@ onready var Dev_Label = $MenuContainer/Info/Dev
 onready var Fade_In = $FadeIn
 
 func _ready() -> void:
+	Title.text = tr("GAME_TITLE")
 	New_Game_Button.text = tr("NEW_GAME")
 	Continue_Button.text = tr("CONTINUE")
 	Options_Button.text = tr("OPTIONS")
