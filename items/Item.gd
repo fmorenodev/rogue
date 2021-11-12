@@ -4,17 +4,17 @@ extends Sprite
 
 var inventory = preload("res://menus/inventory/Inventory.tres")
 
-var item_name: String
+var entity_name: String
 var desc: String
 var amount = 1
 var stackable = true
 
 func _ready() -> void:
 	var _err = events.connect("item_info_added", self, "_on_info_added")
-	events.emit_signal("add_entity_info", self, item_name, self.texture, en.ENTITY_TYPE.ITEM)
+	events.emit_signal("add_entity_info", self, entity_name, self.texture, en.ENTITY_TYPE.ITEM)
 
 func manual_init() -> void:
-	events.emit_signal("add_entity_info", self, item_name, self.texture, en.ENTITY_TYPE.ITEM)
+	events.emit_signal("add_entity_info", self, entity_name, self.texture, en.ENTITY_TYPE.ITEM)
 
 func pick_up(_owner: Actor) -> bool:
 	var item = self.clone()
@@ -37,7 +37,7 @@ func _on_info_added(info_node: EntityInfo) -> void:
 
 func clone() -> Item:
 	var cloned_item: Item = self.duplicate()
-	cloned_item.item_name = self.item_name
+	cloned_item.entity_name = self.entity_name
 	cloned_item.desc = self.desc
 	cloned_item.amount = self.amount
 	cloned_item.stackable = self.stackable

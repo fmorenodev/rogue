@@ -7,13 +7,13 @@ onready var Grid = get_parent()
 var can_interact: bool
 var interaction: String
 var args = ["placeholder"]
-var object_name: String
+var entity_name: String
 
 func _ready() -> void:
 	var _err = events.connect("object_info_added", self, "_on_info_added")
 
 func manual_init() -> void:
-	events.emit_signal("add_entity_info", self, object_name, self.frames.get_frame("default", 0), en.ENTITY_TYPE.OBJECT)
+	events.emit_signal("add_entity_info", self, entity_name, self.frames.get_frame("default", 0), en.ENTITY_TYPE.OBJECT)
 
 func remove() -> void:
 	Grid.objects.erase(self)

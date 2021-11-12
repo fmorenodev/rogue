@@ -50,7 +50,7 @@ func can_drop_data(_position, data) -> bool:
 func drop_data(_position, data) -> void:
 	var item_index = get_index()
 	var item = inventory.items[item_index]
-	if item is Item and item.item_name == data.item.item_name:
+	if item is Item and item.entity_name == data.item.entity_name:
 		inventory.change_amount(item_index, data.item.amount)
 	else:
 		inventory.swap_items(item_index, data.item_index)

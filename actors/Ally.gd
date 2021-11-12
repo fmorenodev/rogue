@@ -4,12 +4,13 @@ extends Actor
 
 onready var Map = get_node("../../")
 onready var turret_texture = preload("res://assets/actors/turret.png")
+onready var healingbot_texture = preload("res://assets/actors/healing_bot.png")
 
 func _ready() -> void:
 	var _err = events.connect("allied_info_added", self, "_on_allied_info_added")
 
 func manual_init() -> void:
-	events.emit_signal("add_allied_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
+	events.emit_signal("add_allied_info", self, entity_name, Actor_Sprite.texture, "HEALTH_BAR")
 	
 func add_type(ally_type: int) -> void:
 	type = ally_type
@@ -19,10 +20,17 @@ func add_type(ally_type: int) -> void:
 			health = 10
 			attack = 2
 			defense = 0
-			actor_name = tr("TURRET_NAME")
+			entity_name = tr("TURRET_NAME")
+			desc = tr("TURRET_DESC")
 			Actor_Sprite.texture = turret_texture
-		_:
-			pass
+		en.ALLY_TYPE.HEALINGBOT, _:
+			max_health = 4
+			health = 4
+			attack = 0
+			defense = 0
+			entity_name = tr("HEALINGBOT_NAME")
+			desc = tr("HEALINGBOT_DESC")
+			Actor_Sprite.texture = healingbot_texture
 
 func _on_Grid_turn_started(current_actor: Actor) -> void:
 	if not current_actor.is_in_group("allies"):
@@ -31,7 +39,8 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 		en.ALLY_TYPE.TURRET:
 			#shoot
 			pass
-		_:
+		en.ALLY_TYPE.HEALINGBOT, _:
+			# follow and heal
 			pass
 	if Grid.Anim_Player.is_playing():
 		events.emit_signal("switch_input", false)
@@ -40,9 +49,10 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 	Grid.end_turn()
 
 func remove() -> void:
+	.remove()
 	Grid.allies.erase(self)
-	Grid.actors.erase(self)
-	data.entities.erase(self)
+	#Grid.actors.erase(self)
+	#data.entities.erase(self)
 	events.emit_signal("ally_removed", self)
 	self.queue_free()
 

@@ -5,18 +5,20 @@
 [ext_resource path="res://gui/LabeledBar.tscn" type="PackedScene" id=4]
 
 [node name="ActorInfo" type="VBoxContainer"]
-margin_right = 120.0
-margin_bottom = 38.0
-rect_min_size = Vector2( 130, 0 )
+margin_right = 100.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 100, 42 )
+custom_constants/separation = 3
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EntityInfo" parent="." instance=ExtResource( 1 )]
-margin_right = 130.0
+margin_bottom = 20.0
 
 [node name="LabeledBar" parent="." instance=ExtResource( 4 )]
-margin_top = 29.0
-margin_right = 130.0
-margin_bottom = 49.0
+margin_left = 0.0
+margin_top = 23.0
+margin_right = 100.0
+margin_bottom = 39.0

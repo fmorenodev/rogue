@@ -20,6 +20,7 @@ func entity_info_init(node, text: String, texture, entity_type: int) -> void:
 		en.ENTITY_TYPE.OBJECT, _:
 			events.emit_signal("object_info_added", self)
 			var _err = events.connect("sprite_changed", self, "_on_Sprite_change")
+
 		
 func _on_Sprite_change(node, new_texture) -> void:
 	if node == node_connected:

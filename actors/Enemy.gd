@@ -14,7 +14,7 @@ func _ready() -> void:
 	var _err = events.connect("enemy_info_added", self, "_on_info_added")
 	
 func manual_init() -> void:
-	events.emit_signal("add_actor_info", self, actor_name, Actor_Sprite.texture, "HEALTH_BAR")
+	events.emit_signal("add_actor_info", self, entity_name, Actor_Sprite.texture, "HEALTH_BAR")
 
 func add_type(enemy_type: int) -> void:
 	type = enemy_type
@@ -24,7 +24,8 @@ func add_type(enemy_type: int) -> void:
 			health = 10
 			attack = 2
 			defense = 0
-			actor_name = tr("BOMBLING_NAME")
+			entity_name = tr("BOMBLING_NAME")
+			desc = tr("BOMBLING_DESC")
 			Actor_Sprite.texture = bombling_texture
 			attack_sound = scratch
 		en.ENEMY_TYPE.CYBERTEMPLAR:
@@ -32,21 +33,24 @@ func add_type(enemy_type: int) -> void:
 			health = 10
 			attack = 2
 			defense = 0
-			actor_name = tr("CYBERTEMPLAR_NAME")
+			entity_name = tr("CYBERTEMPLAR_NAME")
+			desc = tr("CYBERTEMPLAR_DESC")
 			Actor_Sprite.texture = cybertemplar_texture
 		en.ENEMY_TYPE.SHIELDBOT:
 			max_health = 10
 			health = 10
 			attack = 0
 			defense = 1
-			actor_name = tr("SHIELDBOT_NAME")
+			entity_name = tr("SHIELDBOT_NAME")
+			desc = tr("SHIELDBOT_DESC")
 			Actor_Sprite.texture = shieldbot_texture
 		en.ENEMY_TYPE.ZOMBIE, _:
 			max_health = 10
 			health = 10
 			attack = 2
 			defense = 0
-			actor_name = tr("ZOMBIE_NAME")
+			entity_name = tr("ZOMBIE_NAME")
+			desc = tr("ZOMBIE_DESC")
 			Actor_Sprite.texture = zombie_texture
 			attack_sound = scratch
 
@@ -73,9 +77,10 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 	Grid.end_turn()
 
 func remove() -> void:
+	.remove()
 	Grid.enemies.erase(self)
-	Grid.actors.erase(self)
-	data.entities.erase(self)
+	#Grid.actors.erase(self)
+	#data.entities.erase(self)
 	events.emit_signal("actor_removed", self)
 	self.queue_free()
 

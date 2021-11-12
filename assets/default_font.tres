@@ -5,6 +5,7 @@ antialiased = false
 font_path = "res://assets/FiraCode-Regular.ttf"
 
 [resource]
-size = 12
+size = 8
 use_mipmaps = true
+extra_spacing_char = 1
 font_data = SubResource( 1 )

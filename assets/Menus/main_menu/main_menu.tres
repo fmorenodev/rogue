@@ -22,7 +22,7 @@ antialiased = false
 font_path = "res://assets/FiraCode-Regular.ttf"
 
 [sub_resource type="DynamicFont" id=5]
-size = 48
+size = 32
 use_mipmaps = true
 font_data = SubResource( 4 )
 

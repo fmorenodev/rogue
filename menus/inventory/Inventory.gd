@@ -10,7 +10,7 @@ func set_item(item: Sprite, item_index: int = -1):
 	var index = item_index
 	if item_index == -1:
 		for i in items.size():
-			if items[i] != null and item.item_name == items[i].item_name:
+			if items[i] != null and item.entity_name == items[i].entity_name:
 				change_amount(i, item.amount)
 				index = i
 				return item

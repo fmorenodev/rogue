@@ -1,33 +1,45 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://gui/EntityInfo.gd" type="Script" id=1]
+[ext_resource path="res://assets/GUI/sprite_background.png" type="Texture" id=3]
 
 [node name="EntityInfo" type="VBoxContainer"]
-margin_bottom = 25.0
-rect_min_size = Vector2( 0, 25 )
+margin_right = 100.0
+rect_min_size = Vector2( 100, 20 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="InfoContainer" type="Control" parent="."]
+margin_right = 100.0
+
+[node name="TextureRect" type="TextureRect" parent="InfoContainer"]
+margin_left = 4.0
+margin_top = 1.0
+margin_right = 22.0
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="EntitySprite" type="TextureRect" parent="InfoContainer"]
-margin_left = 3.0
-margin_top = 8.0
-margin_right = 16.0
-margin_bottom = 16.0
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 21.0
 rect_min_size = Vector2( 16, 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Info" type="Label" parent="InfoContainer"]
-margin_left = 20.0
-margin_top = 10.0
-margin_right = 120.0
-margin_bottom = 76.0
+margin_left = 23.0
+margin_top = 1.0
+margin_right = 99.0
+rect_min_size = Vector2( 76, 18 )
 size_flags_horizontal = 8
+valign = 1
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

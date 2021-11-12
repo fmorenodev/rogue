@@ -1,18 +1,25 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/GUI/Panel.tres" type="StyleBox" id=1]
 [ext_resource path="res://assets/default_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://gui/TextLog.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
 
 [node name="TextLog" type="Panel"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 120.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 680, 100 )
+margin_right = 120.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 640, 70 )
 size_flags_vertical = 0
-custom_styles/panel = ExtResource( 1 )
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -21,8 +28,8 @@ __meta__ = {
 [node name="TextBox" type="RichTextLabel" parent="."]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 665.0
-margin_bottom = 95.0
+margin_right = 635.0
+margin_bottom = 65.0
 custom_fonts/normal_font = ExtResource( 2 )
 bbcode_enabled = true
 scroll_following = true

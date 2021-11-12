@@ -21,5 +21,4 @@ func display_skill(skill_index: int) -> void:
 	Skill_Sprite.texture = skill.texture
 
 func _on_Skill_Button_pressed() -> void:
-	skills.use_skill(index
-)
+	skills.use_skill(index)

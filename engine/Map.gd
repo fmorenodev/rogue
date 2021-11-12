@@ -1,6 +1,7 @@
 extends Node
 
 onready var Grid = $Grid
+onready var Selection_Grid = $SelectionGrid
 onready var borders = Rect2(data.map_top_left_corner, data.map_size)
 var input_enabled: bool
 
@@ -18,6 +19,8 @@ func _input(event: InputEvent) -> void:
 			events.emit_signal("open_inventory")
 		if event.is_action_pressed('open_skills'):
 			events.emit_signal("open_skills")
+		if event.is_action_pressed("look"):
+			events.emit_signal("switch_look")
 		if event.is_action_pressed('ui_focus_next'):
 			var _err = get_tree().reload_current_scene()
 		if event.is_action_pressed('ui_focus_prev'):
@@ -34,6 +37,7 @@ func build_level() -> void:
 		if Grid.get_cellv(pos) != -1:
 			Grid.set_cellv(pos, -1)
 			add_and_connect_point(pos)
+		Selection_Grid.set_cellv(pos, -1)
 	Grid.update_bitmask_region(borders.position, borders.end - Vector2.ONE)
 	Grid.init(walker.rooms)
 	walker.queue_free()
@@ -45,7 +49,6 @@ func add_and_connect_point(pos: Vector2) -> void:
 	for direction in dir.DIRECTIONS:
 		if Grid.get_cellv(pos + direction) == -1:
 			points_to_connect.append(data.pathfinding.get_closest_point(pos + direction))
-
 	for point in points_to_connect:
 		data.pathfinding.connect_points(new_id, point)
 

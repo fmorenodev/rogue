@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://engine/Map.gd" type="Script" id=1]
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://engine/Grid.tscn" type="PackedScene" id=3]
 [ext_resource path="res://actors/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actors/Ally.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/tilesets/select_tiles.tres" type="TileSet" id=6]
 
 [node name="Map" type="Node2D"]
 position = Vector2( 448, 256 )
@@ -18,10 +19,8 @@ tile_data = PoolIntArray( -2490407, 0, 0, -2490406, 0, 1, -2490405, 0, 1, -24904
 scale = Vector2( 1.00547, 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Grid/Player"]
-position = Vector2( 7.95648, 8 )
-scale = Vector2( 0.99456, 1 )
+offset = Vector2( -48, 48 )
 current = true
-zoom = Vector2( 0.75, 0.75 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 drag_margin_left = 0.0
@@ -38,3 +37,10 @@ scale = Vector2( 1.00547, 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Grid"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Grid"]
+
+[node name="SelectionGrid" type="TileMap" parent="."]
+z_index = 1
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+format = 1

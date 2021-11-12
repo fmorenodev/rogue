@@ -184,7 +184,7 @@ custom_fonts/font = ExtResource( 3 )
 align = 1
 
 [node name="Buttons" type="HBoxContainer" parent="GameOverContainer"]
-margin_right = 800.0
+margin_right = 640.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 300, 300 )
 
