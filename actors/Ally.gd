@@ -40,19 +40,17 @@ func _on_Grid_turn_started(current_actor: Actor) -> void:
 			#shoot
 			pass
 		en.ALLY_TYPE.HEALINGBOT, _:
-			# follow and heal
+			#follow and heal
 			pass
-	if Grid.Anim_Player.is_playing():
+	if Anim_Player.is_playing():
 		events.emit_signal("switch_input", false)
-		yield(Grid.Anim_Player, "animation_finished")
+		yield(Anim_Player, "animation_finished")
 		events.emit_signal("switch_input", true)
 	Grid.end_turn()
 
 func remove() -> void:
 	.remove()
 	Grid.allies.erase(self)
-	#Grid.actors.erase(self)
-	#data.entities.erase(self)
 	events.emit_signal("ally_removed", self)
 	self.queue_free()
 

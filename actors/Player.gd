@@ -9,7 +9,6 @@ var pressed = false
 var targets: PoolVector2Array = []
 
 onready var Player_Camera = $Camera2D
-onready var punch = preload("res://assets/sounds/punch.wav")
 
 func _ready() -> void:
 	var _err = events.connect("use_item", self, "_on_use_item")
@@ -17,7 +16,7 @@ func _ready() -> void:
 	_err = events.connect("change_control", self, "_on_control_changed")
 	_err = events.connect("switch_look", self, "_on_switch_look")
 	_err = events.connect("switch_target", self, "_on_switch_target")
-	attack_sound = punch
+	attack_sound = en.SOUNDS.PUNCH
 
 func _init() -> void:
 	max_health = 10
@@ -73,10 +72,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				if check_input(event):
 					if Grid.interact(self): # turn ended
 						set_process_unhandled_input(false)
-						if Grid.Anim_Player.is_playing():
+						if Anim_Player.is_playing():
 							events.emit_signal("switch_input", false)
 							switch_camera(false)
-							yield(Grid.Anim_Player, "animation_finished")
+							yield(Anim_Player, "animation_finished")
 							events.emit_signal("switch_input", true)
 							switch_camera(true)
 						Grid.end_turn()

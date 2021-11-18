@@ -8,7 +8,6 @@ onready var Syringe = preload("res://items/Syringe.tscn")
 onready var Player = $Player
 onready var Enemy = $Enemy
 onready var Ally = $Ally
-onready var Anim_Player = $AnimationPlayer
 onready var Selection_Grid: TileMap = $"../SelectionGrid"
 var rooms = []
 var enemies = []
@@ -57,10 +56,10 @@ func _on_new_game() -> void:
 		enemy.manual_init()
 	for ally in allies:
 		ally.manual_init()
-	for object in objects:
-		object.manual_init()
-	for item in items:
-		item.manual_init()
+#	for object in objects:
+#		object.manual_init()
+#	for item in items:
+#		item.manual_init()
 
 func init(grid_rooms: Array) -> void:
 	rooms = grid_rooms

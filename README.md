@@ -5,7 +5,7 @@ a GODOT-based roguelike
 ## IMPLEMENT:
 - player interaction with entities
 	- ~~skills and ranged attacks~~
-		- add sound / animation to skills
+		- add animation to skills
 	- ~~targeting system~~
 		- calculate the tiles behind a wall / a solid entity so the shot cannot reach them
 - actor interaction
@@ -21,11 +21,10 @@ a GODOT-based roguelike
 	- fix loading / event order to make it dissappear when the map is generated
 	- add new animation
 - general fixes / improvements
-	- ~~highlight sprites in info bar~~
-	- ~~z-index for things like tile selection to appear above player~~
-	- ~~move death and full damage handling to take_damage~~
+	- fix entity info extra space
 	- check colors for log text
 	- adjust margins for gui
+	- mouse wheel is an InputEventMouseButton? need to control that 
 	- move assets to be preloaded in another node / script (grid or something like a singleton in global)
 	- improve spawning to make it more evenly distributed
 	- fix diagonal movement / pressing two or more movement inputs at the same time.

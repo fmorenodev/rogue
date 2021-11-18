@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/spawn_mech.wav-31b5416423ec9cdbe74052dba19e3228.sample"
+
+[deps]
+
+source_file="res://assets/sounds/spawn_mech.wav"
+dest_files=[ "res://.import/spawn_mech.wav-31b5416423ec9cdbe74052dba19e3228.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

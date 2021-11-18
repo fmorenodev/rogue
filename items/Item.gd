@@ -11,7 +11,6 @@ var stackable = true
 
 func _ready() -> void:
 	var _err = events.connect("item_info_added", self, "_on_info_added")
-	events.emit_signal("add_entity_info", self, entity_name, self.texture, en.ENTITY_TYPE.ITEM)
 
 func manual_init() -> void:
 	events.emit_signal("add_entity_info", self, entity_name, self.texture, en.ENTITY_TYPE.ITEM)

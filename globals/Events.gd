@@ -70,3 +70,4 @@ signal fade_finished
 
 # Sound
 signal play_sound(sound)
+signal play_music(music)

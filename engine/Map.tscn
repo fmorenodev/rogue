@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://engine/Map.gd" type="Script" id=1]
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,24 @@
 [ext_resource path="res://actors/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://actors/Ally.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/tilesets/select_tiles.tres" type="TileSet" id=6]
+[ext_resource path="res://assets/sounds/spawn.wav" type="AudioStream" id=8]
+
+[sub_resource type="Animation" id=1]
+resource_name = "spawn"
+tracks/0/type = "audio"
+tracks/0/path = NodePath("AudioStreamPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 8 )
+} ],
+"times": PoolRealArray( 0.3 )
+}
 
 [node name="Map" type="Node2D"]
 position = Vector2( 448, 256 )
@@ -35,8 +53,10 @@ scale = Vector2( 1.00547, 1 )
 [node name="Ally" parent="Grid" instance=ExtResource( 5 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Grid"]
+anims/spawn = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Grid"]
+stream = ExtResource( 8 )
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 z_index = 1

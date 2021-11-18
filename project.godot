@@ -129,6 +129,8 @@ en="*res://globals/Enums.gd"
 events="*res://globals/Events.gd"
 color="*res://globals/Colors.gd"
 data="*res://globals/Data.gd"
+sound="*res://globals/Sound.tscn"
+music="*res://globals/Music.tscn"
 
 [display]
 

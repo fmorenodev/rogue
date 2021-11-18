@@ -18,6 +18,7 @@ func add_type(skill_type: int) -> void:
 	match skill_type:
 		en.DAMAGE_SKILL_TYPE.SHOOT:
 			texture = shot_texture
+			sound = en.SOUNDS.GUNSHOT
 			tile_range = 4
 			damage = 5
 			skill_name = tr("SHOOT_SKILL")
@@ -25,6 +26,7 @@ func add_type(skill_type: int) -> void:
 			on_use_msg = tr("SHOOT_ON_USE")
 		en.DAMAGE_SKILL_TYPE.BOMB:
 			texture = bomb_texture
+			sound = en.SOUNDS.EXPLOSION
 			tile_range = 4
 			damage = 5
 			tile_radius = 2
@@ -43,7 +45,7 @@ func _on_targets_calculated(targets: PoolVector2Array) -> void:
 	else:
 		in_use = false
 
-func _on_target_chosen(user: Actor, pos: Vector2) -> void:
+func _on_target_chosen(user: Actor, pos) -> void:
 	if pos == null:
 		in_use = false
 		events.emit_signal("open_skills")
@@ -51,6 +53,7 @@ func _on_target_chosen(user: Actor, pos: Vector2) -> void:
 		var blast_area = data.calc_area(pos, tile_radius)
 		events.emit_signal("new_message", on_use_msg, color.white, [user.entity_name])
 		events.emit_signal("area_effect", blast_area, {"damage": damage}) # additional effects added as k/v
-		# animation and sound
+		events.emit_signal("play_sound", sound)
+		# animation
 		use_turn(user)
 		in_use = false

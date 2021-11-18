@@ -22,6 +22,7 @@ func _ready() -> void:
 	_err = Anim_Player.connect("animation_finished", self, "_on_animation_finished")
 
 func _on_game_over(current_floor: int, enemy_name: String) -> void:
+	events.emit_signal("play_music", en.MUSIC.GAME_OVER_INTRO)
 	Game_Over_Subtext.text = tr("GAME_OVER_SUBTEXT").format([current_floor, enemy_name])
 	events.emit_signal("new_message", tr("ACTOR_DEAD"), color.dark_red, [tr("PLAYER_NAME")])
 	self.show()

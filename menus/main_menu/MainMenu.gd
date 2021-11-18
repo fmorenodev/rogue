@@ -12,6 +12,11 @@ onready var Dev_Label = $MenuContainer/Info/Dev
 onready var Fade_In = $FadeIn
 
 func _ready() -> void:
+	var _err = New_Game_Button.connect("pressed", self, "_on_NewGame_pressed")
+	_err = Continue_Button.connect("pressed", self, "_on_Continue_pressed")
+	_err = Options_Button.connect("pressed", self, "_on_Options_pressed")
+	_err = events.connect("fade_finished", self, "_on_FadeIn_fade_finished")
+	
 	Title.text = tr("GAME_TITLE")
 	New_Game_Button.text = tr("NEW_GAME")
 	Continue_Button.text = tr("CONTINUE")
@@ -20,13 +25,8 @@ func _ready() -> void:
 	Dev_Label.text = tr("GAME_DEV")
 	
 	New_Game_Button.grab_focus()
-
 	New_Game_Selector.show()
-	
-	var _err = New_Game_Button.connect("pressed", self, "_on_NewGame_pressed")
-	_err = Continue_Button.connect("pressed", self, "_on_Continue_pressed")
-	_err = Options_Button.connect("pressed", self, "_on_Options_pressed")
-	_err = events.connect("fade_finished", self, "_on_FadeIn_fade_finished")
+	events.emit_signal("play_music", en.MUSIC.MENU)
 
 func _on_NewGame_pressed() -> void:
 	scene_path = "res://engine/Main.tscn"

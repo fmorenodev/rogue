@@ -17,7 +17,7 @@ var attack: int
 var defense: int
 var entity_name: String
 var desc: String
-var attack_sound: AudioStream
+var attack_sound: int
 var is_unique = false
 
 func move() -> void:
@@ -38,14 +38,10 @@ func forward_animation():
 	animation.track_insert_key(track_index, 0.2, position)
 	var _err = Anim_Player.add_animation("forward", animation)
 	Anim_Player.play("forward")
-	
-func play_audio() -> void:
-	Audio_Player.stream = attack_sound
-	Audio_Player.play()
-	
+
 func basic_attack(target: Actor):
 	forward_animation()
-	play_audio()
+	events.emit_signal("play_sound", attack_sound)
 	var msg_color = color.cyan if target.is_in_group("enemies") else color.light_red
 	events.emit_signal("new_message", tr("COMBAT_ATTACK"),
 		msg_color, [self.entity_name, target.entity_name])
